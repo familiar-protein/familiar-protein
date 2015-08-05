@@ -27,6 +27,7 @@ an ever expanding set of levels to gain regex mastery, accruing points and ranks
   "[Regex Game] gives users realistic regex use cases while tracking their progress, enabling
 a greater learning while ignoring the complexities of modern software projects."
 
+  -- Todd Glass, CIO
 ## Where
   [link](url)
 
@@ -34,7 +35,6 @@ a greater learning while ignoring the complexities of modern software projects."
   "After learning regular expressions with [Regex Game], I write much more elogant and efficient
 code"
 
+  -- Ricky Mort
 ## Get Started
- Visit us at [link](link) 
-
-   
+ Visit us at [link](link)  
