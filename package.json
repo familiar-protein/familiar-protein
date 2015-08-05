@@ -18,6 +18,7 @@
   "homepage": "https://github.com/fractal5/familiar-protein#readme",
   "dependencies": {
     "body-parser": "^1.13.3",
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "mongoose": "^4.1.1"
   }
 }
