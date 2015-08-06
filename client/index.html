@@ -3,20 +3,70 @@
 
     <!-- React -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
 
-    <!-- Stores -->
-    <script src="/stores/answerStore.js"></script>
-    <script src="/stores/questionStore.js"></script>
-
-    <!-- Views -->
-    <script src="/views/answerView.js"></script>
-    <script src="/views/questionView.js"></script>
-
-    <!-- Dispatcher -->
-    <script src="gameDispatcher.js"></script>
 
   </head>
   <body>
+  <div class="container">
+    <div id="game"></div>
+  </div>
+  
+  <script type="text/jsx">
+  var GameBox = React.createClass({
+    getInitialState: function(){
+      return {questions: []}
+    },
+    componentDidMount: function(){
+      $.ajax({
+        url: 'http://localhost:3000/questions',
+        method: 'GET',
+        dataType: 'json',
+        success: function(data){
+          this.setState({questions: data});
+        }.bind(this),
+        error: function(xhr, status, err){
+          console.error(xhr, status, err.message);
+        }.bind(this)
+      });
+    },
+    render: function() {
+      return (
+        <div className="gameBox">
+          <h2>Game</h2>
+          <QuestionContainer data={this.state.questions} />
+        </div>
+      );
+    }
+  });
+
+  var QuestionContainer = React.createClass({
+    render: function() {
+      var questions = this.props.data.map(function(question) {
+        return (
+          <div className="question">
+            <b>{question.title}</b>
+            <p>{question.description}</p>
+            <a href="#" >Solve</a>
+          </div>
+        )
+      });
+
+      return (
+        <div class="questionContainer">
+          {questions}
+        </div>
+      )
+    }
+  })
+
+  React.render(
+    <GameBox />, 
+    document.getElementById('game')
+  );
+  </script>
+
 
   </body>
 </html>
