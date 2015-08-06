@@ -6,9 +6,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
 
+    <!-- Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="main.css">
 
   </head>
   <body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <ul class="nav navbar-nav">
+        <li><a href="#">Title</a>
+        <li><a href="#">Login</a>
+        <li><a href="#">Scoreboard</a>
+      </ul>
+    </div>
+  </nav>
   <div class="container">
     <div id="game"></div>
   </div>
@@ -42,7 +55,7 @@
     render: function() {
       return (
         <div className="gameBox">
-          <h2>Game</h2>
+          <h2 className="title">Regex Game</h2>
           <QuestionContainer data={this.state.questions} />
         </div>
       );
@@ -53,18 +66,20 @@
     render: function() {
       var questions = this.props.data.map(function(question) {
         return (
-          <div className="question">
-            <b>{question.title}</b>
-            <p>{question.description}</p>
-            <a href="#" >Solve</a>
-          </div>
+          <tr className="question">
+            <td><b>{question.title}</b></td>
+            <td><p>{question.description}</p></td>
+            <td><a className="btn btn-primary" href="#" >Solve</a></td>
+          </tr>
         )
       });
 
       return (
-        <div class="questionContainer">
-          {questions}
-        </div>
+        <table className="questionContainer table table-hover">
+          <tbody>
+            {questions}
+          </tbody>
+        </table>
       )
     }
   })
