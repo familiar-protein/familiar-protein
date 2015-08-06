@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var questions = require('./questionData');
 
 var QuestionSchema = new mongoose.Schema({
   qNumber: {type: Number, unique: true},
@@ -12,30 +13,6 @@ var QuestionSchema = new mongoose.Schema({
 var Question = mongoose.model('Question', QuestionSchema);
 
 // Set up some dummy initial data for now by hardcoding.
-var questions = [
-  {
-    qNumber: 1,
-    title: "Capital Words",
-    description: "Find all capital words in a string.",
-    truthy: [],
-    falsy: []
-  },
-  {
-    qNumber: 2,
-    title: "Does a Word Contain One 'a'",
-    description: "Validate whether the given word contains one and only one letter 'a'.",
-    truthy: ['Apple', 'Jan', 'hamburger', 'David', 'Sophia', 'example'],
-    falsy: ['Aaron', 'Tim', 'Ingi', 'Canvas', 'PC', 'hackreactor']
-  },
-  {
-    qNumber: 3,
-    title: "Find Prices",
-    description: "Find all prices in the string.",
-    truthy: [],
-    falsy: []
-  }
-];
-
 questions.forEach(function(element) {
   var newQ = new Question(element);
   newQ.save(function(err, data) {
