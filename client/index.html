@@ -20,7 +20,7 @@
     },
     componentDidMount: function(){
       $.ajax({
-        url: '/question',
+        url: 'http://localhost:3000/questions',
         method: 'GET',
         dataType: 'json',
         success: function(data){
@@ -33,9 +33,9 @@
     },
     render: function() {
       return (
-        <div className="gamebox">
+        <div className="gameBox">
           <h2>Game</h2>
-          <QuestionContainer data={this.state.questions}>
+          <QuestionContainer data={this.state.questions} />
         </div>
       );
     }
@@ -45,14 +45,18 @@
     render: function() {
       var questions = this.props.data.map(function(question) {
         return (
-          <div class=question>
-            {question.}
+          <div className="question">
+            <b>{question.title}</b>
+            <p>{question.description}</p>
+            <a href="#" >Solve</a>
           </div>
         )
-      })
+      });
 
       return (
-
+        <div class="questionContainer">
+          {questions}
+        </div>
       )
     }
   })
