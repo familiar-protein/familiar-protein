@@ -5,7 +5,7 @@ var express = require('express');
 module.exports = function(app) {
   app.use(bodyParser.json());
 
-  app.use(express.static(__dirname + '../client'));
+  app.use(express.static(__dirname + '/../../client/'));
 
   questionRoutes(app);
 
