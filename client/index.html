@@ -24,6 +24,14 @@
         method: 'GET',
         dataType: 'json',
         success: function(data){
+          data.sort(function(a, b){
+            if(a.qNumber < b.qNumber){
+              return -1;
+            }
+            if(a.qNumber > b.qNumber){
+              return 1;
+            }
+          });
           this.setState({questions: data});
         }.bind(this),
         error: function(xhr, status, err){
