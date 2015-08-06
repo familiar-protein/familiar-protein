@@ -1,6 +1,8 @@
 var validate = function(regexString, iFlag, truthy, falsy) {
   var regex = new RegExp(regexString, iFlag);
 
+  console.log("REGEX:",regexString)
+
   var error = function(value, expected) {
     return 'Expected ' + value + ' to be ' + String(expected) + ' instead of ' + String(!expected) + '!';
   };
