@@ -3,20 +3,50 @@
 
     <!-- React -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
 
-    <!-- Stores -->
-    <script src="/stores/answerStore.js"></script>
-    <script src="/stores/questionStore.js"></script>
-
-    <!-- Views -->
-    <script src="/views/answerView.js"></script>
-    <script src="/views/questionView.js"></script>
-
-    <!-- Dispatcher -->
-    <script src="gameDispatcher.js"></script>
 
   </head>
   <body>
+  <div class="container">
+    <div id="game"></div>
+  </div>
+  
+  <script type="text/jsx">
+  var Gamebox = React.createClass({
+    setInitialState: function(){
+      this.state = {
+        question: []
+      };
+    },
+    componentDidMount: function(){
+      $.ajax({
+        url: '/question',
+        method: 'GET',
+        success: function(data){
+          this.state.question = data;
+        }.bind(this),
+        error: function(xhr, status, err){
+          console.error(xhr, status, err.message);
+        }.bind(this)
+      });
+    },
+    render: function() {
+      return (
+        <div className="gamebox">
+          <h2>Game</h2>
+        </div>
+      );
+    }
+  });
+
+  React.render(
+    <Gamebox />, 
+    document.getElementById('game')
+  );
+  </script>
+
 
   </body>
 </html>
