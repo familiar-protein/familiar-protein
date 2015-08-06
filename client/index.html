@@ -14,18 +14,17 @@
   </div>
   
   <script type="text/jsx">
-  var Gamebox = React.createClass({
-    setInitialState: function(){
-      this.state = {
-        question: []
-      };
+  var GameBox = React.createClass({
+    getInitialState: function(){
+      return {questions: []}
     },
     componentDidMount: function(){
       $.ajax({
         url: '/question',
         method: 'GET',
+        dataType: 'json',
         success: function(data){
-          this.state.question = data;
+          this.setState({questions: data});
         }.bind(this),
         error: function(xhr, status, err){
           console.error(xhr, status, err.message);
@@ -36,13 +35,30 @@
       return (
         <div className="gamebox">
           <h2>Game</h2>
+          <QuestionContainer data={this.state.questions}>
         </div>
       );
     }
   });
 
+  var QuestionContainer = React.createClass({
+    render: function() {
+      var questions = this.props.data.map(function(question) {
+        return (
+          <div class=question>
+            {question.}
+          </div>
+        )
+      })
+
+      return (
+
+      )
+    }
+  })
+
   React.render(
-    <Gamebox />, 
+    <GameBox />, 
     document.getElementById('game')
   );
   </script>
