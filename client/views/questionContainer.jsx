@@ -33,7 +33,7 @@ var QuestionContainer = React.createClass({
           <form name="questionSolution" >
             <div className="form-group">
               /<input placeholder="Regex solution..." classsName=".form-control" id="solution" ref="solutionText"></input>/
-              <button onClick={function(){this.setState({iFlag: !this.state.iFlag, questions: this.state.questions})}.bind(this)} className="btn" >iFlag</button>
+              <button onClick={function(){this.setState({iFlag: !this.state.iFlag, questions: this.state.questions})}.bind(this)} className="btn" >i</button>
             </div>
             <button onClick={this.submit} className="btn btn-primary" name="solutionButton">Check Answer!</button>
           </form>
