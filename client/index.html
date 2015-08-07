@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="main.css">
 
+    <!-- Dispatcher -->
+    <script src="/gameDispatcher.js"></script>
     <!-- Views -->
     <script type="text/jsx" src="/views/gameBox.jsx"></script>
     <script type="text/jsx" src="/views/questionContainer.jsx"></script>
@@ -31,18 +33,8 @@
   </div>
   
   <script type="text/jsx">
-  var dispatcher = {
-    _subs: [],
-    register: function(cb){
-      this._subs.push(cb);
-    },
 
-    dispatch: function(payload){
-      for(var i = 0; i < this._subs.length; i++){
-        this._subs[i](payload);
-      }
-    }
-  };
+  var dispatcher = new Dispatcher();
 
   React.render(
     <GameBox />, 
