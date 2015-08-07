@@ -5,12 +5,7 @@ var GameBox = React.createClass({
   changeView: function(question){
     this.setState({questions: [question]});
   },
-  componentDidMount: function(){
-    dispatcher.register(function(payload){
-      if(payload.action === "StateChange"){
-        this.setState({questions: payload.questions});
-      }
-    }.bind(this));
+  loadAllQuestions: function(){
     $.ajax({
       url: 'http://localhost:3000/questions',
       method: 'GET',
@@ -26,6 +21,20 @@ var GameBox = React.createClass({
         console.error(xhr, status, err.message);
       }.bind(this)
     });
+  },
+  componentDidMount: function(){
+    dispatcher.register(function(payload){
+      if(payload.action === "StateChange"){
+        this.setState({questions: payload.questions});
+      }
+    }.bind(this));
+    dispatcher.register(function(payload){
+      if(payload.action === "StateRevert"){
+        console.log("Back");
+        this.loadAllQuestions();
+      }
+    }.bind(this));
+    this.loadAllQuestions();
   },
   render: function() {
     return (
