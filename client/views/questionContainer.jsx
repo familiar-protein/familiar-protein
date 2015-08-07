@@ -24,6 +24,7 @@ var QuestionContainer = React.createClass({
     if(this.props.data.length === 1){
       return (
         <div className="question-solve">
+          <a href="#" className="btn btn-primary" onClick={function(){dispatcher.dispatch({action: "StateRevert"}) }}>Back</a>
           <h2>{this.props.data[0].title}</h2>
           <p>{this.props.data[0].description}</p>
           <div id="result">{this.state.result}</div>
