@@ -32,7 +32,6 @@ var QuestionContainer = React.createClass({
           <div id="result">{this.state.result}</div>
           <form name="questionSolution" >
             <div className="form-group">
-              <label for="solution">Solution Regex</label>
               /<input placeholder="Regex solution..." classsName=".form-control" id="solution" ref="solutionText"></input>/
               <button onClick={function(){this.setState({iFlag: !this.state.iFlag, questions: this.state.questions})}.bind(this)} className="btn" >iFlag</button>
             </div>
