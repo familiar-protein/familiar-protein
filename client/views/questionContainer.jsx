@@ -1,22 +1,19 @@
 var QuestionContainer = React.createClass({
+  getInitialState: function(){
+    return {result: ''};
+  },
   submit: function(e){
     e.preventDefault();
     console.log(this);
     var iFlag = React.findDOMNode(this.refs.iFlag).value;
     var answer = React.findDOMNode(this.refs.solutionText).value;
-    console.log("Submitted");
     $.ajax({
-      url: 'http://localhost:3000/questions/' + this.props.data[0]._id,
+      url: 'http://localhost:3000/questions/' + this.props.data[0].qNumber,
       method: "POST",
-      data: {
-        regexString: answer,
-        iFlag: iFlag,
-      },
+      regexString: answer,
+      iFlag: iFlag,
       success: function(data){
-        console.log(data);
-        React.findDOMNode(this.refs.message).value = data.message;
-        React.findDOMNode(this.refs.iFlag).value = '';
-        React.findDOMNode(this.refs.solutionText).value = '';
+        this.setState({result: data.result});
       }.bind(this),
       error: function(xhr, status, err){
         console.log(xhr, status, err.message);
@@ -29,7 +26,7 @@ var QuestionContainer = React.createClass({
         <div className="question-solve">
           <h2>{this.props.data[0].title}</h2>
           <p>{this.props.data[0].description}</p>
-          <p ref="message"></p>
+          <div id="result">{this.state.result}</div>
           <form name="questionSolution" >
             <div className="form-group">
               <label for="iFlag">iFlag</label>
