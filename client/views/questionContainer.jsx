@@ -34,22 +34,21 @@ var QuestionContainer = React.createClass({
   setRegex: function() {
     var value = React.findDOMNode(this.refs.solutionText).value;
     this.setState({
-      result: React.findDOMNode(this.refs.solutionText).value
+      result: value
     });
   },
 
-  checkTestCase: function(testCase) {
+  checkTestCase: function(testCase, condition) {
     var regex = new RegExp(this.state.result);
-    return regex.test(testCase) ? 'solved' : 'unsolved';
+    return regex.test(testCase) === condition ? 'solved' : 'unsolved';
   },
 
-  displayTestCases: function(string) {
-    console.log(this)
+  displayTestCases: function(string, condition) {
     var that = this;
     var question = this.props.data[this.props.currentQuestion];
     return question[string].map(function(testCase) {
       return (
-        <p className={that.checkTestCase(testCase)}>{testCase}</p>
+        <p className={that.checkTestCase(testCase, condition)}>{testCase}</p>
       )
     });
   },
@@ -63,7 +62,6 @@ var QuestionContainer = React.createClass({
           <a href="#" className="btn btn-primary" onClick={this.props.goToQuestionMenu}>Back</a>
           <h2>{this.props.data[currentIndex].title}</h2>
           <p>{this.props.data[currentIndex].description}</p>
-          <div id="result">{this.state.result}</div>
           <form name="questionSolution" >
             <div className="form-group">
               <label for="iFlag">iFlag</label>
@@ -77,11 +75,11 @@ var QuestionContainer = React.createClass({
             </div>
             <div className="col-sm-6">
               <h3>{'Should return true'}</h3>
-              {this.displayTestCases('truthy')}
+              {this.displayTestCases('truthy', true)}
             </div>
             <div className="col-sm-6">
               <h3>{'Should return false'}</h3>
-              {this.displayTestCases('falsy')}
+              {this.displayTestCases('falsy', false)}
             </div>
             <button onClick={this.submit} className="btn btn-primary" name="solutionButton">Check Answer!</button>
           </form>
