@@ -1,11 +1,12 @@
 var QuestionContainer = React.createClass({
   getInitialState: function(){
-    return {result: ''};
+    return {result: '', iFlag: false};
   },
   submit: function(e){
     e.preventDefault();
     console.log(this);
-    var iFlag = React.findDOMNode(this.refs.iFlag).value;
+    var iFlag = (this.state.iFlag === true) ? 'i' : '';
+    console.log(iFlag);
     var answer = React.findDOMNode(this.refs.solutionText).value;
     var payload = JSON.stringify({regexString: answer, iFlag: iFlag});
     $.ajax({
@@ -21,6 +22,13 @@ var QuestionContainer = React.createClass({
       }.bind(this)
     });
   },
+  handleFlagChange: function(){
+    $("#iFlag").toggleClass("active");
+    this.setState({
+      iFlag: !this.state.iFlag, 
+      questions: this.state.questions
+    });
+  },
   render: function() {
     if(this.props.data.length === 1){
       return (
@@ -31,12 +39,8 @@ var QuestionContainer = React.createClass({
           <div id="result">{this.state.result}</div>
           <form name="questionSolution" >
             <div className="form-group">
-              <label for="iFlag">iFlag</label>
-              <input placeholder="iFlag" className=".form-control" type="text" id="iFlag" ref="iFlag" />
-            </div>
-            <div className="form-group">
-              <label for="solution">Solution Regex</label>
-              <textarea placeholder="Regex solution..." classsName=".form-control" id="solution" ref="solutionText"></textarea>
+              /<input placeholder="Regex solution..." classsName=".form-control" id="solution" ref="solutionText"></input>/
+              <button id="iFlag" onClick={this.handleFlagChange} className="btn" >i</button>
             </div>
             <button onClick={this.submit} className="btn btn-primary" name="solutionButton">Check Answer!</button>
           </form>
