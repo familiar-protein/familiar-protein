@@ -31,12 +31,16 @@ var QuestionContainer = React.createClass({
           <div id="result">{this.state.result}</div>
           <form name="questionSolution" >
             <div className="form-group">
-              <label for="iFlag">iFlag</label>
-              <input placeholder="iFlag" className=".form-control" type="text" id="iFlag" ref="iFlag" />
+              <label class="col-sm-2 control-label" for="iFlag">iFlag</label>
+              <div class="col-sm-10">
+                <input placeholder="iFlag" className=".form-control" type="text" id="iFlag" ref="iFlag" />
+              </div>
             </div>
             <div className="form-group">
-              <label for="solution">Solution Regex</label>
-              <textarea placeholder="Regex solution..." classsName=".form-control" id="solution" ref="solutionText"></textarea>
+              <label class="col-sm-2 control-label" for="solution">Solution Regex</label>
+              <div class="col-sm-10">
+                <textarea placeholder="Regex solution..." classsName=".form-control" id="solution" ref="solutionText"></textarea>
+              </div>
             </div>
             <button onClick={this.submit} className="btn btn-primary" name="solutionButton">Check Answer!</button>
           </form>
