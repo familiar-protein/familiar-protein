@@ -1,10 +1,24 @@
 var GameBox = React.createClass({
   getInitialState: function(){
-    return {questions: []}
+    return {
+      questions: [],
+      currentQuestion: -1
+    };
   },
-  changeView: function(question){
-    this.setState({questions: [question]});
+
+  goToQuestionDetail: function(index){
+    console.log("QUESTION DETAIL:", index);
+    this.setState({
+      currentQuestion: index
+    });
   },
+
+  goToQuestionMenu: function(){
+    this.setState({
+      currentQuestion: -1
+    });
+  },
+
   loadAllQuestions: function(){
     $.ajax({
       url: 'http://localhost:3000/questions',
@@ -14,34 +28,32 @@ var GameBox = React.createClass({
         data.sort(function(a, b){
           return a.qNumber - b.qNumber;
         });
+        console.log(data)
         this.setState({questions: data});
 
       }.bind(this),
       error: function(xhr, status, err){
         console.error(xhr, status, err.message);
-      }.bind(this)
+      }
     });
   },
+
   componentDidMount: function(){
-    dispatcher.register(function(payload){
-      if(payload.action === "StateChange"){
-        this.setState({questions: payload.questions});
-      }
-    }.bind(this));
-    dispatcher.register(function(payload){
-      if(payload.action === "StateRevert"){
-        console.log("Back");
-        this.loadAllQuestions();
-      }
-    }.bind(this));
     this.loadAllQuestions();
   },
+
   render: function() {
     return (
       <div className="gameBox">
         <h2 className="title">Regex Game</h2>
-        <QuestionContainer data={this.state.questions} />
+        <QuestionContainer
+          data={this.state.questions}
+          currentQuestion={this.state.currentQuestion}
+          goToQuestionDetail={this.goToQuestionDetail}
+          goToQuestionMenu={this.goToQuestionMenu}
+        />
       </div>
     );
   }
+
 });

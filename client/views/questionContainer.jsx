@@ -2,6 +2,15 @@ var QuestionContainer = React.createClass({
   getInitialState: function(){
     return {result: ''};
   },
+
+  // proptype validation: errors will show in console!
+  propTypes: {
+    data: React.PropTypes.array.isRequired,
+    currentQuestion: React.PropTypes.number.isRequired,
+    goToQuestionDetail: React.PropTypes.func.isRequired,
+    goToQuestionMenu: React.PropTypes.func.isRequired,
+  },
+
   submit: function(e){
     e.preventDefault();
     console.log(this);
@@ -22,12 +31,14 @@ var QuestionContainer = React.createClass({
     });
   },
   render: function() {
-    if(this.props.data.length === 1){
+    var currentIndex = this.props.currentQuestion;
+    console.log(currentIndex);
+    if(currentIndex >= 0){
       return (
         <div className="question-solve">
-          <a href="#" className="btn btn-primary" onClick={function(){dispatcher.dispatch({action: "StateRevert"}) }}>Back</a>
-          <h2>{this.props.data[0].title}</h2>
-          <p>{this.props.data[0].description}</p>
+          <a href="#" className="btn btn-primary" onClick={this.props.goToQuestionMenu}>Back</a>
+          <h2>{this.props.data[currentIndex].title}</h2>
+          <p>{this.props.data[currentIndex].description}</p>
           <div id="result">{this.state.result}</div>
           <form name="questionSolution" >
             <div className="form-group">
@@ -43,12 +54,13 @@ var QuestionContainer = React.createClass({
         </div>
     );
   } else {
-    var questions = this.props.data.map(function(question) {
+    var that = this;
+    var questions = this.props.data.map(function(question, index) {
       return (
         <tr className="question">
           <td><b>{question.title}</b></td>
           <td><p>{question.description}</p></td>
-          <td><a className="btn btn-primary" onClick={function() {dispatcher.dispatch({action: "StateChange", questions: [question]})}} href="#" >Solve</a></td>
+          <td><a className="btn btn-primary" onClick={that.props.goToQuestionDetail.bind(this, index)} href="#" >Solve</a></td>
         </tr>
       )
     });
