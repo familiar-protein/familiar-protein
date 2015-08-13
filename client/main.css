@@ -6,3 +6,11 @@ body {
   text-align: center;
   padding-bottom: 50px;
 }
+
+.solved {
+  color: green;
+}
+
+.unsolved {
+  color: red;
+}
