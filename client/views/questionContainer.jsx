@@ -46,13 +46,12 @@ var QuestionContainer = React.createClass({
   },
 
   displayTestCases: function(string, condition) {
-    var that = this;
     var question = this.props.data[this.props.currentQuestion];
     return question[string].map(function(testCase) {
       return (
-        <p className={that.checkTestCase(testCase, condition)}>{testCase}</p>
+        <p className={this.checkTestCase(testCase, condition)}>{testCase}</p>
       )
-    });
+    }.bind(this));
   },
 
   render: function() {
@@ -88,24 +87,23 @@ var QuestionContainer = React.createClass({
           </div>
         </div>
     );
-  } else {
-    var that = this;
-    var questions = this.props.data.map(function(question, index) {
+    } else {
+      var questions = this.props.data.map(function(question, index) {
+        return (
+          <tr className="question">
+            <td><b>{question.title}</b></td>
+            <td><p>{question.description}</p></td>
+            <td><a className="btn btn-primary" onClick={this.props.goToQuestionDetail.bind(this, index)} href="#" >Solve</a></td>
+          </tr>
+        )
+      }.bind(this));
       return (
-        <tr className="question">
-          <td><b>{question.title}</b></td>
-          <td><p>{question.description}</p></td>
-          <td><a className="btn btn-primary" onClick={that.props.goToQuestionDetail.bind(this, index)} href="#" >Solve</a></td>
-        </tr>
-      )
-    });
-  }
-    return (
-      <table className="questionContainer table table-hover">
-        <tbody>
-          {questions}
-        </tbody>
-      </table>
-    );
+        <table className="questionContainer table table-hover">
+          <tbody>
+            {questions}
+          </tbody>
+        </table>
+      );
+    }
   }
 });
