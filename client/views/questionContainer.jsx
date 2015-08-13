@@ -14,9 +14,8 @@ var QuestionContainer = React.createClass({
   submit: function(e){
     e.preventDefault();
     console.log(this);
-    var iFlag = React.findDOMNode(this.refs.iFlag).value;
     var answer = React.findDOMNode(this.refs.solutionText).value;
-    var payload = JSON.stringify({regexString: answer, iFlag: iFlag});
+    var payload = JSON.stringify({regexString: answer});
     $.ajax({
       url: 'http://localhost:3000/questions/' + this.props.data[0].qNumber,
       method: "POST",

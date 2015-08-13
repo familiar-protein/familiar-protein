@@ -1,5 +1,5 @@
-var validate = function(regexString, iFlag, truthy, falsy) {
-  var regex = new RegExp(regexString, iFlag);
+var validate = function(regexString, truthy, falsy) {
+  var regex = new RegExp(regexString);
 
   console.log("REGEX:",regexString)
 
