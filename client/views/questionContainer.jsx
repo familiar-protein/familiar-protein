@@ -32,7 +32,6 @@ var QuestionContainer = React.createClass({
 
   setRegex: function() {
     var value = React.findDOMNode(this.refs.solutionText).value;
-    console.log(value)
     this.setState({
       result: value
     });
@@ -40,7 +39,6 @@ var QuestionContainer = React.createClass({
 
   checkTestCase: function(testCase, condition) {
     var regex = new RegExp(this.state.result);
-    console.log(regex)
     return regex.test(testCase) === condition ? 'solved' : 'unsolved';
   },
 
@@ -75,6 +73,8 @@ var QuestionContainer = React.createClass({
           </form>
 
           <div>
+            <p className="instruction">{'Make all words turn green to complete the challenge'}</p>
+
             <div className="col-sm-6 text-center">
               <h3>{'Should match'}</h3>
               {this.displayTestCases('truthy', true)}
@@ -85,7 +85,7 @@ var QuestionContainer = React.createClass({
             </div>
           </div>
         </div>
-    );
+      );
     } else {
       var questions = this.props.data.map(function(question, index) {
         return (
@@ -97,11 +97,13 @@ var QuestionContainer = React.createClass({
         )
       }.bind(this));
       return (
-        <table className="questionContainer table table-hover">
-          <tbody>
-            {questions}
-          </tbody>
-        </table>
+        <div>
+          <table className="questionContainer table table-hover">
+            <tbody>
+              {questions}
+            </tbody>
+          </table>
+        </div>
       );
     }
   }
