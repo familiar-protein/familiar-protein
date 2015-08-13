@@ -60,11 +60,20 @@ var QuestionContainer = React.createClass({
     if(currentIndex >= 0){
       return (
         <div className="question-solve">
-          <a href="#" className="btn btn-primary" onClick={this.props.goToQuestionMenu}>Back</a>
-          <h2>{this.props.data[currentIndex].title}</h2>
-          <p>{this.props.data[currentIndex].description}</p>
+
+          <div className="row">
+            <div className="col-sm-10">
+              <h2>{this.props.data[currentIndex].title}</h2>
+              <p>{this.props.data[currentIndex].description}</p>
+            </div>
+
+            <div className="col-sm-2">
+              <a href="#" className="btn btn-primary back" onClick={this.props.goToQuestionMenu}>Back</a>
+            </div>
+          </div>
+
           <form className="form-inline text-center">
-            <span className="solution">/<textarea ref="solutionText" onChange={this.setRegex} rows="1" cols="30" type="text" className="regex form-control" placeholder="Regex solution..."></textarea>/</span>
+            <span className="solution">/<textarea ref="solutionText" onChange={this.setRegex} rows="1" cols="50" type="text" className="regex form-control" placeholder="Regex solution..."></textarea>/</span>
           </form>
 
           <div>

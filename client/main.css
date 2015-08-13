@@ -2,6 +2,10 @@ body {
   padding-top: 70px; 
 }
 
+.back {
+  margin-top: 20px;
+}
+
 .title {
   text-align: center;
   padding-bottom: 50px;
@@ -16,6 +20,10 @@ body {
 }
 
 .solution {
-  /*font-weight: bold;*/
+  font-size: 70px;
+  font-weight: 200;
+}
 
+.regex {
+  margin: 50px 20px;
 }
