@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="main.css">
 
+    <!-- Views -->
+    <script type="text/jsx" src="/views/gameBox.jsx"></script>
+    <script type="text/jsx" src="/views/questionContainer.jsx"></script>
+
   </head>
   <body>
   <nav class="navbar navbar-default navbar-fixed-top">
@@ -27,62 +31,6 @@
   </div>
   
   <script type="text/jsx">
-  var GameBox = React.createClass({
-    getInitialState: function(){
-      return {questions: []}
-    },
-    componentDidMount: function(){
-      $.ajax({
-        url: 'http://localhost:3000/questions',
-        method: 'GET',
-        dataType: 'json',
-        success: function(data){
-          data.sort(function(a, b){
-            if(a.qNumber < b.qNumber){
-              return -1;
-            }
-            if(a.qNumber > b.qNumber){
-              return 1;
-            }
-          });
-          this.setState({questions: data});
-        }.bind(this),
-        error: function(xhr, status, err){
-          console.error(xhr, status, err.message);
-        }.bind(this)
-      });
-    },
-    render: function() {
-      return (
-        <div className="gameBox">
-          <h2 className="title">Regex Game</h2>
-          <QuestionContainer data={this.state.questions} />
-        </div>
-      );
-    }
-  });
-
-  var QuestionContainer = React.createClass({
-    render: function() {
-      var questions = this.props.data.map(function(question) {
-        return (
-          <tr className="question">
-            <td><b>{question.title}</b></td>
-            <td><p>{question.description}</p></td>
-            <td><a className="btn btn-primary" href="#" >Solve</a></td>
-          </tr>
-        )
-      });
-
-      return (
-        <table className="questionContainer table table-hover">
-          <tbody>
-            {questions}
-          </tbody>
-        </table>
-      )
-    }
-  })
 
   React.render(
     <GameBox />, 
