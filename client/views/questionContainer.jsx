@@ -33,6 +33,7 @@ var QuestionContainer = React.createClass({
 
   setRegex: function() {
     var value = React.findDOMNode(this.refs.solutionText).value;
+    console.log(value)
     this.setState({
       result: value
     });
@@ -40,6 +41,7 @@ var QuestionContainer = React.createClass({
 
   checkTestCase: function(testCase, condition) {
     var regex = new RegExp(this.state.result);
+    console.log(regex)
     return regex.test(testCase) === condition ? 'solved' : 'unsolved';
   },
 
@@ -55,34 +57,26 @@ var QuestionContainer = React.createClass({
 
   render: function() {
     var currentIndex = this.props.currentQuestion;
-    console.log(currentIndex);
     if(currentIndex >= 0){
       return (
         <div className="question-solve">
           <a href="#" className="btn btn-primary" onClick={this.props.goToQuestionMenu}>Back</a>
           <h2>{this.props.data[currentIndex].title}</h2>
           <p>{this.props.data[currentIndex].description}</p>
-          <form name="questionSolution" >
-            <div className="form-group">
-              <label for="iFlag">iFlag</label>
-              <input placeholder="iFlag" className=".form-control" type="text" id="iFlag" ref="iFlag" />
-            </div>
-            <div className="form-group">
-              <label class="col-sm-2 control-label" for="solution">Solution Regex</label>
-              <div class="col-sm-10">
-                <textarea onChange={this.setRegex} placeholder="Regex solution..." classsName=".form-control" id="solution" ref="solutionText"></textarea>
-              </div>
-            </div>
-            <div className="col-sm-6">
-              <h3>{'Should return true'}</h3>
+          <form className="form-inline text-center">
+            <span className="solution">/<textarea ref="solutionText" onChange={this.setRegex} rows="1" cols="30" type="text" className="regex form-control" placeholder="Regex solution..."></textarea>/</span>
+          </form>
+
+          <div>
+            <div className="col-sm-6 text-center">
+              <h3>{'Should match'}</h3>
               {this.displayTestCases('truthy', true)}
             </div>
-            <div className="col-sm-6">
-              <h3>{'Should return false'}</h3>
+            <div className="col-sm-6 text-center">
+              <h3>{'Should not match'}</h3>
               {this.displayTestCases('falsy', false)}
             </div>
-            <button onClick={this.submit} className="btn btn-primary" name="solutionButton">Check Answer!</button>
-          </form>
+          </div>
         </div>
     );
   } else {
