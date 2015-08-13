@@ -1,6 +1,9 @@
 var QuestionContainer = React.createClass({
   getInitialState: function(){
-    return {result: ''};
+    return {
+      result: '',
+      solved: false
+    };
   },
 
   // proptype validation: errors will show in console!
@@ -32,8 +35,10 @@ var QuestionContainer = React.createClass({
 
   setRegex: function() {
     var value = React.findDOMNode(this.refs.solutionText).value;
+    var solved = this.isSolved(value)
     this.setState({
-      result: value
+      result: value,
+      solved: solved
     });
   },
 
@@ -49,6 +54,24 @@ var QuestionContainer = React.createClass({
         <p className={this.checkTestCase(testCase, condition)}>{testCase}</p>
       )
     }.bind(this));
+  },
+
+  isSolved: function(regexString) {
+    var question = this.props.data[this.props.currentQuestion];
+
+    var truthy = question['truthy']
+    var falsy = question['falsy'];
+    var regex = new RegExp(regexString);
+
+    var solvedTruthy = truthy.reduce(function(result, current) {
+      return result && regex.test(current);
+    }, true);
+
+    var solvedFalsy = falsy.reduce(function(result, current) {
+      return result && !regex.test(current);
+    }, true);
+
+    return solvedTruthy && solvedFalsy;
   },
 
   render: function() {
@@ -73,8 +96,10 @@ var QuestionContainer = React.createClass({
           </form>
 
           <div>
-            <p className="instruction">{'Make all words turn green to complete the challenge'}</p>
 
+            {this.state.solved ? <h3 className="success">Success!!! Solved All Test Cases!</h3> : null}
+
+            <p className="instruction">{'Make all words turn green to complete the challenge'}</p>
             <div className="col-sm-6 text-center">
               <h3>{'Should match'}</h3>
               {this.displayTestCases('truthy', true)}
