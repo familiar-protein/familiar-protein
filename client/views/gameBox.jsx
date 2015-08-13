@@ -28,7 +28,7 @@ var GameBox = React.createClass({
         data.sort(function(a, b){
           return a.qNumber - b.qNumber;
         });
-        console.log(data)
+        console.log("loadAllQuestions: " + data);
         this.setState({questions: data});
 
       }.bind(this),
