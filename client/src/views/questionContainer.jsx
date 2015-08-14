@@ -133,3 +133,5 @@ var QuestionContainer = React.createClass({
     }
   }
 });
+
+module.exports = QuestionContainer;
