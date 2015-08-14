@@ -1,8 +1,47 @@
 body { 
-  padding-top: 70px; 
+  padding: 30px 0 50px 0; 
+}
+
+.back {
+  margin-top: 20px;
 }
 
 .title {
   text-align: center;
   padding-bottom: 50px;
+}
+
+.solved {
+  color: green;
+}
+
+.unsolved {
+  color: red;
+}
+
+.solution {
+  font-size: 70px;
+  font-weight: 200;
+}
+
+form {
+  margin: 60px 0;
+}
+
+.regex {
+  margin: 0 20px;
+}
+
+.instruction {
+  font-style: italic;
+  text-align: center;
+}
+
+.success {
+  text-align: center;
+}
+
+.error-msg {
+  font-style: italic;
+  color: red;
 }

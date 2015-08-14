@@ -54,9 +54,8 @@ var getQuestion = function(req, res, next) {
 // run tests on submitted regular expression
 var runTests = function(req, res, next) {
   var regexString = req.body.regexString;
-  var iFlag = req.body.iFlag;
 
-  var result = questionValidation(regexString, iFlag, req.questionData.truthy, req.questionData.falsy);
+  var result = questionValidation(regexString, req.questionData.truthy, req.questionData.falsy);
 
   res.status(201);
   res.send({result: result})
