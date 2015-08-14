@@ -3,7 +3,7 @@ var GameBox = require('./views/gameBox.jsx');
 var App = React.createClass({
   render: function() {
     return (
-      <div>
+      <div className="container">
         <GameBox/>
       </div>
     )
