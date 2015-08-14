@@ -232,12 +232,13 @@
 
 	          React.createElement("form", {className: "form-inline text-center"}, 
 	            React.createElement("span", {className: "solution"}, "/", React.createElement("textarea", {ref: "solutionText", onChange: this.setRegex, rows: "1", cols: "50", type: "text", className: "regex form-control", placeholder: "Regex solution..."}), "/"), 
-	            this.state.solved === null ? React.createElement("p", {className: "error-msg"}, "Please provide valid regular expression") : null
+
+	            this.state.solved === null ? React.createElement("p", {className: "error-msg"}, "Please provide valid regular expression") : null, 
+	            this.state.solved ? React.createElement("h3", {className: "success"}, "Success!!! Solved All Test Cases!") : null
 	          ), 
 
 	          React.createElement("div", {className: "test-cases"}, 
 
-	            this.state.solved ? React.createElement("h3", {className: "success"}, "Success!!! Solved All Test Cases!") : null, 
 
 	            React.createElement("p", {className: "instruction"}, 'Make all words turn green to complete the challenge'), 
 	            React.createElement("div", {className: "col-sm-6 text-center"}, 
