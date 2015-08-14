@@ -73,7 +73,6 @@
 	  },
 
 	  goToQuestionDetail: function(index){
-	    console.log("QUESTION DETAIL:", index);
 	    this.setState({
 	      currentQuestion: index
 	    });
@@ -94,7 +93,6 @@
 	        data.sort(function(a, b){
 	          return a.qNumber - b.qNumber;
 	        });
-	        console.log("loadAllQuestions: " + data);
 	        this.setState({questions: data});
 
 	      }.bind(this),
@@ -149,7 +147,6 @@
 
 	  submit: function(e){
 	    e.preventDefault();
-	    console.log(this);
 	    var answer = React.findDOMNode(this.refs.solutionText).value;
 	    var payload = JSON.stringify({regexString: answer});
 	    $.ajax({
@@ -168,7 +165,7 @@
 
 	  setRegex: function() {
 	    var value = React.findDOMNode(this.refs.solutionText).value;
-	    var solved = this.isSolved(value)
+	    var solved = this.isSolved(value);
 	    this.setState({
 	      result: value,
 	      solved: solved
@@ -176,15 +173,19 @@
 	  },
 
 	  checkTestCase: function(testCase, condition) {
-	    var regex = new RegExp(this.state.result);
-	    return regex.test(testCase) === condition ? 'solved' : 'unsolved';
+	    try {
+	      var regex = new RegExp(this.state.result);
+	      return regex.test(testCase) === condition ? 'solved' : 'unsolved';
+	    } catch(e) {
+	      return 'unsolved';
+	    }
 	  },
 
 	  displayTestCases: function(string, condition) {
 	    var question = this.props.data[this.props.currentQuestion];
 	    return question[string].map(function(testCase) {
 	      return (
-	        React.createElement("p", {className: this.checkTestCase(testCase, condition)}, testCase)
+	        React.createElement("p", {key: testCase, className: this.checkTestCase(testCase, condition)}, testCase)
 	      )
 	    }.bind(this));
 	  },
@@ -194,17 +195,22 @@
 
 	    var truthy = question['truthy']
 	    var falsy = question['falsy'];
-	    var regex = new RegExp(regexString);
 
-	    var solvedTruthy = truthy.reduce(function(result, current) {
-	      return result && regex.test(current);
-	    }, true);
+	    try {
+	      var regex = new RegExp(regexString);
 
-	    var solvedFalsy = falsy.reduce(function(result, current) {
-	      return result && !regex.test(current);
-	    }, true);
+	      var solvedTruthy = truthy.reduce(function(result, current) {
+	        return result && regex.test(current);
+	      }, true);
 
-	    return solvedTruthy && solvedFalsy;
+	      var solvedFalsy = falsy.reduce(function(result, current) {
+	        return result && !regex.test(current);
+	      }, true);
+
+	      return solvedTruthy && solvedFalsy;
+	    } catch(e) {
+	      return null;
+	    }
 	  },
 
 	  render: function() {
@@ -225,10 +231,11 @@
 	          ), 
 
 	          React.createElement("form", {className: "form-inline text-center"}, 
-	            React.createElement("span", {className: "solution"}, "/", React.createElement("textarea", {ref: "solutionText", onChange: this.setRegex, rows: "1", cols: "50", type: "text", className: "regex form-control", placeholder: "Regex solution..."}), "/")
+	            React.createElement("span", {className: "solution"}, "/", React.createElement("textarea", {ref: "solutionText", onChange: this.setRegex, rows: "1", cols: "50", type: "text", className: "regex form-control", placeholder: "Regex solution..."}), "/"), 
+	            this.state.solved === null ? React.createElement("p", {className: "error-msg"}, "Please provide valid regular expression") : null
 	          ), 
 
-	          React.createElement("div", null, 
+	          React.createElement("div", {className: "test-cases"}, 
 
 	            this.state.solved ? React.createElement("h3", {className: "success"}, "Success!!! Solved All Test Cases!") : null, 
 
@@ -241,16 +248,17 @@
 	              React.createElement("h3", null, 'Should not match'), 
 	              this.displayTestCases('falsy', false)
 	            )
+
 	          )
 	        )
 	      );
 	    } else {
 	      var questions = this.props.data.map(function(question, index) {
 	        return (
-	          React.createElement("tr", {className: "question"}, 
+	          React.createElement("tr", {key: question.qNumber, className: "question"}, 
 	            React.createElement("td", null, React.createElement("b", null, question.title)), 
 	            React.createElement("td", null, React.createElement("p", null, question.description)), 
-	            React.createElement("td", null, React.createElement("a", {className: "btn btn-primary", onClick: this.props.goToQuestionDetail.bind(this, index), href: "#"}, "Solve"))
+	            React.createElement("td", null, React.createElement("a", {className: "btn btn-primary", onClick: this.props.goToQuestionDetail.bind(null, index), href: "#"}, "Solve"))
 	          )
 	        )
 	      }.bind(this));

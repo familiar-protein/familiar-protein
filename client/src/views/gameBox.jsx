@@ -9,7 +9,6 @@ var GameBox = React.createClass({
   },
 
   goToQuestionDetail: function(index){
-    console.log("QUESTION DETAIL:", index);
     this.setState({
       currentQuestion: index
     });
@@ -30,7 +29,6 @@ var GameBox = React.createClass({
         data.sort(function(a, b){
           return a.qNumber - b.qNumber;
         });
-        console.log("loadAllQuestions: " + data);
         this.setState({questions: data});
 
       }.bind(this),
