@@ -1,5 +1,5 @@
 body { 
-  padding-top: 70px; 
+  padding: 30px 0 50px 0; 
 }
 
 .back {
@@ -24,8 +24,12 @@ body {
   font-weight: 200;
 }
 
+form {
+  margin: 60px 0;
+}
+
 .regex {
-  margin: 70px 20px;
+  margin: 0 20px;
 }
 
 .instruction {
@@ -35,4 +39,9 @@ body {
 
 .success {
   text-align: center;
+}
+
+.error-msg {
+  font-style: italic;
+  color: red;
 }

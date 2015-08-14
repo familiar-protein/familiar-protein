@@ -16,7 +16,6 @@ var QuestionContainer = React.createClass({
 
   submit: function(e){
     e.preventDefault();
-    console.log(this);
     var answer = React.findDOMNode(this.refs.solutionText).value;
     var payload = JSON.stringify({regexString: answer});
     $.ajax({
@@ -35,7 +34,7 @@ var QuestionContainer = React.createClass({
 
   setRegex: function() {
     var value = React.findDOMNode(this.refs.solutionText).value;
-    var solved = this.isSolved(value)
+    var solved = this.isSolved(value);
     this.setState({
       result: value,
       solved: solved
@@ -43,15 +42,19 @@ var QuestionContainer = React.createClass({
   },
 
   checkTestCase: function(testCase, condition) {
-    var regex = new RegExp(this.state.result);
-    return regex.test(testCase) === condition ? 'solved' : 'unsolved';
+    try {
+      var regex = new RegExp(this.state.result);
+      return regex.test(testCase) === condition ? 'solved' : 'unsolved';
+    } catch(e) {
+      return 'unsolved';
+    }
   },
 
   displayTestCases: function(string, condition) {
     var question = this.props.data[this.props.currentQuestion];
     return question[string].map(function(testCase) {
       return (
-        <p className={this.checkTestCase(testCase, condition)}>{testCase}</p>
+        <p key={testCase} className={this.checkTestCase(testCase, condition)}>{testCase}</p>
       )
     }.bind(this));
   },
@@ -61,17 +64,22 @@ var QuestionContainer = React.createClass({
 
     var truthy = question['truthy']
     var falsy = question['falsy'];
-    var regex = new RegExp(regexString);
 
-    var solvedTruthy = truthy.reduce(function(result, current) {
-      return result && regex.test(current);
-    }, true);
+    try {
+      var regex = new RegExp(regexString);
 
-    var solvedFalsy = falsy.reduce(function(result, current) {
-      return result && !regex.test(current);
-    }, true);
+      var solvedTruthy = truthy.reduce(function(result, current) {
+        return result && regex.test(current);
+      }, true);
 
-    return solvedTruthy && solvedFalsy;
+      var solvedFalsy = falsy.reduce(function(result, current) {
+        return result && !regex.test(current);
+      }, true);
+
+      return solvedTruthy && solvedFalsy;
+    } catch(e) {
+      return null;
+    }
   },
 
   render: function() {
@@ -93,11 +101,13 @@ var QuestionContainer = React.createClass({
 
           <form className="form-inline text-center">
             <span className="solution">/<textarea ref="solutionText" onChange={this.setRegex} rows="1" cols="50" type="text" className="regex form-control" placeholder="Regex solution..."></textarea>/</span>
+
+            {this.state.solved === null ? <p className="error-msg">Please provide valid regular expression</p> : null}
+            {this.state.solved ? <h3 className="success">Success!!! Solved All Test Cases!</h3> : null}
           </form>
 
-          <div>
+          <div className="test-cases">
 
-            {this.state.solved ? <h3 className="success">Success!!! Solved All Test Cases!</h3> : null}
 
             <p className="instruction">{'Make all words turn green to complete the challenge'}</p>
             <div className="col-sm-6 text-center">
@@ -108,16 +118,17 @@ var QuestionContainer = React.createClass({
               <h3>{'Should not match'}</h3>
               {this.displayTestCases('falsy', false)}
             </div>
+
           </div>
         </div>
       );
     } else {
       var questions = this.props.data.map(function(question, index) {
         return (
-          <tr className="question">
+          <tr key={question.qNumber} className="question">
             <td><b>{question.title}</b></td>
             <td><p>{question.description}</p></td>
-            <td><a className="btn btn-primary" onClick={this.props.goToQuestionDetail.bind(this, index)} href="#" >Solve</a></td>
+            <td><a className="btn btn-primary" onClick={this.props.goToQuestionDetail.bind(null, index)} href="#" >Solve</a></td>
           </tr>
         )
       }.bind(this));
