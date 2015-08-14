@@ -1,3 +1,5 @@
+var QuestionContainer = require('./questionContainer.jsx')
+
 var GameBox = React.createClass({
   getInitialState: function(){
     return {
@@ -57,3 +59,5 @@ var GameBox = React.createClass({
   }
 
 });
+
+module.exports = GameBox;

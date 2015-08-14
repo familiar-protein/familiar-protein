@@ -25,5 +25,14 @@ body {
 }
 
 .regex {
-  margin: 50px 20px;
+  margin: 70px 20px;
+}
+
+.instruction {
+  font-style: italic;
+  text-align: center;
+}
+
+.success {
+  text-align: center;
 }
