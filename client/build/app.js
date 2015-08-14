@@ -145,24 +145,6 @@
 	    goToQuestionMenu: React.PropTypes.func.isRequired,
 	  },
 
-	  submit: function(e){
-	    e.preventDefault();
-	    var answer = React.findDOMNode(this.refs.solutionText).value;
-	    var payload = JSON.stringify({regexString: answer});
-	    $.ajax({
-	      url: 'http://localhost:3000/questions/' + this.props.data[0].qNumber,
-	      method: "POST",
-	      contentType: "application/json",
-	      data: payload,
-	      success: function(data){
-	        this.setState({result: data.result});
-	      }.bind(this),
-	      error: function(xhr, status, err){
-	        console.log(xhr, status, err.message);
-	      }.bind(this)
-	    });
-	  },
-
 	  setRegex: function() {
 	    var value = React.findDOMNode(this.refs.solutionText).value;
 	    var solved = this.isSolved(value);
@@ -188,6 +170,15 @@
 	        React.createElement("p", {key: testCase, className: this.checkTestCase(testCase, condition)}, testCase)
 	      )
 	    }.bind(this));
+	  },
+
+	  returnToMenu: function() {
+	    this.setState({
+	      result: '',
+	      solved: false,
+	    });
+
+	    this.props.goToQuestionMenu();
 	  },
 
 	  isSolved: function(regexString) {
@@ -218,7 +209,6 @@
 	    if(currentIndex >= 0){
 	      return (
 	        React.createElement("div", {className: "question-solve"}, 
-
 	          React.createElement("div", {className: "row"}, 
 	            React.createElement("div", {className: "col-sm-10"}, 
 	              React.createElement("h2", null, this.props.data[currentIndex].title), 
@@ -226,7 +216,7 @@
 	            ), 
 
 	            React.createElement("div", {className: "col-sm-2"}, 
-	              React.createElement("a", {href: "#", className: "btn btn-primary back", onClick: this.props.goToQuestionMenu}, "Back")
+	              React.createElement("a", {href: "#", className: "btn btn-primary back", onClick: this.returnToMenu}, "Back")
 	            )
 	          ), 
 

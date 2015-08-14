@@ -14,24 +14,6 @@ var QuestionContainer = React.createClass({
     goToQuestionMenu: React.PropTypes.func.isRequired,
   },
 
-  submit: function(e){
-    e.preventDefault();
-    var answer = React.findDOMNode(this.refs.solutionText).value;
-    var payload = JSON.stringify({regexString: answer});
-    $.ajax({
-      url: 'http://localhost:3000/questions/' + this.props.data[0].qNumber,
-      method: "POST",
-      contentType: "application/json",
-      data: payload,
-      success: function(data){
-        this.setState({result: data.result});
-      }.bind(this),
-      error: function(xhr, status, err){
-        console.log(xhr, status, err.message);
-      }.bind(this)
-    });
-  },
-
   setRegex: function() {
     var value = React.findDOMNode(this.refs.solutionText).value;
     var solved = this.isSolved(value);
@@ -57,6 +39,15 @@ var QuestionContainer = React.createClass({
         <p key={testCase} className={this.checkTestCase(testCase, condition)}>{testCase}</p>
       )
     }.bind(this));
+  },
+
+  returnToMenu: function() {
+    this.setState({
+      result: '',
+      solved: false,
+    });
+
+    this.props.goToQuestionMenu();
   },
 
   isSolved: function(regexString) {
@@ -87,7 +78,6 @@ var QuestionContainer = React.createClass({
     if(currentIndex >= 0){
       return (
         <div className="question-solve">
-
           <div className="row">
             <div className="col-sm-10">
               <h2>{this.props.data[currentIndex].title}</h2>
@@ -95,7 +85,7 @@ var QuestionContainer = React.createClass({
             </div>
 
             <div className="col-sm-2">
-              <a href="#" className="btn btn-primary back" onClick={this.props.goToQuestionMenu}>Back</a>
+              <a href="#" className="btn btn-primary back" onClick={this.returnToMenu}>Back</a>
             </div>
           </div>
 
