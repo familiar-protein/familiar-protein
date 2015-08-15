@@ -1,4 +1,7 @@
+var Router = require('react-router');
+
 var QuestionContainer = React.createClass({
+  mixins: [Router.Navigation],
   getInitialState: function(){
     return {
       result: '',
@@ -114,11 +117,12 @@ var QuestionContainer = React.createClass({
       );
     } else {
       var questions = this.props.data.map(function(question, index) {
+        var link = "#/" + question.qNumber
         return (
           <tr key={question.qNumber} className="question">
             <td><b>{question.title}</b></td>
             <td><p>{question.description}</p></td>
-            <td><a className="btn btn-primary" onClick={this.props.goToQuestionDetail.bind(null, index)} href="#" >Solve</a></td>
+            <td><a className="btn btn-primary" onClick={this.props.goToQuestionDetail.bind(null, index) } href={link}>Solve</a></td>
           </tr>
         )
       }.bind(this));
