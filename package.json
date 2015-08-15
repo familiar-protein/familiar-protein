@@ -4,6 +4,7 @@
   "description": "",
   "main": "server/server.js",
   "scripts": {
+    "start": "node server/server.js",
     "test": "mocha server/tests/serverSpec.js"
   },
   "repository": {
