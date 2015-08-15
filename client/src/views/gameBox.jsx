@@ -11,7 +11,6 @@ var GameBox = React.createClass({
   },
 
   goToQuestionDetail: function(index){
-    var index = index;
     this.setState({
       currentQuestion: index
     });
