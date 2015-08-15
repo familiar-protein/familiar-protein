@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 
-// XXX EE: this is the format for Azure. Needs to change if we deploy elsewhere.
-var mongoURI =  process.env.CUSTOMCONNSTR_MONGOLAB_URI || process.env.TESTING_DB ||'mongodb://localhost/regexdb';
+var mongoURI =  process.env.MONGOLAB_URI || process.env.TESTING_DB ||'mongodb://localhost/regexdb';
 console.log("CONNECTED TO:", mongoURI);
 
 console.log(mongoose.connect(mongoURI));
