@@ -1,6 +1,8 @@
 var QuestionContainer = require('./questionContainer.jsx')
+var Router = require('react-router');
 
 var GameBox = React.createClass({
+  mixins: [Router.Navigation],
   getInitialState: function(){
     return {
       questions: [],
@@ -12,6 +14,7 @@ var GameBox = React.createClass({
     this.setState({
       currentQuestion: index
     });
+    this.transitionTo('question', {qNumber: index});
   },
 
   goToQuestionMenu: function(){
