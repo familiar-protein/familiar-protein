@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var mongoURI =  process.env.MONGOLAB_URI || process.env.TESTING_DB ||'mongodb://localhost/regexdb';
 console.log("CONNECTED TO:", mongoURI);
 
-console.log(mongoose.connect(mongoURI));
+mongoose.connect(mongoURI);
 
 var db = mongoose.connection;
 
