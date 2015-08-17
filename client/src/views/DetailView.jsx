@@ -4,7 +4,7 @@ var Router = require('react-router');
 var Navigation = Router.Navigation;
 var Link = Router.Link;
 
-var OverView = React.createClass({
+var DetailView = React.createClass({
   mixins: [Navigation],
 
   getInitialState: function(){
@@ -80,6 +80,7 @@ var OverView = React.createClass({
       this.transitionTo('/');
     }
 
+    // makes sure that the questions are loaded from the database before rendering the view
     try {
       question.title;
     } catch(e) {
@@ -124,4 +125,4 @@ var OverView = React.createClass({
   }
 });
 
-module.exports = OverView;
+module.exports = DetailView;
