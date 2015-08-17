@@ -17,7 +17,7 @@ module.exports = [
     qNumber: 3,
     title: "Username Validation",
     description: "Determine whether a given username is valid according to the following restrictions: A username has to be between 6 and 10 characters and can only contain alphanumeric characters and '_'!",
-    truthy: ['myname', 'ali_gator', '12345678', 'alpha123'],
+    truthy: ['myname', 'ali_gator', '12345678', 'alpha123', '_USER_'],
     falsy: ['myreallylongname', '@symbol', '@#$%^&*()', 'name', '$myName$']
   },
   {
