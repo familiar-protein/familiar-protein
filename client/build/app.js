@@ -62,7 +62,11 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var QuestionContainer = __webpack_require__(2)
+	var QuestionContainer = __webpack_require__(2);
+
+	// Get the url to query based on window.location to adjust according
+	// to running local v.s. deployed.
+	var baseUrl = window.location;
 
 	var GameBox = React.createClass({displayName: "GameBox",
 	  getInitialState: function(){
@@ -86,7 +90,7 @@
 
 	  loadAllQuestions: function(){
 	    $.ajax({
-	      url: 'http://localhost:3000/questions',
+	      url: baseUrl + 'questions',
 	      method: 'GET',
 	      dataType: 'json',
 	      success: function(data){

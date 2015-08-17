@@ -1,4 +1,8 @@
-var QuestionContainer = require('./questionContainer.jsx')
+var QuestionContainer = require('./questionContainer.jsx');
+
+// Get the url to query based on window.location to adjust according
+// to running local v.s. deployed.
+var baseUrl = window.location;
 
 var GameBox = React.createClass({
   getInitialState: function(){
@@ -22,7 +26,7 @@ var GameBox = React.createClass({
 
   loadAllQuestions: function(){
     $.ajax({
-      url: 'http://localhost:3000/questions',
+      url: baseUrl + 'questions',
       method: 'GET',
       dataType: 'json',
       success: function(data){
