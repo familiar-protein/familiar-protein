@@ -64,7 +64,7 @@
 
 	  loadAllQuestions: function(){
 	    $.ajax({
-	      url: 'http://localhost:3000/questions',
+	      url: window.location.origin + '/questions',
 	      method: 'GET',
 	      dataType: 'json',
 	      success: function(data){
@@ -23638,7 +23638,8 @@
 	var Navigation = Router.Navigation;
 	var Link = Router.Link;
 
-	var OverView = React.createClass({displayName: "OverView",
+
+	var DetailView = React.createClass({displayName: "DetailView",
 	  mixins: [Navigation],
 
 	  getInitialState: function(){
@@ -23714,6 +23715,8 @@
 	      this.transitionTo('/');
 	    }
 
+
+	    // makes sure that the questions are loaded from the database before rendering the view
 	    try {
 	      question.title;
 	    } catch(e) {
@@ -23758,7 +23761,8 @@
 	  }
 	});
 
-	module.exports = OverView;
+	module.exports = DetailView;
+
 
 /***/ }
 /******/ ]);
