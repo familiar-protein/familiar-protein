@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fractal5/familiar-protein.git"
+    "url": "git+https://github.com/familiar-protein/familiar-protein.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/fractal5/familiar-protein/issues"
+    "url": "https://github.com/familiar-protein/familiar-protein/issues"
   },
-  "homepage": "https://github.com/fractal5/familiar-protein#readme",
+  "homepage": "https://github.com/familiar-protein/familiar-protein#readme",
   "dependencies": {
     "body-parser": "^1.13.3",
     "express": "^4.13.3",
