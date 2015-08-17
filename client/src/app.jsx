@@ -18,7 +18,7 @@ var App = React.createClass({
 
   loadAllQuestions: function(){
     $.ajax({
-      url: 'http://localhost:3000/questions',
+      url: window.location.origin + '/questions',
       method: 'GET',
       dataType: 'json',
       success: function(data){
