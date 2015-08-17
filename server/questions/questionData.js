@@ -48,4 +48,18 @@ module.exports = [
     truthy: ['Password1234', '111xxxYY', '123456aA', 'fhewoh123EWD', '12345abcdeFGHIJK'],
     falsy: ['#Password1234', '12345aA', 'no$pesialCharacter5', 'paws&*fsB', 'ThisIsTooLongOfAPassword']
   },
+  {
+    qNumber: 8,
+    title: "Date",
+    description:"Determine whether or not an input is a valid date. \nE.g. YYYY/MM/DD or YYYY-MM-DD \nMonths and days must be in valid ranges",
+    truthy: ['1918/11/11', '2010/06/13', '2015-05-01', '1100-12-04', '1933/4/12'],
+    falsy: ['1234/323/4', '19e4/12/01', '1944/15/28', '2003/3/55']
+  },
+ {
+   qNumber: 9,
+   title: "IPv4 Addresses",
+   description: "Create a regex to match valid IPv4 addresses. \nMust match dotted decimal, dotted hexadecimal, dotted octal, hexidecimal, decimal and octal)",
+   truthy: ['192.0.2.235', '18.101.25.153', '0xFF.0x12.0xF1.0x1F', '0300.0000.0002.0353', '0xC00002EC', '2130706433'],
+   falsy: ['256.256.256', '0x100.0x11.0x11.0x11', '0xx20.0x20.0x20.0x20', '0180.0100.0100.0100', '0x100111111', '100.100.100', '100..100.100.100.', '4294967296']
+ }, 
 ];
