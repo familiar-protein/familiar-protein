@@ -4,6 +4,7 @@ var Router = require('react-router');
 var Navigation = Router.Navigation;
 var Link = Router.Link;
 
+
 var DetailView = React.createClass({
   mixins: [Navigation],
 
@@ -79,6 +80,7 @@ var DetailView = React.createClass({
     if (this.props.questions.length > 0 && question === undefined) {
       this.transitionTo('/');
     }
+
 
     // makes sure that the questions are loaded from the database before rendering the view
     try {
