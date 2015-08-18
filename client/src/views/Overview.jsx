@@ -17,6 +17,7 @@ var OverView = React.createClass({
 
     return (
       <div>
+        <Link to="userProfile" className="btn btn-primary">Profile</Link>
         <table className="questionContainer table table-hover">
           <tbody>
             {questions}
