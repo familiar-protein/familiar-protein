@@ -17,7 +17,7 @@ var OverView = React.createClass({
   getChildContext: function() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
-    };
+    }; 
   },
 
   render: function() {
