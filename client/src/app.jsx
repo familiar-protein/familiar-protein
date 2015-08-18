@@ -55,6 +55,7 @@ var routes = (
     <DefaultRoute name="default" handler={OverView} />
     <Route name="userProfile" path="userProfile" handler={UserProfileView}/>
     <Route name="login" path="/login" handler={LoginView}/> 
+    <Route name="signup" path="/signup" handler={LoginView}/>
     <Route name="question" path="/:qNumber" handler={DetailView}/>
   </Route>
 );

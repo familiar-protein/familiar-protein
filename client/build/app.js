@@ -101,6 +101,7 @@
 	    React.createElement(DefaultRoute, {name: "default", handler: OverView}), 
 	    React.createElement(Route, {name: "userProfile", path: "userProfile", handler: UserProfileView}), 
 	    React.createElement(Route, {name: "login", path: "/login", handler: LoginView}), 
+	    React.createElement(Route, {name: "signup", path: "/signup", handler: LoginView}), 
 	    React.createElement(Route, {name: "question", path: "/:qNumber", handler: DetailView})
 	  )
 	);
@@ -23774,35 +23775,38 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	// var If = require('../components/if.jsx');
 
 	var Router = __webpack_require__(159);
 	var Link = Router.Link;
 
 	var LoginView = React.createClass({displayName: "LoginView",
 
-
-	  // getRoute: function(){
-	  //   var currentRoutes = this.context.router.getCurrentRoutes();
-	  //   var activeRouteName = currentRoutes[currentRoutes.length - 1].name;
-	  //   return activeRouteName;
-	  // },
+	  mixins: [Router.State],
 
 	  render: function() {
 	    
-	    // var currentRoutes = this.conte
-	    // if (logI)
-	    
-	    // if (this.getRoute() === "login"){
+	    console.log("PATH === ", this.getPath());
+	    if (this.getPath() === "/login"){
 	      return (
 	        React.createElement("div", null, 
 	          React.createElement("h1", null, "Login"), 
 	          React.createElement("p", null, "Username: ", React.createElement("input", {type: "text"})), 
 	          React.createElement("p", null, "Password: ", React.createElement("input", {type: "password"})), 
-	          React.createElement("button", {type: "button"}, "Log In")
+	          React.createElement("button", {type: "button"}, "Log In"), 
+	          React.createElement(Link, {to: "signup", className: "btn btn-primary"}, "To Signup")
 	        )
 	      );
-	    // }
+	    }else if (this.getPath() === "/signup"){
+	      return (
+	        React.createElement("div", null, 
+	          React.createElement("h1", null, "Sign Up"), 
+	          React.createElement("p", null, "Username: ", React.createElement("input", {type: "text"})), 
+	          React.createElement("p", null, "Password: ", React.createElement("input", {type: "password"})), 
+	          React.createElement("button", {type: "button"}, "Sign Up"), 
+	          React.createElement(Link, {to: "login", className: "btn btn-primary"}, "To Login")
+	        )
+	      );
+	    }
 
 	  }
 	});
