@@ -3,6 +3,7 @@ var React = require('react');
 var OverView = require('./views/OverView.jsx');
 var DetailView = require('./views/DetailView.jsx');
 var LoginView = require('./views/LoginView.jsx');
+var UserProfileView = require('./views/UserProfileView.jsx');
 
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -53,7 +54,8 @@ var routes = (
   <Route name="app" path="/" handler={App}>
     <DefaultRoute name="default" handler={OverView} />
     <Route name="user" path="/login" handler={LoginView}/> 
-    <Route name="question" path="/:qNumber" handler={DetailView}/>
+    <Route name="userProfile" path="userProfile" handler={UserProfileView}/>
+    <Route name="question" path=":qNumber" handler={DetailView}/>
   </Route>
 );
 

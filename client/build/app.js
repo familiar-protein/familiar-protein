@@ -48,7 +48,8 @@
 
 	var OverView = __webpack_require__(157);
 	var DetailView = __webpack_require__(197);
-	var LoginView = __webpack_require__(198);
+	var LoginView = __webpack_require__(199);
+	var UserProfileView = __webpack_require__(198);
 
 	var Router = __webpack_require__(158);
 	var RouteHandler = Router.RouteHandler;
@@ -99,7 +100,8 @@
 	  React.createElement(Route, {name: "app", path: "/", handler: App}, 
 	    React.createElement(DefaultRoute, {name: "default", handler: OverView}), 
 	    React.createElement(Route, {name: "user", path: "/login", handler: LoginView}), 
-	    React.createElement(Route, {name: "question", path: "/:qNumber", handler: DetailView})
+	    React.createElement(Route, {name: "userProfile", path: "userProfile", handler: UserProfileView}), 
+	    React.createElement(Route, {name: "question", path: ":qNumber", handler: DetailView})
 	  )
 	);
 
@@ -20507,6 +20509,7 @@
 
 	    return (
 	      React.createElement("div", null, 
+	        React.createElement(Link, {to: "userProfile", className: "btn btn-primary"}, "Profile"), 
 	        React.createElement("table", {className: "questionContainer table table-hover"}, 
 	          React.createElement("tbody", null, 
 	            questions
@@ -23768,6 +23771,40 @@
 
 /***/ },
 /* 198 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+
+	var Router = __webpack_require__(158);
+	var Link = Router.Link;
+
+	var UserProfileContainer = React.createClass({displayName: "UserProfileContainer",
+		render: function() {
+			return (
+				React.createElement("div", null, 
+					React.createElement(UserInfo, null)
+				)
+			)
+		}
+	});
+
+	var UserInfo = React.createClass({displayName: "UserInfo",
+		render: function() {
+			return (
+				React.createElement("div", null, 
+					React.createElement("img", {src: "http://placekitten.com/g/200/300"}), 
+					React.createElement("h2", null, "Name"), 
+					React.createElement("p", null, "email@email.com")
+				)
+			);
+		}
+	});
+
+	module.exports = UserProfileContainer;
+
+
+/***/ },
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
