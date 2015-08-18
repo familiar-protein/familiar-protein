@@ -27,22 +27,25 @@ var DetailView = React.createClass({
   getInitialState: function(){
     return {
       result: '',
+      flag: '',
       solved: false,
     };
   },
 
   setRegex: function() {
     var value = this.refs.solutionText.getValue();
-    var solved = this.isSolved(value);
+    var flag = this.refs.solutionTextFlags.getValue();
+    var solved = this.isSolved(value, flag);
     this.setState({
       result: value,
+      flag: flag,
       solved: solved
     });
   },
 
   checkTestCase: function(testCase, condition) {
     try {
-      var regex = new RegExp(this.state.result);
+      var regex = new RegExp(this.state.result, this.state.flag);
       return regex.test(testCase) === condition ? 'solved' : 'unsolved';
     } catch(e) {
       return 'unsolved';
@@ -61,20 +64,21 @@ var DetailView = React.createClass({
   returnToMenu: function() {
     this.setState({
       result: '',
+      flag: '',
       solved: false,
     });
 
     this.props.goToQuestionMenu();
   },
 
-  isSolved: function(regexString) {
+  isSolved: function(regexString, flag) {
     var question = this.props.questions[this.props.params.qNumber - 1];
 
     var truthy = question['truthy']
     var falsy = question['falsy'];
 
     try {
-      var regex = new RegExp(regexString);
+      var regex = new RegExp(regexString, flag);
 
       var solvedTruthy = truthy.reduce(function(result, current) {
         return result && regex.test(current);
@@ -118,7 +122,7 @@ var DetailView = React.createClass({
         </div>
 
         <form className="form-inline text-center">
-          <span className="solution">/<TextField hintText="You can solve it!" floatingLabelText="Regex solution..." type="text" ref="solutionText" onChange={this.setRegex} className="regex"/>/</span>
+          <span className="solution">/<TextField hintText="You can solve it!" floatingLabelText="Regex solution..." type="text" ref="solutionText" onChange={this.setRegex} className="regex"/>/<TextField  floatingLabelText="Put your flags here..." type="text" ref="solutionTextFlags" onChange={this.setRegex} className="regex"/></span>
 
           {this.state.solved === null ? <p className="error-msg">Please provide valid regular expression</p> : null}
           {this.state.solved ? <h3 className="success">Success!!! Solved All Test Cases!</h3> : null}
