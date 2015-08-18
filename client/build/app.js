@@ -48,6 +48,7 @@
 
 	var OverView = __webpack_require__(157);
 	var DetailView = __webpack_require__(197);
+	var LoginView = __webpack_require__(198);
 
 	var Router = __webpack_require__(158);
 	var RouteHandler = Router.RouteHandler;
@@ -96,8 +97,9 @@
 
 	var routes = (
 	  React.createElement(Route, {name: "app", path: "/", handler: App}, 
-	    React.createElement(Route, {name: "question", path: "/:qNumber", handler: DetailView}), 
-	    React.createElement(DefaultRoute, {name: "default", handler: OverView})
+	    React.createElement(DefaultRoute, {name: "default", handler: OverView}), 
+	    React.createElement(Route, {name: "user", path: "/login", handler: LoginView}), 
+	    React.createElement(Route, {name: "question", path: "/:qNumber", handler: DetailView})
 	  )
 	);
 
@@ -23763,6 +23765,27 @@
 
 	module.exports = DetailView;
 
+
+/***/ },
+/* 198 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+
+	var Router = __webpack_require__(158);
+	var Link = Router.Link;
+
+	var LoginView = React.createClass({displayName: "LoginView",
+	  render: function() {
+	    return (
+	      React.createElement("div", null, 
+	        React.createElement("h1", null, "Hi-Diddily-Ho, World!")
+	      )
+	    );
+	  }
+	});
+
+	module.exports = LoginView;
 
 /***/ }
 /******/ ]);
