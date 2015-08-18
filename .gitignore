@@ -2,8 +2,6 @@
 logs
 *.log
 
-client/build/app.js
-
 # Runtime data
 pids
 *.pid
