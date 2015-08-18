@@ -21,16 +21,22 @@ var OverView = React.createClass({
   },
 
   render: function() {
+    // think of propos as immutable within the component, that is, never write to this.props.
+    // https://facebook.github.io/react/docs/displaying-data.html
     var questions = this.props.questions.map(function(question) {
       return (
         <tr key={question.qNumber} className="question">
           <td><b>{question.title}</b></td>
           <td><p>{question.description}</p></td>
           <td><RaisedButton label="Solve" linkButton="true" params={{qNumber:question.qNumber}} containerElement={<Link to="question"/>}/></td>
+          <td><p>Indication if user already solved</p></td>
         </tr>
       )
     });
 
+    // Since JSX is JavaScript, identifiers such as class and for are discouraged as XML attribute names. 
+    // Instead, React DOM components expect DOM property names like className and htmlFor, respectively.
+    // https://facebook.github.io/react/docs/jsx-in-depth.html
     return (
       <div>
         <table className="questionContainer table table-hover">
