@@ -1,11 +1,27 @@
 var React = require('react');
-
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
+var TextField = mui.TextField;
+var RaisedButton = mui.RaisedButton;
 var Router = require('react-router');
 var Navigation = Router.Navigation;
+var injectTapEventPlugin = require("react-tap-event-plugin");
+injectTapEventPlugin();
 var Link = Router.Link;
 
 
 var DetailView = React.createClass({
+
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
+  getChildContext: function() {
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
+
   mixins: [Navigation],
 
   getInitialState: function(){
@@ -16,7 +32,7 @@ var DetailView = React.createClass({
   },
 
   setRegex: function() {
-    var value = React.findDOMNode(this.refs.solutionText).value;
+    var value = this.refs.solutionText.getValue();
     var solved = this.isSolved(value);
     this.setState({
       result: value,
@@ -96,14 +112,13 @@ var DetailView = React.createClass({
             <h2>{question.title}</h2>
             <p>{question.description}</p>
           </div>
-
-          <div className="col-sm-2">
-            <Link to="default" className="btn btn-primary back">Back</Link>
-          </div>
+            <div className="col-sm-2 back">
+              <RaisedButton label="Back" linkButton="true" href="/#/"/>
+            </div>
         </div>
 
         <form className="form-inline text-center">
-          <span className="solution">/<textarea ref="solutionText" onChange={this.setRegex} rows="1" cols="50" type="text" className="regex form-control" placeholder="Regex solution..."></textarea>/</span>
+          <span className="solution">/<TextField hintText="You can solve it!" floatingLabelText="Regex solution..." type="text" ref="solutionText" onChange={this.setRegex} className="regex"/>/</span>
 
           {this.state.solved === null ? <p className="error-msg">Please provide valid regular expression</p> : null}
           {this.state.solved ? <h3 className="success">Success!!! Solved All Test Cases!</h3> : null}
