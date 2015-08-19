@@ -11,7 +11,10 @@ var UserSchema = new mongoose.Schema({
   solutions: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Solution'
-  }]
+  }],
+  githubId: {
+    type: String
+  }
   // format is intended to be: { <qNumber>: "solution string", ...}
   // entries will only exist for a question that the user has solved.
   // Note: Using a mixed type requires calling User.markModified('questionState')
