@@ -1,7 +1,6 @@
 var User = require('./userModel');
 var bcrypt = require('bcrypt');
 var utils = require('../lib/utilities');
-
 var signup = function(req,res,next){
   console.log("req.body === ",req.body);
   User.findOne({username: req.body.username})
@@ -17,6 +16,7 @@ var signup = function(req,res,next){
           } else {
             // Successfully created!
             console.log("Success! newUser === ", newUser);
+            utils.createSession(req, res, data);
             res.statusCode = 201;
           }
         });
@@ -41,6 +41,7 @@ var login = function(req,res,next){
         if (err){console.log(err);}
 
         if (match){
+          utils.createSession(req, res, data);
           res.statusCode = 200;
           console.log("SUCCESSFULLY LOGGED IN!");
           res.send({response: "SUCCESSFULLY LOGGED IN!"});
