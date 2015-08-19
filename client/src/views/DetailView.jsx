@@ -1,8 +1,6 @@
 var React = require('react');
 
 var Router = require('react-router');
-
-// var Answer = require('../../../server/answers/answerModel');
 var Navigation = Router.Navigation;
 var Link = Router.Link;
 
@@ -20,11 +18,6 @@ var DetailView = React.createClass({
   setRegex: function() {
     var value = React.findDOMNode(this.refs.solutionText).value;
     var solved = this.isSolved(value);
-
-    // if (solved === true) {
-
-    // }
-
     this.setState({
       result: value,
       solved: solved
