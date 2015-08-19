@@ -12,7 +12,8 @@ user = {
     {
       question: bla bla,
       score: number,
-      time: number
+      time: number,
+      timestamp: date
     }
   ]
 }
