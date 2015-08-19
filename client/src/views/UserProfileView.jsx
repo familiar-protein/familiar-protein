@@ -6,8 +6,8 @@ var Link = Router.Link;
 var UserProfileContainer = React.createClass({
 	render: function() {
 		return (
-			<div>
-				<UserInfo />
+			<div class='col-md-6'>
+				<UserInfo user={this.props.user}/>
 			</div>
 		)
 	}
@@ -18,8 +18,8 @@ var UserInfo = React.createClass({
 		return (
 			<div>
 				<img src="http://placekitten.com/g/200/300" />
-				<h2>Name</h2>
-				<p>email@email.com</p>
+				<h2>{this.props.user.name}</h2>
+				<p>{this.props.user.email}</p>
 			</div>
 		);
 	}
