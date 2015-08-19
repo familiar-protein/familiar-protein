@@ -1,5 +1,6 @@
 var Question = require('./questionModel');
 var questionValidation = require('../question_validation/validation');
+var Answer = require('../answers/answerModel');
 
 // adds a question to the database
 var add = function(req, res, next) {
@@ -56,6 +57,23 @@ var runTests = function(req, res, next) {
   var regexString = req.body.regexString;
 
   var result = questionValidation(regexString, req.questionData.truthy, req.questionData.falsy);
+
+  // save correct answer
+  if (result === "Success! All test cases passed!") {
+    var newAnswer = new Answer({
+      questionID: questionID,
+      userID: userID,
+      answer: regexString
+    });
+
+    newAnswer.save(function(err, data) {
+      if (err) {
+        res.send(500, err);
+      } else {
+        console.log("saved answer: ", data);
+      }
+    })
+  }
 
   res.status(201);
   res.send({result: result})
