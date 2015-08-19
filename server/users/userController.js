@@ -5,7 +5,7 @@ var signup = function(req,res,next){
   console.log("req.body === ",req.body);
   User.findOne({username: req.body.username})
   .exec(function(err, data){
-    if (err) { console.log("ERROR", err)}
+    if (err) { console.log("ERROR", err);}
     console.log("DATA === ", data);
 
     if (data === null) {
@@ -36,17 +36,22 @@ var login = function(req,res,next){
     
     if (data !== null) {
       // check that the passwords match if so, log in else don't
-      bcrypt.compare(req.body.password, data.password, function(match){
+      bcrypt.compare(req.body.password, data.password, function(err, match){
+        if (err){console.log(err);}
+
         if (match){
           res.statusCode = 200;
+          console.log("SUCCESSFULLY LOGGED IN!");
           res.send({response: "SUCCESSFULLY LOGGED IN!"});
         }else{
           res.statusCode = 400;
+          console.log("WRONG PASSWORD");
           res.send({response: "WRONG PASSWORD"});
         }
       });
     }else{
       res.statusCode = 400;
+      console.log("WRONG USERNAME");
       res.send({response: "WRONG USERNAME"});
     }
   });
