@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var questions = require('./answerData');
 
 var AnswerSchema = new mongoose.Schema({
-	qNumber: Number,
+	questionID: Number,
 	userID: Number,
 	answer: String
 });
