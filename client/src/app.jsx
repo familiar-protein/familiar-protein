@@ -19,7 +19,6 @@ var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
 
-
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
 var AppBar = mui.AppBar;
