@@ -23781,12 +23781,12 @@
 
 	var LoginView = React.createClass({displayName: "LoginView",
 
-	  mixins: [Router.State],
+	  mixins: [Router.State, Router.Navigation],
 
 	  signUpLogin: function(){
 	    var user = {
-	      "username": this.refs.username.getDOMNode().value,
-	      "password": this.refs.password.getDOMNode().value
+	      username: this.refs.username.getDOMNode().value,
+	      password: this.refs.password.getDOMNode().value
 	    };
 
 
@@ -23794,12 +23794,15 @@
 	      url: window.location.origin + this.getPath(),
 	      method: "POST",
 	      dataType: "json",
-	      data: user,
+	      contentType: "application/json; charset=utf-8",
+	      data: JSON.stringify(user),
 	      success: function(data){
 	        console.log("Successful signup | login", data);
+	        this.transitionTo('default');
 	        // navigate to the other screen
-	      },
+	      }.bind(this),
 	      error: function(xhr, status, err){
+	        console.log("ERROR in ajax", err);
 	        console.error(xhr, status, err.message);
 	      }
 	    });

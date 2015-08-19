@@ -15,19 +15,34 @@ var signup = function(req,res,next){
           // Successfully created!
           console.log("Success! newUser === ", newUser);
           res.statusCode = 201;
-          res.send("Success!", newUser);
         }
       });     
     } else{
       // user already exists
       res.statusCode = 409;
-      res.send("Failure!");
+      res.send({response: "Failure!"});
     }
   });
 };
 
 var login = function(req,res,next){
+  // Get username and see if it exists
+  User.findOne({username: req.body.username, password: req.body.password})
+  .exec(function(err, data){
+    if (err) { console.log("ERROR", err)}
+    
+    if (data !== null) {
+      res.send({response: "SUCCESSFULLY LOGGED IN!"});
+    // If so, compare req.body.password to password in DB
+      // If same, return success response! (And login / go somewhere on client side )
+    } else {
+      res.send({response: "Error: Incorrect username or password."});
+    }
+  });
 
+    // Otherwise
+      // ERROR: Username or password doesn't match.
+      // Return response indicating failed login.
 };
 
 module.exports = {
