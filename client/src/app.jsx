@@ -14,7 +14,8 @@ var Route = Router.Route;
 var App = React.createClass({
   getInitialState: function(){
     return {
-      questions: []
+      questions: [],
+      user: {}
     };
   },
 
@@ -27,13 +28,14 @@ var App = React.createClass({
         data.sort(function(a, b){
           return a.qNumber - b.qNumber;
         });
-        this.setState({questions: data});
+        this.setState({questions: data, user: {name: 'Lisa',email: 'lisa@email.com'}});
       }.bind(this),
       error: function(xhr, status, err){
         console.error(xhr, status, err.message);
       }
     });
   },
+
 
   componentDidMount: function(){
     this.loadAllQuestions();
@@ -43,7 +45,7 @@ var App = React.createClass({
     return (
       <div className="container">
         <h2 className="title">Regex Game</h2>
-        <RouteHandler questions={this.state.questions}/>
+        <RouteHandler questions={this.state.questions} user={this.state.user} />
       </div>
     )
   }
