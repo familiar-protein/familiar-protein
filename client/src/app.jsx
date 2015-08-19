@@ -7,6 +7,8 @@ var UserProfileView = require('./views/UserProfileView.jsx');
 var NavBarView = require('./views/NavBarView.jsx');
 
 var HomeView = require('./views/MultiplayerViews/HomeView.jsx');
+var CreateGameView = require('./views/MultiplayerViews/CreateGameView.jsx');
+var JoinGameView = require('./views/MultiplayerViews/JoinGameView.jsx');
 
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -72,6 +74,8 @@ var routes = (
     <Route name="login" path="/login" handler={LoginView}/> 
     <Route name="signup" path="/signup" handler={LoginView}/>
     <Route name="home" path="/home" handler={HomeView}/>
+    <Route name="createGame" path="/createGame" handler={CreateGameView}/>
+    <Route name="joinGame" path="/joinGame" handler={JoinGameView}/>
     <Route name="question" path="/:qNumber" handler={DetailView}/>
   </Route>
 );
