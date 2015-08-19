@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var questions = require('./answerData');
 
 var AnswerSchema = new mongoose.Schema({
 	questionID: Number,
