@@ -1,12 +1,12 @@
 var React = require('react');
 var Router = require('react-router');
 
-var SubmitView = require('./views/SubmitView.jsx');
 var HomeView = require('./views/HomeView.jsx');
 var OverView = require('./views/Overview.jsx');
 var DetailView = require('./views/DetailView.jsx');
 var UserView = require('./views/UserView.jsx');
 var TestView = require('./views/TestView.jsx');
+var SubmitView = require('./views/SubmitView.jsx');
 var Link = Router.Link;
 var OverView = require('./views/Overview.jsx');
 var DetailView = require('./views/DetailView.jsx');
