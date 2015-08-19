@@ -46,3 +46,7 @@ form {
   font-style: italic;
   color: red;
 }
+
+.bottom-space {
+  margin-bottom: 50px;
+}

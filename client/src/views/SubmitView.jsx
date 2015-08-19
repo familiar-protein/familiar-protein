@@ -25,7 +25,30 @@ var SubmitView = React.createClass({
   render: function(){
 
     return(
-      <div>Hello World!</div>  
+      <div className="container">
+        <h3>Submit your own challenge</h3>
+        <div className="container">
+          <form className="form-inline text-center">
+            <div className="container row">
+              <div className="col-md-6 bottom-space">
+                <TextField hintText="Enter a detailed description of your challenge here." multiLine={true} type="text" ref="challengeDescription"/>
+              </div>
+              <div className="col-md-6 bottom-space">
+                <TextField hintText="Enter the answer to your challenge here." multiLine={true} type="text" ref="challengeAnswer"/>
+              </div>
+            </div>
+            <div className="container row">
+              <div className="col-md-6">
+                <TextField hintText="Enter at least five examples that will pass your challenge here." multiLine={true} type="text" ref="passingTests"/>
+              </div>
+              <div className="col-md-6">
+                <TextField hintText="Enter at least five examples that will fail your challenge here." multiLine={true} type="text" ref="failingTests"/>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>  
+
     );
   },
 
