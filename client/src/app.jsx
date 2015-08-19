@@ -12,7 +12,25 @@ var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
 
 
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
+var AppBar = mui.AppBar;
+var LeftNav = mui.LeftNav;
+var MenuItem = mui.MenuItem;
+
+
+var TextField = mui.TextField;
+var RaisedButton = mui.RaisedButton;
+
 var App = React.createClass({
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext: function() {
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
   getInitialState: function(){
     return {
       questions: [],
@@ -62,19 +80,40 @@ var App = React.createClass({
     this.getUserInfo();
     this.setState({user: 'Placeholder UserName'});
   },
+  // _handleClick, _getSelectedIndex & _onLeftNavChange -> functions for Appbar & LeftNav
+  _handleClick: function(e) {
+    e.preventDefault();
+    this.refs.leftNav.toggle();
+  },
+  _getSelectedIndex: function() {
+    var currentItem;
+    for (var i = menuItems.length - 1; i >= 0; i--) {
+      currentItem = menuItems[i];
+      if (currentItem.route && this.context.router.isActive(currentItem.route)) return i;
+    }
+  },
+  _onLeftNavChange: function(e, key, payload) {
+    this.context.router.transitionTo(payload.route);
+  },
 
   render: function() {
+    menuItems = [
+      { route: 'home', text: 'Home' },
+      { route: 'questions', text: 'Challenges' },
+      { route: 'user', text: 'User' },
+      { route: 'test', text: 'Test' },
+    ];
 
     return (
       <div>
-        <h2 className="title">Regex Game</h2>
+        <LeftNav ref="leftNav" 
+          docked={false} 
+          menuItems={menuItems} 
+          selectedIndex={this._getSelectedIndex()}
+          onChange={this._onLeftNavChange} />
+
         <header>
-          <ul>
-            <li><Link to="home">Home</Link></li>
-            <li><Link to="questions">Questions</Link></li>
-            <li><Link to="user">User</Link></li>
-            <li><Link to="test">Test</Link></li>
-          </ul>
+          <AppBar title='Regex Challenge' onLeftIconButtonTouchTap={this._handleClick} />
         </header>
 
         <RouteHandler questions={this.state.questions} user={this.state.user}/>
@@ -83,6 +122,10 @@ var App = React.createClass({
   }
 
 });
+
+App.contextTypes = {
+  router: React.PropTypes.func
+};
 // 
 var routes = (
   <Route name="app" path="/" handler={App}>
