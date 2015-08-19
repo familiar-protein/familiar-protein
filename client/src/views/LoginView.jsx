@@ -9,8 +9,8 @@ var LoginView = React.createClass({
 
   signUpLogin: function(){
     var user = {
-      username: this.refs.username.getDOMNode().value,
-      password: this.refs.password.getDOMNode().value
+      "username": this.refs.username.getDOMNode().value,
+      "password": this.refs.password.getDOMNode().value
     };
 
 
@@ -18,7 +18,7 @@ var LoginView = React.createClass({
       url: window.location.origin + this.getPath(),
       method: "POST",
       dataType: "json",
-      data: JSON.stringify(user),
+      data: user,
       success: function(data){
         console.log("Successful signup | login", data);
         // navigate to the other screen

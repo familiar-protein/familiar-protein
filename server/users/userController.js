@@ -15,7 +15,7 @@ var signup = function(req,res,next){
           // Successfully created!
           console.log("Success! newUser === ", newUser);
           res.statusCode = 201;
-          res.send("Success!");
+          res.send("Success!", newUser);
         }
       });     
     } else{

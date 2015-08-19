@@ -47,11 +47,11 @@
 	var React = __webpack_require__(1);
 
 	var OverView = __webpack_require__(157);
-	var DetailView = __webpack_require__(158);
+	var DetailView = __webpack_require__(197);
 	var LoginView = __webpack_require__(198);
-	var UserProfileView = __webpack_require__(200);
+	var UserProfileView = __webpack_require__(199);
 
-	var Router = __webpack_require__(159);
+	var Router = __webpack_require__(158);
 	var RouteHandler = Router.RouteHandler;
 	var DefaultRoute = Router.DefaultRoute;
 	var Route = Router.Route;
@@ -20493,7 +20493,7 @@
 
 	var React = __webpack_require__(1);
 
-	var Router = __webpack_require__(159);
+	var Router = __webpack_require__(158);
 	var Link = Router.Link;
 
 	var OverView = React.createClass({displayName: "OverView",
@@ -20527,176 +20527,40 @@
 /* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(1);
+	'use strict';
 
-	var Router = __webpack_require__(159);
-	var Navigation = Router.Navigation;
-	var Link = Router.Link;
+	exports.DefaultRoute = __webpack_require__(159);
+	exports.Link = __webpack_require__(172);
+	exports.NotFoundRoute = __webpack_require__(173);
+	exports.Redirect = __webpack_require__(174);
+	exports.Route = __webpack_require__(171);
+	exports.ActiveHandler = __webpack_require__(169);
+	exports.RouteHandler = exports.ActiveHandler;
 
+	exports.HashLocation = __webpack_require__(175);
+	exports.HistoryLocation = __webpack_require__(178);
+	exports.RefreshLocation = __webpack_require__(179);
+	exports.StaticLocation = __webpack_require__(180);
+	exports.TestLocation = __webpack_require__(181);
 
-	var DetailView = React.createClass({displayName: "DetailView",
-	  mixins: [Navigation],
+	exports.ImitateBrowserBehavior = __webpack_require__(182);
+	exports.ScrollToTopBehavior = __webpack_require__(183);
 
-	  getInitialState: function(){
-	    return {
-	      result: '',
-	      solved: false,
-	    };
-	  },
+	exports.History = __webpack_require__(177);
+	exports.Navigation = __webpack_require__(184);
+	exports.State = __webpack_require__(185);
 
-	  setRegex: function() {
-	    var value = React.findDOMNode(this.refs.solutionText).value;
-	    var solved = this.isSolved(value);
-	    this.setState({
-	      result: value,
-	      solved: solved
-	    });
-	  },
+	exports.createRoute = __webpack_require__(161).createRoute;
+	exports.createDefaultRoute = __webpack_require__(161).createDefaultRoute;
+	exports.createNotFoundRoute = __webpack_require__(161).createNotFoundRoute;
+	exports.createRedirect = __webpack_require__(161).createRedirect;
+	exports.createRoutesFromReactChildren = __webpack_require__(186);
 
-	  checkTestCase: function(testCase, condition) {
-	    try {
-	      var regex = new RegExp(this.state.result);
-	      return regex.test(testCase) === condition ? 'solved' : 'unsolved';
-	    } catch(e) {
-	      return 'unsolved';
-	    }
-	  },
-
-	  displayTestCases: function(string, condition) {
-	    var question = this.props.questions[this.props.params.qNumber - 1];
-	    return question[string].map(function(testCase) {
-	      return (
-	        React.createElement("p", {key: testCase, className: this.checkTestCase(testCase, condition)}, testCase)
-	      )
-	    }.bind(this));
-	  },
-
-	  returnToMenu: function() {
-	    this.setState({
-	      result: '',
-	      solved: false,
-	    });
-
-	    this.props.goToQuestionMenu();
-	  },
-
-	  isSolved: function(regexString) {
-	    var question = this.props.questions[this.props.params.qNumber - 1];
-
-	    var truthy = question['truthy']
-	    var falsy = question['falsy'];
-
-	    try {
-	      var regex = new RegExp(regexString);
-
-	      var solvedTruthy = truthy.reduce(function(result, current) {
-	        return result && regex.test(current);
-	      }, true);
-
-	      var solvedFalsy = falsy.reduce(function(result, current) {
-	        return result && !regex.test(current);
-	      }, true);
-
-	      return solvedTruthy && solvedFalsy;
-	    } catch(e) {
-	      return null;
-	    }
-	  },
-
-	  render: function() {
-	    var question = this.props.questions[this.props.params.qNumber - 1];
-
-	    if (this.props.questions.length > 0 && question === undefined) {
-	      this.transitionTo('/');
-	    }
-
-
-	    // makes sure that the questions are loaded from the database before rendering the view
-	    try {
-	      question.title;
-	    } catch(e) {
-	      return React.createElement("div", null);
-	    }
-
-	    return (
-	      React.createElement("div", {className: "question-solve"}, 
-	        React.createElement("div", {className: "row"}, 
-	          React.createElement("div", {className: "col-sm-10"}, 
-	            React.createElement("h2", null, question.title), 
-	            React.createElement("p", null, question.description)
-	          ), 
-
-	          React.createElement("div", {className: "col-sm-2"}, 
-	            React.createElement(Link, {to: "default", className: "btn btn-primary back"}, "Back")
-	          )
-	        ), 
-
-	        React.createElement("form", {className: "form-inline text-center"}, 
-	          React.createElement("span", {className: "solution"}, "/", React.createElement("textarea", {ref: "solutionText", onChange: this.setRegex, rows: "1", cols: "50", type: "text", className: "regex form-control", placeholder: "Regex solution..."}), "/"), 
-
-	          this.state.solved === null ? React.createElement("p", {className: "error-msg"}, "Please provide valid regular expression") : null, 
-	          this.state.solved ? React.createElement("h3", {className: "success"}, "Success!!! Solved All Test Cases!") : null
-	        ), 
-
-	        React.createElement("div", {className: "test-cases"}, 
-
-	          React.createElement("p", {className: "instruction"}, 'Make all words turn green to complete the challenge'), 
-	          React.createElement("div", {className: "col-sm-6 text-center"}, 
-	            React.createElement("h3", null, 'Should match'), 
-	            this.displayTestCases('truthy', true)
-	          ), 
-	          React.createElement("div", {className: "col-sm-6 text-center"}, 
-	            React.createElement("h3", null, 'Should not match'), 
-	            this.displayTestCases('falsy', false)
-	          )
-
-	        )
-	      )
-	    )
-	  }
-	});
-
-	module.exports = DetailView;
-
+	exports.create = __webpack_require__(187);
+	exports.run = __webpack_require__(196);
 
 /***/ },
 /* 159 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.DefaultRoute = __webpack_require__(160);
-	exports.Link = __webpack_require__(173);
-	exports.NotFoundRoute = __webpack_require__(174);
-	exports.Redirect = __webpack_require__(175);
-	exports.Route = __webpack_require__(172);
-	exports.ActiveHandler = __webpack_require__(170);
-	exports.RouteHandler = exports.ActiveHandler;
-
-	exports.HashLocation = __webpack_require__(176);
-	exports.HistoryLocation = __webpack_require__(179);
-	exports.RefreshLocation = __webpack_require__(180);
-	exports.StaticLocation = __webpack_require__(181);
-	exports.TestLocation = __webpack_require__(182);
-
-	exports.ImitateBrowserBehavior = __webpack_require__(183);
-	exports.ScrollToTopBehavior = __webpack_require__(184);
-
-	exports.History = __webpack_require__(178);
-	exports.Navigation = __webpack_require__(185);
-	exports.State = __webpack_require__(186);
-
-	exports.createRoute = __webpack_require__(162).createRoute;
-	exports.createDefaultRoute = __webpack_require__(162).createDefaultRoute;
-	exports.createNotFoundRoute = __webpack_require__(162).createNotFoundRoute;
-	exports.createRedirect = __webpack_require__(162).createRedirect;
-	exports.createRoutesFromReactChildren = __webpack_require__(187);
-
-	exports.create = __webpack_require__(188);
-	exports.run = __webpack_require__(197);
-
-/***/ },
-/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20705,9 +20569,9 @@
 
 	var _inherits = function (subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
-	var PropTypes = __webpack_require__(161);
-	var RouteHandler = __webpack_require__(170);
-	var Route = __webpack_require__(172);
+	var PropTypes = __webpack_require__(160);
+	var RouteHandler = __webpack_require__(169);
+	var Route = __webpack_require__(171);
 
 	/**
 	 * A <DefaultRoute> component is a special kind of <Route> that
@@ -20748,14 +20612,14 @@
 	module.exports = DefaultRoute;
 
 /***/ },
-/* 161 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var assign = __webpack_require__(13);
 	var ReactPropTypes = __webpack_require__(1).PropTypes;
-	var Route = __webpack_require__(162);
+	var Route = __webpack_require__(161);
 
 	var PropTypes = assign({}, ReactPropTypes, {
 
@@ -20784,7 +20648,7 @@
 	module.exports = PropTypes;
 
 /***/ },
-/* 162 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20796,7 +20660,7 @@
 	var assign = __webpack_require__(13);
 	var invariant = __webpack_require__(7);
 	var warning = __webpack_require__(15);
-	var PathUtils = __webpack_require__(163);
+	var PathUtils = __webpack_require__(162);
 
 	var _currentRoute;
 
@@ -20989,14 +20853,14 @@
 	module.exports = Route;
 
 /***/ },
-/* 163 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var invariant = __webpack_require__(7);
-	var assign = __webpack_require__(164);
-	var qs = __webpack_require__(165);
+	var assign = __webpack_require__(163);
+	var qs = __webpack_require__(164);
 
 	var paramCompileMatcher = /:([a-zA-Z_$][a-zA-Z0-9_$]*)|[*.()\[\]\\+|{}^$]/g;
 	var paramInjectMatcher = /:([a-zA-Z_$][a-zA-Z0-9_$?]*[?]?)|[*]/g;
@@ -21147,7 +21011,7 @@
 	module.exports = PathUtils;
 
 /***/ },
-/* 164 */
+/* 163 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21179,20 +21043,20 @@
 
 
 /***/ },
-/* 165 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(166);
+	module.exports = __webpack_require__(165);
 
 
 /***/ },
-/* 166 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Load modules
 
-	var Stringify = __webpack_require__(167);
-	var Parse = __webpack_require__(169);
+	var Stringify = __webpack_require__(166);
+	var Parse = __webpack_require__(168);
 
 
 	// Declare internals
@@ -21207,12 +21071,12 @@
 
 
 /***/ },
-/* 167 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Load modules
 
-	var Utils = __webpack_require__(168);
+	var Utils = __webpack_require__(167);
 
 
 	// Declare internals
@@ -21310,7 +21174,7 @@
 
 
 /***/ },
-/* 168 */
+/* 167 */
 /***/ function(module, exports) {
 
 	// Load modules
@@ -21448,12 +21312,12 @@
 
 
 /***/ },
-/* 169 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Load modules
 
-	var Utils = __webpack_require__(168);
+	var Utils = __webpack_require__(167);
 
 
 	// Declare internals
@@ -21615,7 +21479,7 @@
 
 
 /***/ },
-/* 170 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21627,9 +21491,9 @@
 	var _inherits = function (subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
 	var React = __webpack_require__(1);
-	var ContextWrapper = __webpack_require__(171);
+	var ContextWrapper = __webpack_require__(170);
 	var assign = __webpack_require__(13);
-	var PropTypes = __webpack_require__(161);
+	var PropTypes = __webpack_require__(160);
 
 	var REF_NAME = '__routeHandler__';
 
@@ -21728,7 +21592,7 @@
 	module.exports = RouteHandler;
 
 /***/ },
-/* 171 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21771,7 +21635,7 @@
 	module.exports = ContextWrapper;
 
 /***/ },
-/* 172 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21784,8 +21648,8 @@
 
 	var React = __webpack_require__(1);
 	var invariant = __webpack_require__(7);
-	var PropTypes = __webpack_require__(161);
-	var RouteHandler = __webpack_require__(170);
+	var PropTypes = __webpack_require__(160);
+	var RouteHandler = __webpack_require__(169);
 
 	/**
 	 * <Route> components specify components that are rendered to the page when the
@@ -21867,7 +21731,7 @@
 	module.exports = Route;
 
 /***/ },
-/* 173 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21880,7 +21744,7 @@
 
 	var React = __webpack_require__(1);
 	var assign = __webpack_require__(13);
-	var PropTypes = __webpack_require__(161);
+	var PropTypes = __webpack_require__(160);
 
 	function isLeftClickEvent(event) {
 	  return event.button === 0;
@@ -22007,7 +21871,7 @@
 	module.exports = Link;
 
 /***/ },
-/* 174 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22016,9 +21880,9 @@
 
 	var _inherits = function (subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
-	var PropTypes = __webpack_require__(161);
-	var RouteHandler = __webpack_require__(170);
-	var Route = __webpack_require__(172);
+	var PropTypes = __webpack_require__(160);
+	var RouteHandler = __webpack_require__(169);
+	var Route = __webpack_require__(171);
 
 	/**
 	 * A <NotFoundRoute> is a special kind of <Route> that
@@ -22060,7 +21924,7 @@
 	module.exports = NotFoundRoute;
 
 /***/ },
-/* 175 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22069,8 +21933,8 @@
 
 	var _inherits = function (subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
-	var PropTypes = __webpack_require__(161);
-	var Route = __webpack_require__(172);
+	var PropTypes = __webpack_require__(160);
+	var Route = __webpack_require__(171);
 
 	/**
 	 * A <Redirect> component is a special kind of <Route> that always
@@ -22108,13 +21972,13 @@
 	module.exports = Redirect;
 
 /***/ },
-/* 176 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var LocationActions = __webpack_require__(177);
-	var History = __webpack_require__(178);
+	var LocationActions = __webpack_require__(176);
+	var History = __webpack_require__(177);
 
 	var _listeners = [];
 	var _isListening = false;
@@ -22224,7 +22088,7 @@
 	module.exports = HashLocation;
 
 /***/ },
-/* 177 */
+/* 176 */
 /***/ function(module, exports) {
 
 	/**
@@ -22254,7 +22118,7 @@
 	module.exports = LocationActions;
 
 /***/ },
-/* 178 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22289,13 +22153,13 @@
 	module.exports = History;
 
 /***/ },
-/* 179 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var LocationActions = __webpack_require__(177);
-	var History = __webpack_require__(178);
+	var LocationActions = __webpack_require__(176);
+	var History = __webpack_require__(177);
 
 	var _listeners = [];
 	var _isListening = false;
@@ -22380,13 +22244,13 @@
 	module.exports = HistoryLocation;
 
 /***/ },
-/* 180 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var HistoryLocation = __webpack_require__(179);
-	var History = __webpack_require__(178);
+	var HistoryLocation = __webpack_require__(178);
+	var History = __webpack_require__(177);
 
 	/**
 	 * A Location that uses full page refreshes. This is used as
@@ -22416,7 +22280,7 @@
 	module.exports = RefreshLocation;
 
 /***/ },
-/* 181 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22470,7 +22334,7 @@
 	module.exports = StaticLocation;
 
 /***/ },
-/* 182 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22480,8 +22344,8 @@
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var invariant = __webpack_require__(7);
-	var LocationActions = __webpack_require__(177);
-	var History = __webpack_require__(178);
+	var LocationActions = __webpack_require__(176);
+	var History = __webpack_require__(177);
 
 	/**
 	 * A location that is convenient for testing and does not require a DOM.
@@ -22569,12 +22433,12 @@
 	module.exports = TestLocation;
 
 /***/ },
-/* 183 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var LocationActions = __webpack_require__(177);
+	var LocationActions = __webpack_require__(176);
 
 	/**
 	 * A scroll behavior that attempts to imitate the default behavior
@@ -22603,7 +22467,7 @@
 	module.exports = ImitateBrowserBehavior;
 
 /***/ },
-/* 184 */
+/* 183 */
 /***/ function(module, exports) {
 
 	/**
@@ -22623,12 +22487,12 @@
 	module.exports = ScrollToTopBehavior;
 
 /***/ },
-/* 185 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var PropTypes = __webpack_require__(161);
+	var PropTypes = __webpack_require__(160);
 
 	/**
 	 * A mixin for components that modify the URL.
@@ -22698,12 +22562,12 @@
 	module.exports = Navigation;
 
 /***/ },
-/* 186 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var PropTypes = __webpack_require__(161);
+	var PropTypes = __webpack_require__(160);
 
 	/**
 	 * A mixin for components that need to know the path, routes, URL
@@ -22777,7 +22641,7 @@
 	module.exports = State;
 
 /***/ },
-/* 187 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* jshint -W084 */
@@ -22786,10 +22650,10 @@
 	var React = __webpack_require__(1);
 	var assign = __webpack_require__(13);
 	var warning = __webpack_require__(15);
-	var DefaultRoute = __webpack_require__(160);
-	var NotFoundRoute = __webpack_require__(174);
-	var Redirect = __webpack_require__(175);
-	var Route = __webpack_require__(162);
+	var DefaultRoute = __webpack_require__(159);
+	var NotFoundRoute = __webpack_require__(173);
+	var Redirect = __webpack_require__(174);
+	var Route = __webpack_require__(161);
 
 	function checkPropTypes(componentName, propTypes, props) {
 	  componentName = componentName || 'UnknownComponent';
@@ -22863,7 +22727,7 @@
 	module.exports = createRoutesFromReactChildren;
 
 /***/ },
-/* 188 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/* jshint -W058 */
@@ -22873,24 +22737,24 @@
 	var warning = __webpack_require__(15);
 	var invariant = __webpack_require__(7);
 	var canUseDOM = __webpack_require__(51).canUseDOM;
-	var LocationActions = __webpack_require__(177);
-	var ImitateBrowserBehavior = __webpack_require__(183);
-	var HashLocation = __webpack_require__(176);
-	var HistoryLocation = __webpack_require__(179);
-	var RefreshLocation = __webpack_require__(180);
-	var StaticLocation = __webpack_require__(181);
-	var ScrollHistory = __webpack_require__(189);
-	var createRoutesFromReactChildren = __webpack_require__(187);
-	var isReactChildren = __webpack_require__(191);
-	var Transition = __webpack_require__(192);
-	var PropTypes = __webpack_require__(161);
-	var Redirect = __webpack_require__(194);
-	var History = __webpack_require__(178);
-	var Cancellation = __webpack_require__(193);
-	var Match = __webpack_require__(195);
-	var Route = __webpack_require__(162);
-	var supportsHistory = __webpack_require__(196);
-	var PathUtils = __webpack_require__(163);
+	var LocationActions = __webpack_require__(176);
+	var ImitateBrowserBehavior = __webpack_require__(182);
+	var HashLocation = __webpack_require__(175);
+	var HistoryLocation = __webpack_require__(178);
+	var RefreshLocation = __webpack_require__(179);
+	var StaticLocation = __webpack_require__(180);
+	var ScrollHistory = __webpack_require__(188);
+	var createRoutesFromReactChildren = __webpack_require__(186);
+	var isReactChildren = __webpack_require__(190);
+	var Transition = __webpack_require__(191);
+	var PropTypes = __webpack_require__(160);
+	var Redirect = __webpack_require__(193);
+	var History = __webpack_require__(177);
+	var Cancellation = __webpack_require__(192);
+	var Match = __webpack_require__(194);
+	var Route = __webpack_require__(161);
+	var supportsHistory = __webpack_require__(195);
+	var PathUtils = __webpack_require__(162);
 
 	/**
 	 * The default location for new routers.
@@ -23383,14 +23247,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 189 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var invariant = __webpack_require__(7);
 	var canUseDOM = __webpack_require__(51).canUseDOM;
-	var getWindowScrollPosition = __webpack_require__(190);
+	var getWindowScrollPosition = __webpack_require__(189);
 
 	function shouldUpdateScroll(state, prevState) {
 	  if (!prevState) {
@@ -23463,7 +23327,7 @@
 	module.exports = ScrollHistory;
 
 /***/ },
-/* 190 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23486,7 +23350,7 @@
 	module.exports = getWindowScrollPosition;
 
 /***/ },
-/* 191 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23504,15 +23368,15 @@
 	module.exports = isReactChildren;
 
 /***/ },
-/* 192 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* jshint -W058 */
 
 	'use strict';
 
-	var Cancellation = __webpack_require__(193);
-	var Redirect = __webpack_require__(194);
+	var Cancellation = __webpack_require__(192);
+	var Redirect = __webpack_require__(193);
 
 	/**
 	 * Encapsulates a transition to a given path.
@@ -23584,7 +23448,7 @@
 	module.exports = Transition;
 
 /***/ },
-/* 193 */
+/* 192 */
 /***/ function(module, exports) {
 
 	/**
@@ -23598,7 +23462,7 @@
 	module.exports = Cancellation;
 
 /***/ },
-/* 194 */
+/* 193 */
 /***/ function(module, exports) {
 
 	/**
@@ -23615,7 +23479,7 @@
 	module.exports = Redirect;
 
 /***/ },
-/* 195 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23625,7 +23489,7 @@
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	/* jshint -W084 */
-	var PathUtils = __webpack_require__(163);
+	var PathUtils = __webpack_require__(162);
 
 	function deepSearch(route, pathname, query) {
 	  // Check the subtree first to find the most deeply-nested match.
@@ -23695,7 +23559,7 @@
 	module.exports = Match;
 
 /***/ },
-/* 196 */
+/* 195 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23716,12 +23580,12 @@
 	module.exports = supportsHistory;
 
 /***/ },
-/* 197 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var createRouter = __webpack_require__(188);
+	var createRouter = __webpack_require__(187);
 
 	/**
 	 * A high-level convenience method that creates, configures, and
@@ -23771,12 +23635,148 @@
 	module.exports = runRouter;
 
 /***/ },
+/* 197 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+
+	var Router = __webpack_require__(158);
+	var Navigation = Router.Navigation;
+	var Link = Router.Link;
+
+
+	var DetailView = React.createClass({displayName: "DetailView",
+	  mixins: [Navigation],
+
+	  getInitialState: function(){
+	    return {
+	      result: '',
+	      solved: false,
+	    };
+	  },
+
+	  setRegex: function() {
+	    var value = React.findDOMNode(this.refs.solutionText).value;
+	    var solved = this.isSolved(value);
+	    this.setState({
+	      result: value,
+	      solved: solved
+	    });
+	  },
+
+	  checkTestCase: function(testCase, condition) {
+	    try {
+	      var regex = new RegExp(this.state.result);
+	      return regex.test(testCase) === condition ? 'solved' : 'unsolved';
+	    } catch(e) {
+	      return 'unsolved';
+	    }
+	  },
+
+	  displayTestCases: function(string, condition) {
+	    var question = this.props.questions[this.props.params.qNumber - 1];
+	    return question[string].map(function(testCase) {
+	      return (
+	        React.createElement("p", {key: testCase, className: this.checkTestCase(testCase, condition)}, testCase)
+	      )
+	    }.bind(this));
+	  },
+
+	  returnToMenu: function() {
+	    this.setState({
+	      result: '',
+	      solved: false,
+	    });
+
+	    this.props.goToQuestionMenu();
+	  },
+
+	  isSolved: function(regexString) {
+	    var question = this.props.questions[this.props.params.qNumber - 1];
+
+	    var truthy = question['truthy']
+	    var falsy = question['falsy'];
+
+	    try {
+	      var regex = new RegExp(regexString);
+
+	      var solvedTruthy = truthy.reduce(function(result, current) {
+	        return result && regex.test(current);
+	      }, true);
+
+	      var solvedFalsy = falsy.reduce(function(result, current) {
+	        return result && !regex.test(current);
+	      }, true);
+
+	      return solvedTruthy && solvedFalsy;
+	    } catch(e) {
+	      return null;
+	    }
+	  },
+
+	  render: function() {
+	    var question = this.props.questions[this.props.params.qNumber - 1];
+
+	    if (this.props.questions.length > 0 && question === undefined) {
+	      this.transitionTo('/');
+	    }
+
+
+	    // makes sure that the questions are loaded from the database before rendering the view
+	    try {
+	      question.title;
+	    } catch(e) {
+	      return React.createElement("div", null);
+	    }
+
+	    return (
+	      React.createElement("div", {className: "question-solve"}, 
+	        React.createElement("div", {className: "row"}, 
+	          React.createElement("div", {className: "col-sm-10"}, 
+	            React.createElement("h2", null, question.title), 
+	            React.createElement("p", null, question.description)
+	          ), 
+
+	          React.createElement("div", {className: "col-sm-2"}, 
+	            React.createElement(Link, {to: "default", className: "btn btn-primary back"}, "Back")
+	          )
+	        ), 
+
+	        React.createElement("form", {className: "form-inline text-center"}, 
+	          React.createElement("span", {className: "solution"}, "/", React.createElement("textarea", {ref: "solutionText", onChange: this.setRegex, rows: "1", cols: "50", type: "text", className: "regex form-control", placeholder: "Regex solution..."}), "/"), 
+
+	          this.state.solved === null ? React.createElement("p", {className: "error-msg"}, "Please provide valid regular expression") : null, 
+	          this.state.solved ? React.createElement("h3", {className: "success"}, "Success!!! Solved All Test Cases!") : null
+	        ), 
+
+	        React.createElement("div", {className: "test-cases"}, 
+
+	          React.createElement("p", {className: "instruction"}, 'Make all words turn green to complete the challenge'), 
+	          React.createElement("div", {className: "col-sm-6 text-center"}, 
+	            React.createElement("h3", null, 'Should match'), 
+	            this.displayTestCases('truthy', true)
+	          ), 
+	          React.createElement("div", {className: "col-sm-6 text-center"}, 
+	            React.createElement("h3", null, 'Should not match'), 
+	            this.displayTestCases('falsy', false)
+	          )
+
+	        )
+	      )
+	    )
+	  }
+	});
+
+	module.exports = DetailView;
+
+
+/***/ },
 /* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 
-	var Router = __webpack_require__(159);
+	var Router = __webpack_require__(158);
 	var Link = Router.Link;
 
 	var LoginView = React.createClass({displayName: "LoginView",
@@ -23785,8 +23785,8 @@
 
 	  signUpLogin: function(){
 	    var user = {
-	      username: this.refs.username.getDOMNode().value,
-	      password: this.refs.password.getDOMNode().value
+	      "username": this.refs.username.getDOMNode().value,
+	      "password": this.refs.password.getDOMNode().value
 	    };
 
 
@@ -23794,7 +23794,7 @@
 	      url: window.location.origin + this.getPath(),
 	      method: "POST",
 	      dataType: "json",
-	      data: JSON.stringify(user),
+	      data: user,
 	      success: function(data){
 	        console.log("Successful signup | login", data);
 	        // navigate to the other screen
@@ -23836,13 +23836,12 @@
 	module.exports = LoginView;
 
 /***/ },
-/* 199 */,
-/* 200 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 
-	var Router = __webpack_require__(159);
+	var Router = __webpack_require__(158);
 	var Link = Router.Link;
 
 	var UserProfileContainer = React.createClass({displayName: "UserProfileContainer",
