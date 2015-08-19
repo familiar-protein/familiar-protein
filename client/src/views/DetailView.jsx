@@ -44,15 +44,19 @@ var DetailView = React.createClass({
   },
 
   checkTestCase: function(testCase, condition) {
+    if(this.state.result===''){
+      return 'unsolved';
+    };
     try {
       var regex = new RegExp(this.state.result, this.state.flag);
-      return regex.test(testCase) === condition ? 'solved' : 'unsolved';
+      return regex.test(testCase) ? 'solved' : 'unsolved';
+      // return regex.test(testCase) === condition ? 'solved' : 'unsolved';
     } catch(e) {
       return 'unsolved';
     }
   },
 
-  displayTestCases: function(string, condition) {
+  displayTestCases: function(string, condition) { //string=truthy or falsy
     var question = this.props.questions[this.props.params.qNumber - 1];
     return question[string].map(function(testCase) {
       return (
