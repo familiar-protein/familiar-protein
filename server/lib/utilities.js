@@ -1,9 +1,11 @@
+/** 
+ *  Utilities and helpers for the server.
+ */
+
 exports.createSession = function(req, res, newUser) {
-  return req.session.regenerate(function() {
-    req.session.user = newUser;
-    console.log('Session created for user');
-    //res.redirect('/');
-  });
+  req.session.user = newUser;
+  console.log('Session created for user', req.session);
+  return;
 }
 
 // Check if session exists

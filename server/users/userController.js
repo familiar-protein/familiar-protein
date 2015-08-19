@@ -1,6 +1,7 @@
 var User = require('./userModel');
 var bcrypt = require('bcrypt');
 var utils = require('../lib/utilities');
+
 var signup = function(req,res,next){
   console.log("req.body === ",req.body);
   User.findOne({username: req.body.username})
@@ -57,7 +58,6 @@ var login = function(req,res,next){
       res.send({response: "WRONG USERNAME"});
     }
   });
-
 };
 
 module.exports = {
