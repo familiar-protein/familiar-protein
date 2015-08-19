@@ -2,20 +2,27 @@ var React = require('react');
 
 var OverView = require('./views/OverView.jsx');
 var DetailView = require('./views/DetailView.jsx');
+var LoginView = require('./views/LoginView.jsx');
+var Auth = require('./utils/auth.jsx');
 
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
 var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route;
-
+var Link  = Router.Link;
 
 var App = React.createClass({
   getInitialState: function(){
     return {
-      questions: []
+      questions: [],
+      loggedIn: Auth.loggedIn()
     };
   },
-
+  setStateOnAuth: function(loggedIn) {
+    this.setState({
+      loggedIn: loggedIn
+    });
+  },
   loadAllQuestions: function(){
     $.ajax({
       url: window.location.origin + '/questions',
@@ -32,11 +39,14 @@ var App = React.createClass({
       }
     });
   },
-
+  componentWillMount: function(){
+    // ?? // auth.onChange = this.setStateOnAuth.bind(this);
+    Auth.onChange = this.setStateOnAuth;
+    Auth.login();
+  },
   componentDidMount: function(){
     this.loadAllQuestions();
   },
-
   render: function() {
     return (
       <div className="container">
@@ -50,7 +60,8 @@ var App = React.createClass({
 
 var routes = (
   <Route name="app" path="/" handler={App}>
-    <Route name="question" path="/:qNumber" handler={DetailView} />
+    <Route name="login" path="/login" handler={LoginView}/>
+    <Route name="question" path="/:qNumber" handler={DetailView}/>
     <DefaultRoute name="default" handler={OverView} />
   </Route>
 );
