@@ -23783,6 +23783,28 @@
 
 	  mixins: [Router.State],
 
+	  signUpLogin: function(){
+	    var user = {
+	      username: this.refs.username.getDOMNode().value,
+	      password: this.refs.password.getDOMNode().value
+	    };
+
+
+	    $.ajax({
+	      url: window.location.origin + this.getPath(),
+	      method: "POST",
+	      dataType: "json",
+	      data: JSON.stringify(user),
+	      success: function(data){
+	        console.log("Successful signup | login", data);
+	        // navigate to the other screen
+	      },
+	      error: function(xhr, status, err){
+	        console.error(xhr, status, err.message);
+	      }
+	    });
+	  },
+
 	  render: function() {
 	    
 	    console.log("PATH === ", this.getPath());
@@ -23790,9 +23812,9 @@
 	      return (
 	        React.createElement("div", null, 
 	          React.createElement("h1", null, "Login"), 
-	          React.createElement("p", null, "Username: ", React.createElement("input", {type: "text"})), 
-	          React.createElement("p", null, "Password: ", React.createElement("input", {type: "password"})), 
-	          React.createElement("button", {type: "button"}, "Log In"), 
+	          React.createElement("p", null, "Username: ", React.createElement("input", {type: "text", ref: "username"})), 
+	          React.createElement("p", null, "Password: ", React.createElement("input", {type: "password", ref: "password"})), 
+	          React.createElement("button", {type: "button", onClick: this.signUpLogin}, "Log In"), 
 	          React.createElement(Link, {to: "signup", className: "btn btn-primary"}, "To Signup")
 	        )
 	      );
@@ -23800,9 +23822,9 @@
 	      return (
 	        React.createElement("div", null, 
 	          React.createElement("h1", null, "Sign Up"), 
-	          React.createElement("p", null, "Username: ", React.createElement("input", {type: "text"})), 
-	          React.createElement("p", null, "Password: ", React.createElement("input", {type: "password"})), 
-	          React.createElement("button", {type: "button"}, "Sign Up"), 
+	          React.createElement("p", null, "Username: ", React.createElement("input", {type: "text", ref: "username"})), 
+	          React.createElement("p", null, "Password: ", React.createElement("input", {type: "password", ref: "password"})), 
+	          React.createElement("button", {type: "button", onClick: this.signUpLogin}, "Sign Up"), 
 	          React.createElement(Link, {to: "login", className: "btn btn-primary"}, "To Login")
 	        )
 	      );
