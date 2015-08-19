@@ -4,10 +4,18 @@ var UserSchema = new mongoose.Schema({
   google: {
     id: String,
     token: String,
-    name: String
+    name: String,
+    image: String,
   },
 
-  score: Number
+  score: Number,
+
+  stats: [{
+      question: String, 
+      score: Number, 
+      time: Number, 
+      timestamp: String
+    }]
 
   // format is intended to be: { <qNumber>: "solution string", ...}
   // entries will only exist for a question that the user has solved.
