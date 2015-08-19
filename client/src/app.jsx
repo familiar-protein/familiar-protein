@@ -7,6 +7,13 @@ var DetailView = require('./views/DetailView.jsx');
 var UserView = require('./views/UserView.jsx');
 var TestView = require('./views/TestView.jsx');
 var Link = Router.Link;
+var OverView = require('./views/Overview.jsx');
+var DetailView = require('./views/DetailView.jsx');
+var loginView = require('./views/loginView.jsx');
+
+var Router = require('react-router');
+var RouteHandler = Router.RouteHandler;
+
 var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
@@ -44,12 +51,25 @@ var App = React.createClass({
       method: 'GET',
       dataType: 'json',
       success: function(data){
+<<<<<<< HEAD
         // this probably should be sorted by difficulty
         data.sort(function(a, b){
           return a.qNumber - b.qNumber;
         });
         this.setState({questions: data});
       }.bind(this),
+=======
+        console.log(data);
+        if(data === 'not logged in'){
+          React.render(React.createElement(loginView), document.body);
+        }else{
+          data.sort(function(a, b){
+            return a.qNumber - b.qNumber;
+          });
+          this.setState({questions: data});
+          }
+        }.bind(this),
+>>>>>>> (googleAuth) added primary authentication with google
       error: function(xhr, status, err){
         console.error(xhr, status, err.message);
       }
