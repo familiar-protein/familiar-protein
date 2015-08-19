@@ -1,5 +1,6 @@
 var User = require('./userModel');
 var bcrypt = require('bcrypt');
+var utils = require('../lib/utilities');
 
 var signup = function(req,res,next){
   console.log("req.body === ",req.body);

@@ -10,9 +10,9 @@ module.exports = function(app) {
 
   app.use(express.static(__dirname + '/../../client/'));
 
-  // Support for session tracking
+  // Support for session creation and tracking
   app.use(session({
-    secret: 'oh, snap. No 0ne w1ll 3v3r figur3 0ut th1s s3cret k3y!!!1!',
+    secret: '00000h, Snap! No 0ne w1ll 3v3r figur3 0ut th1s s3cret k3y!!!1!',
     resave: false,
     saveUninitialized: true
   }));
