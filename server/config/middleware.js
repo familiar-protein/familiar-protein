@@ -5,12 +5,6 @@ var userRoutes = require('../users/userRoutes');
 var questionRoutes = require('../questions/questionRoutes');
 var authRoutes = require('../auth/authRoutes');
 
-var passport = require('passport');
-var GithubStrategy = require('passport-github').Strategy;
-
-var GITHUB_CLIENT_ID = 'e47b0909a724130cfdac';
-var GITHUB_CLIENT_SECRET = 'd3df248c72cdbcaeef66038939d992cf959f7189';
-
 module.exports = function(app) {
   app.use(bodyParser.json());
   app.use(express.cookieParser());
