@@ -48,21 +48,27 @@
 
 	var OverView = __webpack_require__(157);
 	var DetailView = __webpack_require__(199);
-	var DetailView = __webpack_require__(200);
+	var LoginView = __webpack_require__(200);
+	var Auth = __webpack_require__(159);
 
 	var Router = __webpack_require__(160);
 	var RouteHandler = Router.RouteHandler;
 	var DefaultRoute = Router.DefaultRoute;
 	var Route = Router.Route;
-
+	var Link  = Router.Link;
 
 	var App = React.createClass({displayName: "App",
 	  getInitialState: function(){
 	    return {
-	      questions: []
+	      questions: [],
+	      loggedIn: Auth.loggedIn()
 	    };
 	  },
-
+	  setStateOnAuth: function(loggedIn) {
+	    this.setState({
+	      loggedIn: loggedIn
+	    });
+	  },
 	  loadAllQuestions: function(){
 	    $.ajax({
 	      url: window.location.origin + '/questions',
@@ -79,11 +85,14 @@
 	      }
 	    });
 	  },
-
+	  componentWillMount: function(){
+	    // ?? // auth.onChange = this.setStateOnAuth.bind(this);
+	    Auth.onChange = this.setStateOnAuth;
+	    Auth.login();
+	  },
 	  componentDidMount: function(){
 	    this.loadAllQuestions();
 	  },
-
 	  render: function() {
 	    return (
 	      React.createElement("div", {className: "container"}, 
@@ -94,6 +103,21 @@
 	  }
 
 	});
+
+	var requireAuth = function(Component) {
+	  return React.createClass({
+	    statics: {
+	      willTransitionTo: function(transition){
+	        if(!Auth.loggedIn()){
+	          transition.redirect('/login', {}, {'nextPath' : transition.path});
+	        }
+	      }
+	    },
+	    render: function(){
+	      return React.createElement(Component, React.__spread({},  this.props))
+	    }
+	  });
+	};
 
 	var routes = (
 	  React.createElement(Route, {name: "app", path: "/", handler: App}, 
@@ -20521,7 +20545,65 @@
 
 /***/ },
 /* 158 */,
-/* 159 */,
+/* 159 */
+/***/ function(module, exports) {
+
+	function pretendRequest(email, pass, cb) {
+	  setTimeout(function() {
+	    if (email === 'drew' && pass === 'password') {
+	      cb({
+	        authenticated: true,
+	        token: Math.random().toString(36).substring(7)
+	      });
+	    } else {
+	      cb({authenticated: false});
+	    }
+	  }, 0);
+	}
+
+
+	module.exports = {
+	  login: function(user, pass, cb) {
+	    // TODO: ACTUAL AUTH REQUEST //
+	    cb = arguments[arguments.length - 1];
+	    if (localStorage.token) {
+	      if (cb) cb(true);
+	      this.onChange(true);
+	      return;
+	    }
+	    var context = this;
+	    pretendRequest(user, pass, function(res){
+	      if(res.authenticated) {
+	        localStorage.token = res.token;
+	        if (cb) cb(true);
+	        context.onChange(true);
+	      } else {
+	        if (cb) cb(false);
+	        context.onChange(false);
+	      }
+	    });
+	  },
+
+	  getToken: function () {
+	    return localStorage.token;
+	  },
+
+	  logout: function (cb) {
+	    delete localStorage.token;
+	    if (cb) cb();
+	    this.onChange(false);
+	  },
+
+	  loggedIn: function () {
+	    console.log('Logged in?: ',!!localStorage.token);
+	    return !!localStorage.token;
+	  },
+
+	  onChange: function () {}
+	};
+
+
+/***/ },
 /* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -23776,21 +23858,49 @@
 	var Router = __webpack_require__(160);
 	var Navigation = Router.Navigation;
 
+	var Auth = __webpack_require__(159);
+
 	var LoginView = React.createClass({displayName: "LoginView",
 	  mixins: [Navigation],
-
+	  contextTypes: {
+	    router: React.PropTypes.func.isRequired
+	  },
+	  getInitialState: function(){
+	    return {
+	      error: false
+	    };
+	  },
 	  handleSubmit: function(e){
 	    e.preventDefault();
-	    //TODO: Authentication
-	    
-	    this.transitionTo('default');
+	    var router = this.context.router;
+	    var nextPath = router.getCurrentQuery().nextPath;
+	    var user = this.refs.username.getDOMNode().value;
+	    var pass = this.refs.password.getDOMNode().value;
+
+	    var context = this;
+	    Auth.login(user, pass, function(success){
+	      console.log(success);
+	      if(!success){
+	        return context.setState({error: true});
+	      }
+	      if (nextPath) {
+	        router.replaceWith(nextPath);
+	      } else {
+	        router.replaceWith('/default');
+	      }
+	    });
+
+	    //this.transitionTo('default');
 	  },
 	  render: function(){
 	    return(
 	      React.createElement("form", {className: "loginForm", onSubmit: this.handleSubmit}, 
-	        React.createElement("input", {type: "text", placeholder: "Username", ref: "username"}), 
-	        React.createElement("input", {type: "password", placeholder: "Password", ref: "password"}), 
-	        React.createElement("input", {type: "submit", value: "Login"})
+	        React.createElement("input", {ref: "username", type: "text", placeholder: "Username", ref: "username"}), 
+	        React.createElement("input", {ref: "password", type: "password", placeholder: "Password", ref: "password"}), 
+	        React.createElement("input", {type: "submit", value: "Login"}), 
+	        this.state.error && (
+	          React.createElement("p", null, "Bad login information")
+	        )
 	      )
 	    );
 	  }
