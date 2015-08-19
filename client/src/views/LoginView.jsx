@@ -27,7 +27,6 @@ var LoginView = React.createClass({
       }.bind(this),
       error: function(xhr, status, err){
         console.log("ERROR in ajax", err);
-        console.error(xhr, status, err.message);
       }
     });
   },

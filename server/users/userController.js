@@ -32,10 +32,12 @@ var login = function(req,res,next){
     if (err) { console.log("ERROR", err)}
     
     if (data !== null) {
+      res.statusCode = 200;
       res.send({response: "SUCCESSFULLY LOGGED IN!"});
     // If so, compare req.body.password to password in DB
       // If same, return success response! (And login / go somewhere on client side )
     } else {
+      res.statusCode = 400;
       res.send({response: "Error: Incorrect username or password."});
     }
   });
