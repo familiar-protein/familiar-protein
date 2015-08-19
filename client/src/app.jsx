@@ -1,6 +1,7 @@
 var React = require('react');
 var Router = require('react-router');
 
+var SubmitView = require('./views/SubmitView.jsx');
 var HomeView = require('./views/HomeView.jsx');
 var OverView = require('./views/Overview.jsx');
 var DetailView = require('./views/DetailView.jsx');
@@ -119,6 +120,7 @@ var App = React.createClass({
       { route: 'questions', text: 'Challenges' },
       { route: 'user', text: 'User' },
       { route: 'test', text: 'Test' },
+      { route: 'submit', text: 'Submit Your Challenge' },
     ];
 
     return (
@@ -151,6 +153,7 @@ var routes = (
     <Route name="question" path="question/:qNumber" handler={DetailView}/>
     <Route name="user" handler={UserView}/>
     <Route name="test" handler={TestView}/>
+    <Route name="submit" handler={SubmitView}/>
     <DefaultRoute handler={HomeView}/>
   </Route>
 );
