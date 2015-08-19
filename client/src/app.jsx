@@ -4,6 +4,7 @@ var OverView = require('./views/OverView.jsx');
 var DetailView = require('./views/DetailView.jsx');
 var LoginView = require('./views/LoginView.jsx');
 var UserProfileView = require('./views/UserProfileView.jsx');
+var NavBarView = require('./views/NavBarView.jsx');
 
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -44,12 +45,22 @@ var App = React.createClass({
   render: function() {
     return (
       <div className="container">
-        <h2 className="title">Regex Game</h2>
+        <NavBarView />
         <RouteHandler questions={this.state.questions} user={this.state.user} />
       </div>
     )
   }
 
+});
+
+// add component for toolbar
+var NavBar = React.createClass({
+  render: function() {
+    return (
+      <nav class="navbar navbar-default">
+      </nav>
+    )
+  }
 });
 
 var routes = (
