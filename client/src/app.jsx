@@ -2,6 +2,7 @@ var React = require('react');
 
 var OverView = require('./views/OverView.jsx');
 var DetailView = require('./views/DetailView.jsx');
+var DetailView = require('./views/LoginView.jsx');
 
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -50,7 +51,8 @@ var App = React.createClass({
 
 var routes = (
   <Route name="app" path="/" handler={App}>
-    <Route name="question" path="/:qNumber" handler={DetailView} />
+    <Route name="login" path="/login" handler={LoginView}/>
+    <Route name="question" path="/:qNumber" handler={DetailView}/>
     <DefaultRoute name="default" handler={OverView} />
   </Route>
 );
