@@ -3,6 +3,7 @@ var questionController = require('./questionController.js');
 module.exports = function (app) {
   app.post('/questions', questionController.add);
   app.get('/questions', isAuth, questionController.getAll);
+  // app.get('/questions', questionController.getAll);
 
   app.param('id', questionController.getQuestionData);
 
