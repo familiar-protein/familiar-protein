@@ -58,21 +58,6 @@ var App = React.createClass({
 
 });
 
-var requireAuth = function(Component) {
-  return React.createClass({
-    statics: {
-      willTransitionTo: function(transition){
-        if(!Auth.loggedIn()){
-          transition.redirect('/login', {}, {'nextPath' : transition.path});
-        }
-      }
-    },
-    render: function(){
-      return <Component {...this.props}/>
-    }
-  });
-};
-
 var routes = (
   <Route name="app" path="/" handler={App}>
     <Route name="login" path="/login" handler={LoginView}/>

@@ -45,6 +45,7 @@ module.exports = {
   },
 
   loggedIn: function () {
+    console.log(localStorage.token);
     console.log('Logged in?: ',!!localStorage.token);
     return !!localStorage.token;
   },
