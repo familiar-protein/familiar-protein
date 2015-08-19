@@ -50,7 +50,7 @@ var App = React.createClass({
 
 var routes = (
   <Route name="app" path="/" handler={App}>
-    <Route name="question" path="/:qNumber" handler={DetailView}/>
+    <Route name="question" path="/:qNumber" handler={DetailView} />
     <DefaultRoute name="default" handler={OverView} />
   </Route>
 );

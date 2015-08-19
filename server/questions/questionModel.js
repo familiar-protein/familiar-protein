@@ -6,7 +6,11 @@ var QuestionSchema = new mongoose.Schema({
   title: String,
   description: String,
   truthy: [String],
-  falsy: [String]
+  falsy: [String],
+  solutions: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Solution'
+  }]
   // examples?
 });
 
