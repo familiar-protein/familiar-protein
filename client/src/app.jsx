@@ -34,7 +34,7 @@ var App = React.createClass({
         data.sort(function(a, b){
           return a.qNumber - b.qNumber;
         });
-        this.setState({questions: data, user: {name: 'Lisa',email: 'lisa@email.com'}});
+        this.setState({questions: data});
       }.bind(this),
       error: function(xhr, status, err){
         console.error(xhr, status, err.message);
@@ -66,9 +66,9 @@ var App = React.createClass({
         if (this.state.loggedIn != data.loggedIn) {
           this.setState({
             loggedIn: data.loggedIn,
-            user: data.userInfo
+            user: data.user
           }, function() {
-            console.log ("USER INFO: ", context.state.user);
+            console.log ("USER INFO: ", this.state.user);
           });
 
           if (data.loggedIn === false) {
