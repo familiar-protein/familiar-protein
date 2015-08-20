@@ -44,7 +44,6 @@ var login = function(req,res,next){
         if (match){
           utils.createSession(req, res, data);
           res.statusCode = 200;
-          console.log('SESSION DATA: ', req.session.user);
           console.log("SUCCESSFULLY LOGGED IN!");
           res.send({
             response: "SUCCESSFULLY LOGGED IN!", 
