@@ -1,5 +1,19 @@
 var User = require('./userModel');
 
+var addUser = function(req, res, next) {
+  var user = {
+    username: req.body.username
+  };
+  var newUser = new User(user);
+  newUser.save(function(err, newEntry) {
+    if (err) {
+      res.send(500, err);
+    } else {
+      res.send(200, newEntry);
+    }
+  });
+};
+
 var getUserData = function(req, res, next, id) {
   User.findOne({_id: id}).exec(function(err, data) {
     if (err) {
@@ -11,13 +25,14 @@ var getUserData = function(req, res, next, id) {
   });
 };
 
+
 var userProfile = function(req, res, next) {
   res.status(200);
   res.send(req.userData);
 };
 
 var getAllUsers = function(req, res, next) {
-  User.find().exec(function(err, data) {
+  User.find({}).exec(function(err, data) {
     if (err) {
       res.send(500, err);
     } else {
@@ -29,5 +44,6 @@ var getAllUsers = function(req, res, next) {
 module.exports = {
   getUserData: getUserData,
   userProfile: userProfile,
-  getAllUsers: getAllUsers
+  getAllUsers: getAllUsers,
+  addUser: addUser
 };
