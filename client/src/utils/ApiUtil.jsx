@@ -18,7 +18,19 @@ var ApiUtils = {
       error: function(xhr, status, err){
         console.error(xhr, status, err.message);
       }
-  })
+    })
+  },
+
+  getUserProfile: function (userId, callback) {
+    $.ajax({
+      url: window.location.origin + '/user/' + userId,
+      method: 'GET',
+      dataType: 'json',
+      success: callback,
+      error: function (xhr, status, err) {
+        console.log(xhr, status, err.message);
+      }
+    })
   }
 };
 

@@ -6,7 +6,8 @@ module.exports = {
   ActionTypes: keyMirror({
     LOAD_QUESTIONS: null,
     QUESTIONS_LOADED: null,
-    USER_AUTHENTICATION: null
+    USER_AUTHENTICATION: null,
+    GET_USER_PROFILE: null
   }),
 
   PayloadSources: keyMirror({

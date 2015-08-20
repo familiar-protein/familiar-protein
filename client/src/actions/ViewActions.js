@@ -5,7 +5,6 @@ var Auth = require('../utils/auth.jsx');
 
 var ViewActions = {
   loadQuestions: function () {
-    console.log('questions loading');
     Dispatcher.dispatch({
       type: ActionTypes.LOAD_QUESTIONS
     });
@@ -20,6 +19,15 @@ var ViewActions = {
           authenticated: isAuthenticated,
           error: !isAuthenticated
         }
+      });
+    });
+  },
+
+  getUserProfile: function (userId) {
+    ApiUtils.getUserProfile(userId, function (userData) {
+      Dispatcher.dispatch({
+        type: ActionTypes.GET_USER_PROFILE,
+        userData: userData
       });
     });
   }
