@@ -19,9 +19,27 @@ var CreateGameView = React.createClass({
     return gameID;
   },
 
+  createGame: function(gameID){
+    var game = {id: gameID};
+    $.ajax({
+      url: window.location.origin + "/makeGame",
+      method: "POST",
+      dataType: "json",
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify(game),
+      success: function(data){
+        console.log("Successfully created game", data);
+      },
+      error: function(xhr, status, err){
+        console.log("ERROR in ajax", err);
+      }
+    });
+  },
+
   render: function(){
 
     var gameID = this.createGameID();
+    var game = this.createGame(gameID);
 
     return (
       <div>

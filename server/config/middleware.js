@@ -2,6 +2,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var userRoutes = require('../users/userRoutes');
 var questionRoutes = require('../questions/questionRoutes');
+var gameRoutes = require('../game/gameRoutes');
 
 module.exports = function(app) {
   app.use(bodyParser.json());
@@ -12,5 +13,6 @@ module.exports = function(app) {
   // Handle routing for users and questions
   userRoutes(app);
   questionRoutes(app);
+  gameRoutes(app);
 };
 
