@@ -20,13 +20,13 @@ module.exports = function(app) {
   });
 
   app.get('/solutions', function(req, res, next) {
-    Solution.find({}).exec(function(err, data) {
+    Solution.find().exec(function(err, data) {
       if (err) {
         res.send(500, err);
       } else {
         res.json(data);
       }
-    })
+    });
   });
 
   //Expect POST object like:
@@ -36,15 +36,6 @@ module.exports = function(app) {
   //  "userId": 3
   //}
   app.post('/solutions', function(req, res, next) {
-    //var solution = {
-    //  content: req.body.content,
-    //  questionId: req.body.questionId,
-    //  userId: req.body.userId,
-    //  votes: req.body.votes
-    //};
-    //var newSolution = Solution.create(solution, function(err, solution) {
-    //  res.send(solution);
-    //});
     var data = req.body;
 
     var addSolution = Solution.create({
@@ -56,16 +47,6 @@ module.exports = function(app) {
     function(err, newSolution) {
       res.send(newSolution);
     });
-
-    //var newSolution = new Solution(solution);
-    //newSolution.save(function(err, newEntry) {
-    //  if (err) {
-    //    res.send(500, err);
-    //  } else {
-    //    //res.send(200, newEntry);
-    //    res.status(200).send(newEntry);
-    //  }
-    //})
   });
 
   app.put('/solutions', function(req, res) {
