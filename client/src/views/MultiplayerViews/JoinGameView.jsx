@@ -21,7 +21,7 @@ var JoinGameView = React.createClass({
 
     $.ajax({
       url: window.location.origin + "/gameExists",
-      method: "GET",
+      method: "POST",
       dataType: "json",
       data: dataObj,
       success: function(game){
