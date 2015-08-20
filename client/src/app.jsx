@@ -21,8 +21,7 @@ var App = React.createClass({
     return {
       questions: [],
       user: {},
-      loggedIn: false,
-      hasAlreadyUpdatedOnce: false
+      loggedIn: false
     };
   },
 
