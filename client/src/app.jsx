@@ -34,7 +34,7 @@ var App = React.createClass({
         data.sort(function(a, b){
           return a.qNumber - b.qNumber;
         });
-        this.setState({questions: data, user: {name: 'Lisa',email: 'lisa@email.com'}});
+        this.setState({questions: data});
       }.bind(this),
       error: function(xhr, status, err){
         console.error(xhr, status, err.message);
@@ -61,9 +61,20 @@ var App = React.createClass({
       method: 'GET',
       dataType: 'json',
       success: function(data){
-        //this.props.loggedIn = data.loggedIn;
         if (this.state.loggedIn != data.loggedIn) {
-          this.setState({loggedIn: data.loggedIn});
+          this.setState({
+            loggedIn: data.loggedIn,
+            user: data.user
+          }, function() {
+            //console.log ("USER INFO: ", this.state.user);
+          });
+
+          if (data.loggedIn === false) {
+            this.setState({
+              loggedIn: false, 
+              user: {}}
+            );  // Clear out clientside user info if / when we log out.
+          }
         }
       }.bind(this),
       error: function(xhr, status, err){

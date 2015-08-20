@@ -8,7 +8,7 @@ var UserProfileContainer = React.createClass({
 		return (
 			<div>
 				<UserInfo user={this.props.user} />
-				{/* // <UserSolved user={} question={} />*/}
+				{ /* // <UserSolved user={} question={} />*/ }
 			</div>
 		)
 	}
