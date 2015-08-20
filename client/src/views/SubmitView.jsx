@@ -23,8 +23,9 @@ var SubmitView = React.createClass({
   mixins: [Navigation],
 
   createRegExp: function(){
-    var value = this.refs.challengeAnswer.getValue();
-    return new RegExp(value);
+    var reg = this.refs.challengeAnswer.getValue();
+    var flag = this.refs.challengeAnswerFlags.getValue();
+    return new RegExp(reg, flag);
   },
 
   truthy: function(){
@@ -33,42 +34,16 @@ var SubmitView = React.createClass({
   },
 
   falsy: function(){
-    var falsy = this.refs.failingTests.getValue();
-    return falsy.split(' ');
-  },
-
-  checkTestCases: function(){
-    var regex = this.createRegExp();
-    var passing = this.truthy();
-    var failing = this.falsy();
-    var passTruthy = true;
-    var passFalsy = true;
-    passing.forEach(function(item){
-      if(!regex.test(item)){
-        passTruthy = false;
-      }
-    });
-    failing.forEach(function(item){
-      if(regex.test(item)){
-        passFalsy = false;
-      }
-    });
-    if(passTruthy && passFalsy){
-      this.submit({
-        title: this.refs.challengeTitle.getValue(),
-        description: this.refs.challengeDescription.getValue(),
-        truthy: passing,
-        falsy: failing,
-        solution: this.refs.challengeAnswer.getValue()
-      });
-    }
+    var falsyVals = this.refs.failingTests.getValue();
+    return falsyVals.split(' ');
   },
 
   submit: function(question){
+    console.log('submitted');
     $.ajax({
-      url: '/questions',
+      url: window.location.origin + '/questions',
       method: 'POST',
-      data: JSON.parse(question),
+      data: JSON.stringify(question),
       dataType: 'json',
       success: function(){
         console.log('success!');
@@ -80,6 +55,40 @@ var SubmitView = React.createClass({
     });
   },
 
+  checkTestCases: function(){
+    var regex = this.createRegExp();
+    console.log(regex);
+    var passing = this.truthy();
+    var failing = this.falsy();
+    var passTruthy = true;
+    var passFalsy = true;
+    passing.forEach(function(item){
+      if(!regex.test(item)){
+        passTruthy = false;
+      }
+      // the following line of code is required to work around a bug in ECMA script 3 go to http://stackoverflow.com/questions/3891641/regex-test-only-works-every-other-time to see why
+      regex.test(item);
+    });
+    failing.forEach(function(item){
+      if(regex.test(item)){
+        passFalsy = false;
+      }
+      // the following line of code is required to work around a bug in ECMA script 3 go to http://stackoverflow.com/questions/3891641/regex-test-only-works-every-other-time to see why
+      regex.test(item);
+    });
+    if(passTruthy && passFalsy){
+      //if all test 'pass' then submit a question object to the server
+      console.log('passing');
+      this.submit({
+        title: this.refs.challengeTitle.getValue(),
+        description: this.refs.challengeDescription.getValue(),
+        truthy: passing,
+        falsy: failing,
+        solution: this.refs.challengeAnswer.getValue()
+      });
+    }
+  },
+
   render: function(){
 
     return(
@@ -88,14 +97,17 @@ var SubmitView = React.createClass({
         <div className="container">
           <form className="form-inline text-center">
             <div className="container bottom-space">
-              <TextField hintText="Give your challenge a title." multiLine={true} type="text" ref="challengeTitle"/>
+              <TextField hintText="Give your challenge an interesting title." multiLine={true} type="text" ref="challengeTitle"/>
+            </div>
+            <div className="container bottom-space">
+              <TextField hintText="Enter a detailed description of your challenge here." multiLine={true} type="text" ref="challengeDescription"/>
             </div>
             <div className="container row">
               <div className="col-md-6 bottom-space">
-                <TextField hintText="Enter a detailed description of your challenge here." multiLine={true} type="text" ref="challengeDescription"/>
+                <TextField hintText="Enter your answer in this format a{1}\(9\)." multiLine={true} onChange={this.createRegExp} type="text" ref="challengeAnswer"/>
               </div>
               <div className="col-md-6 bottom-space">
-                <TextField hintText="Enter your answer in this format a{1}\(9\), gi." multiLine={true} onChange={this.createRegExp} type="text" ref="challengeAnswer"/>
+                <TextField hintText="Enter your flags in this format gi " multiLine={true} onChange={this.createRegExp} type="text" ref="challengeAnswerFlags"/>
               </div>
             </div>
             <div className="container row">
