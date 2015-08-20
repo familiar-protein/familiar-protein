@@ -11,10 +11,12 @@ var userInfo = function(req, res, next){
 };
 
 var newSolution = function(req, res){
-	console.log('TEST inside userController->newSolution. data=', req.body);
+	// console.log('TEST inside userController->newSolution. data=', req.data);
 
-	var user = User.find({});
-	console.log('TEST inside userController->newSolution. user=', user.models);
+	// var user = User.find(function(err, users){
+	// 	console.log('TEST inside userController->newSolution. user=', users);
+	// }); //find()
+	res.end();
 } //newSolution()
 
 module.exports = {
