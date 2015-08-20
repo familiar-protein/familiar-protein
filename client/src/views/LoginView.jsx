@@ -1,19 +1,36 @@
 var React = require('react');
 var Router = require('react-router');
 var Navigation = Router.Navigation;
+var UserStore = require('../stores/UserStore');
 
 var Auth = require('./../utils/auth.jsx');
+var ViewActions = require('./../actions/ViewActions');
 
 var LoginView = React.createClass({
   mixins: [Navigation],
+
   contextTypes: {
     router: React.PropTypes.func.isRequired
   },
+
   getInitialState: function(){
     return {
       error: false
     };
   },
+
+  onChange: function () {
+    this.setState(UserStore.getState());
+  },
+
+  componentDidMount: function () {
+    UserStore.addListener(this.onChange);
+  },
+
+  componentWillUnmount: function () {
+    UserStore.removeChangeListener(this.onChange);
+  },
+
   handleSubmit: function(e){
     e.preventDefault();
     var router = this.context.router;
@@ -21,18 +38,20 @@ var LoginView = React.createClass({
     var user = this.refs.username.getDOMNode().value;
     var pass = this.refs.password.getDOMNode().value;
 
-    var context = this;
-    Auth.login(user, pass, function(success){
-      console.log(success);
-      if(!success){
-        return context.setState({error: true});
-      }
-      if (nextPath) {
-        router.replaceWith(nextPath);
-      } else {
-        router.replaceWith('/default');
-      }
-    });
+    ViewActions.login(user, pass);
+
+    // move to action
+    // Auth.login(user, pass, function(success){
+    //   console.log(success);
+    //   if(!success){
+    //     return context.setState({error: true});
+    //   }
+    //   if (nextPath) {
+    //     router.replaceWith(nextPath);
+    //   } else {
+    //     router.replaceWith('/default');
+    //   }
+    // });
 
     //this.transitionTo('default');
   },

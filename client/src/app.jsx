@@ -4,6 +4,9 @@ var OverView = require('./views/OverView.jsx');
 var DetailView = require('./views/DetailView.jsx');
 var LoginView = require('./views/LoginView.jsx');
 var Auth = require('./utils/auth.jsx');
+var UserStore = require('./stores/UserStore');
+var QuestionStore = require('./stores/QuestionStore');
+var ViewActions = require('./actions/ViewActions');
 
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -12,41 +15,32 @@ var Route = Router.Route;
 var Link  = Router.Link;
 
 var App = React.createClass({
+
   getInitialState: function(){
     return {
       questions: [],
-      loggedIn: Auth.loggedIn()
+      loggedIn: UserStore.getState().loggedIn
     };
   },
-  setStateOnAuth: function(loggedIn) {
+
+  onChange: function () {
     this.setState({
-      loggedIn: loggedIn
-    });
+      questions: QuestionStore.getQuestions(),
+      loggedIn: UserStore.getState().loggedIn
+    })
+    console.log(this.state);
   },
-  loadAllQuestions: function(){
-    $.ajax({
-      url: window.location.origin + '/questions',
-      method: 'GET',
-      dataType: 'json',
-      success: function(data){
-        data.sort(function(a, b){
-          return a.qNumber - b.qNumber;
-        });
-        this.setState({questions: data});
-      }.bind(this),
-      error: function(xhr, status, err){
-        console.error(xhr, status, err.message);
-      }
-    });
-  },
+
   componentWillMount: function(){
-    // ?? // auth.onChange = this.setStateOnAuth.bind(this);
-    Auth.onChange = this.setStateOnAuth;
-    Auth.login();
+    ViewActions.login();
   },
+
   componentDidMount: function(){
-    this.loadAllQuestions();
+    UserStore.addListener(this.onChange);
+    QuestionStore.addListener(this.onChange);
+    ViewActions.loadQuestions();
   },
+
   render: function() {
     return (
       <div className="container">
