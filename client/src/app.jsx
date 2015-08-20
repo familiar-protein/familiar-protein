@@ -61,13 +61,12 @@ var App = React.createClass({
       method: 'GET',
       dataType: 'json',
       success: function(data){
-        console.log('DATA!!!! ', data);
         if (this.state.loggedIn != data.loggedIn) {
           this.setState({
             loggedIn: data.loggedIn,
             user: data.user
           }, function() {
-            console.log ("USER INFO: ", this.state.user);
+            //console.log ("USER INFO: ", this.state.user);
           });
 
           if (data.loggedIn === false) {

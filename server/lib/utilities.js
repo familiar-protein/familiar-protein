@@ -10,22 +10,8 @@ exports.createSession = function(req, res, newUser) {
 
 // Check if session exists
 exports.isLoggedIn = function(req, res) {
-  // console.log("Current cookie: ", req.session);
-  // var sessionResult = {};
-  // if (req.session.user != undefined) {
-  //   sessionResult = {
-  //     loggedIn: true,
-  //     user: req.session
-  //   }
-  // } else {
-  //   sessionResult = {
-  //     loggedIn: false
-  //   }
-  // }
-
   //return sessionResult
   var result = req.session ? !!req.session.user : false;
-  console.log("is Logged In?? ", result);
   return result;
 }
 
