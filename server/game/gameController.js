@@ -1,18 +1,12 @@
 var Game = require('./gameModel');
 
 var makeGame = function(req, res, next){
-  
-  // will want to add questions to the game such that it is no longer
-  // simply an empty object
-  console.log("makeGame in controller");
 
   var game = {
     _id: req.body.id,
     players: [],
-    questions: [1,2,3,4,5,6,7] // hard coded question numbers
+    questions: [1,2,3,4,5,6,7] // hard coded question numbers and round numbers
   };
-
-  console.log("Making new Game in gameController");
 
   var newGame = new Game(game);
   newGame.save(function(err, newEntry){
@@ -26,6 +20,40 @@ var makeGame = function(req, res, next){
   });
 };
 
+var getGame = function(req, res, next){
+
+  console.log("req.body", req.body);
+  console.log("req.body.code", req.body.code);
+
+  Game.findById(req.body.code).exec(function(err, data){
+    if (err){
+      console.log("ERROR: ", err);
+      res.send(500,err);
+    }else{
+      res.status(200).send(data);
+    }
+  });
+
+};
+
+var updateGame = function(req,res,next){
+  Game.findOneAndUpdate(
+      {"_id":req.body.code},
+      {$push: {"players": {username: "hardcode", currentRound: 1}}},
+      {safe: true, upsert: true, new: true},
+      function(err, model){
+        if (err){
+          console.log("ERROR: ", err);
+          res.send(500, err);
+        }else{
+          res.status(200).send(model);
+        }
+      }
+    );
+};
+
 module.exports = {
-  makeGame: makeGame
+  makeGame: makeGame,
+  getGame: getGame,
+  updateGame: updateGame
 };

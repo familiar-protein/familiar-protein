@@ -10,7 +10,7 @@ var UserProfileContainer = React.createClass({
 				<UserInfo user={this.props.user} />
 				{ /* // <UserSolved user={} question={} />*/ }
 			</div>
-		)
+		);
 	}
 });
 
@@ -30,13 +30,15 @@ var UserInfo = React.createClass({
 	}
 });
 
-// var UserSolved = React.createClass({
-// 	var userSolvedQuestions = this.props.userSolvedQuestions
-// 	render: function() {
-// 		return (
+/*
+var UserSolved = React.createClass({
+	var userSolvedQuestions = this.props.userSolvedQuestions
+	render: function() {
+		return (
 
-// 		);
-// 	}
-// });
+		);
+	}
+});
+*/
 
 module.exports = UserProfileContainer;
