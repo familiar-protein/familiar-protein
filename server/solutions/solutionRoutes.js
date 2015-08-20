@@ -5,7 +5,8 @@ module.exports = function(app) {
     Solution.find({questionId: qid}).populate('questionId').populate('userId')
     .exec(function(err, data) {
       if (err) {
-        res.send(500, err);
+        //res.send(500, err);
+        res.status(500).send(err);
       } else {
         req.solutionData = data;
         next();
@@ -18,6 +19,16 @@ module.exports = function(app) {
     res.send(req.solutionData);
   });
 
+  app.get('/solutions', function(req, res, next) {
+    Solution.find({}).exec(function(err, data) {
+      if (err) {
+        res.send(500, err);
+      } else {
+        res.json(data);
+      }
+    })
+  });
+
   //Expect POST object like:
   //{
   //  "content": "sample regex answer",
@@ -25,19 +36,36 @@ module.exports = function(app) {
   //  "userId": 3
   //}
   app.post('/solutions', function(req, res, next) {
-    var solution = {
-      content: req.body.content,
-      questionId: req.body.questionId,
-      userId: req.body.userId
-    };
-    var newSolution = new Solution(solution);
-    newSolution.save(function(err, newEntry) {
-      if (err) {
-        res.send(500, err);
-      } else {
-        res.send(200, newEntry);
-      }
-    })
+    //var solution = {
+    //  content: req.body.content,
+    //  questionId: req.body.questionId,
+    //  userId: req.body.userId,
+    //  votes: req.body.votes
+    //};
+    //var newSolution = Solution.create(solution, function(err, solution) {
+    //  res.send(solution);
+    //});
+    var data = req.body;
+
+    var addSolution = Solution.create({
+      content: data.content,
+      questionId: data.questionId,
+      userId: data.userId,
+      votes: data.votes
+    },
+    function(err, newSolution) {
+      res.send(newSolution);
+    });
+
+    //var newSolution = new Solution(solution);
+    //newSolution.save(function(err, newEntry) {
+    //  if (err) {
+    //    res.send(500, err);
+    //  } else {
+    //    //res.send(200, newEntry);
+    //    res.status(200).send(newEntry);
+    //  }
+    //})
   });
 
   app.put('/solutions', function(req, res) {
