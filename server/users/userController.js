@@ -25,3 +25,9 @@ var getAllUsers = function(req, res, next) {
     }
   });
 };
+
+module.exports = {
+  getUserData: getUserData,
+  userProfile: userProfile,
+  getAllUsers: getAllUsers
+};
