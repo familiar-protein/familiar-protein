@@ -21,7 +21,8 @@ var App = React.createClass({
     return {
       questions: [],
       user: {},
-      loggedIn: false
+      loggedIn: false,
+      hasAlreadyUpdatedOnce: false
     };
   },
 
@@ -50,7 +51,7 @@ var App = React.createClass({
   // let's kick off a request to check if we aren't logged in.
   componentDidUpdate: function() {
     this.isLoggedIn();
-    //console.log("CURRENT STATE: ", this.state.loggedIn);
+    console.log('Component updating!');
   },
 
   // AJAX request to the server to check if the client is logged in.
@@ -62,7 +63,9 @@ var App = React.createClass({
       dataType: 'json',
       success: function(data){
         //this.props.loggedIn = data.loggedIn;
-        this.setState({loggedIn: data.loggedIn});
+        if (this.state.loggedIn != data.loggedIn) {
+          this.setState({loggedIn: data.loggedIn});
+        }
       }.bind(this),
       error: function(xhr, status, err){
         console.error(xhr, status, err.message);
