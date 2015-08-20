@@ -70,7 +70,10 @@ var App = React.createClass({
           });
 
           if (data.loggedIn === false) {
-            //this.setState({loggedIn: false, user: {}});  // Clear out clientside user info if / when we log out.
+            this.setState({
+              loggedIn: false, 
+              user: {}}
+            );  // Clear out clientside user info if / when we log out.
           }
         }
       }.bind(this),
