@@ -75,22 +75,29 @@ var DetailView = React.createClass({
   },
 
   handleAnswerSubmit: function() {
-    var asnswer = React.findDOMNode(this.refs.solutionText).value.trim();
-    var qID = 
+    var question = this.props.questions[this.props.params.qNumber - 1];
+    var qID = question._id;
+    var qNumber = question.qNumber;
+    var answerData = {questionID: qID, answer: this.state.result};
+    console.log("qNumber: ", qNumber);
+    if (this.state.solved) {
+      $.ajax({
+        url: window.location.origin + "/answers/" + qNumber,
+        method: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(answerData),
+        success: function(data){
+          console.log("Post Answer: ", data);
+        }.bind(this),
+        error: function(xhr, status, err){
+          console.log("ERROR in Post", err);
+        }
+      });
+    } else {
+      console.log("not solved no save!");
+    }
 
-    $.ajax({
-      url: window.location.origin + this.getPath(),
-      method: "POST",
-      dataType: "json",
-      contentType: "application/json; charset=utf-8",
-      data: JSON.stringify(answer),
-      success: function(data){
-        console.log("Post Answer: ", data);
-      }.bind(this),
-      error: function(xhr, status, err){
-        console.log("ERROR in Post", err);
-      }
-    });
   },
 
   render: function() {

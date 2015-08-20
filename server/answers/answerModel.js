@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 
 var AnswerSchema = new mongoose.Schema({
-	questionID: Number,
-	userID: Number,
+	questionID: String,
+	// userID: Number,
 	answer: String
 });
 

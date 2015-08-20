@@ -3,6 +3,7 @@ var express = require('express');
 var userRoutes = require('../users/userRoutes');
 var questionRoutes = require('../questions/questionRoutes');
 var gameRoutes = require('../game/gameRoutes');
+var answerRoutes = require('../answers/answerRoutes');
 
 module.exports = function(app) {
   app.use(bodyParser.json());
@@ -14,5 +15,7 @@ module.exports = function(app) {
   gameRoutes(app);
   userRoutes(app);
   questionRoutes(app);
+  gameRoutes(app);
+  answerRoutes(app);
 };
 
