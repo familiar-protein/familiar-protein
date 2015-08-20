@@ -9,24 +9,20 @@ var injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
 var Link = Router.Link;
 
-// var time = 0; 
-// var startTime = new Date();
-// var interval = 1000;
-
-// // TEST: set interval when the page loads?
-// setInterval(function(){
-//   var currentTime = new Date();
-//   time = Math.round((currentTime - startTime)/1000); 
-
-//   console.log("TEST ----> time=" + time);
-// }, interval);
-
 var DetailView = React.createClass({
 
+  statics: {
+    // willTransitionTo: function (transition, params, query, callback) {
+    //   console.log('TEST---> everytime this loads');
+    // } // willTransitionTo()
+    willTransitionTo: function(){
+      console.log("TEST --> willTransitionTo");
+      // this.startTimer();
+    } //willTransitionTo()
+  }, //statics
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
-
   getChildContext: function() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
@@ -40,7 +36,8 @@ var DetailView = React.createClass({
       result: '',
       flag: '',
       solved: false,
-      elapsed: 0 //initial time
+      elapsed: 0, //initial time
+      startTime: new Date()
     };
   },
 
@@ -109,24 +106,24 @@ var DetailView = React.createClass({
       return null;
     }
   },
-  componentDidMount: function(){
+  componentWillReceiveProps: function(){
+  },
+  componentDidMount: function(){ //whenever 
     /*** Timer ***/
-    var startTime = new Date();
+    // var startTime = new Date();
     var interval = 1000;
-    this.setState({elapsed:0}); //init
+    // this.setState({elapsed:0}); //init
     // TEST: set interval when the page loads?
     setInterval(function(){
       var currentTime = new Date();
       
       this.setState({
-        elapsed: Math.round((currentTime - startTime)/1000)
+        elapsed: Math.round((currentTime - this.state.startTime)/1000)
       });
-
       // console.log("TEST ----> elapsed=" + this.state.elapsed);
     }.bind(this), interval); //setInterval
 
   },
-
   render: function() {
     // this.startTimer();
     /*** Questions ***/
@@ -144,6 +141,14 @@ var DetailView = React.createClass({
       return <div></div>;
     }
 
+    // var SuccessView = React.createClass({
+    //   render: function() {
+    //     return (
+    //       <p> {'Hello World!'}</p>
+    //     );
+    //   }
+    // });
+
     return (
       <div className="question-solve">
         <div className="row">
@@ -152,17 +157,29 @@ var DetailView = React.createClass({
             <p>{question.description}</p>
           </div>
             <div className="col-sm-2 back">
-              <RaisedButton label="Back" linkButton="true" href="/#/"/>
+              <RaisedButton label="Back" linkButton="true" href="/#/questions"/>
             </div>
         </div>
 
         <h2 className='timer'>Time Elapsed: {this.state.elapsed}</h2> {/*timer*/}
-        
+
         <form className="form-inline text-center">
           <span className="solution">/<TextField hintText="You can solve it!" floatingLabelText="Regex solution..." type="text" ref="solutionText" onChange={this.setRegex} className="regex"/>/<TextField  floatingLabelText="Put your flags here..." type="text" ref="solutionTextFlags" onChange={this.setRegex} className="regex"/></span>
 
           {this.state.solved === null ? <p className="error-msg">Please provide valid regular expression</p> : null}
-          {this.state.solved ? <h3 className="success">Success!!! Solved All Test Cases!</h3> : null}
+          {(function(){
+            if(this.state.solved){
+              // console.log('Test here!');
+              return (
+                <h3 className='success'>
+                  {"Success!!! Solved All Test Cases!  "}
+                 <a href={"/#/question/"+(parseInt(this.props.params.qNumber)+1)}>Next Problem</a>
+                  // <Link to="question" params={{qNumber: "2"}} />
+                </h3>
+              ) //return 
+            }
+          }.bind(this))()} 
+
         </form>
 
         <div className="test-cases">
@@ -179,8 +196,8 @@ var DetailView = React.createClass({
 
         </div>
       </div>
-    )
-  }
-});
+    ) //return 
+  } //render()
+}); //detailView
 
 module.exports = DetailView;
