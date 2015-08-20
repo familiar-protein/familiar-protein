@@ -124,7 +124,7 @@ var DetailView = React.createClass({
 
           {this.state.solved === null ? <p className="error-msg">Please provide valid regular expression</p> : null}
           {this.state.solved ? <h3 className="success">Success!!! Solved All Test Cases!</h3> : null}
-          <Link to="solutions" className="btn btn-primary back">View Past Solutions</Link>
+          {this.state.solved ? <Link to="solutions" className="btn btn-primary back">View Past Solutions</Link> : null}
         </form>
 
         <div className="test-cases">

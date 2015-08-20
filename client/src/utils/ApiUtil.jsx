@@ -36,7 +36,15 @@ var ApiUtils = {
   loadSolutions: function () {
 
     //TODO: Actual request to server
-    var solutions = ["Great Solution", "Best Solution"];
+    var solutions = [
+      {
+        id: 1,
+        solution: "Great Solution"
+      }, 
+      {
+        id: 2,
+        solution:"Best Solution"
+      }];
     ServerActions.solutionsLoaded(solutions);
   }
 };
