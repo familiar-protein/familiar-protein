@@ -14,10 +14,11 @@ var add = function(req, res, next) {
 
   var newQ = new Question(question);
   newQ.save(function(err, newEntry) {
+    console.log('=================', newEntry, err);
     if (err) {
       res.send(500, err);
     } else {
-      res.send(200, newEntry);
+      res.status(201).json(newEntry);
     }
   });
 };
