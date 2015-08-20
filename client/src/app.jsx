@@ -97,7 +97,7 @@ var App = React.createClass({
       }.bind(this),
       error: function(xhr, status, err){
         console.error(xhr, status, err.message);
-        that.setState({user: 'error'});
+        this.setState({user: 'error'});
       }.bind(this)
     });
   },
