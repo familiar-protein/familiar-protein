@@ -19,6 +19,7 @@ module.exports = function(app) {
 
   // routing
   // authRoutes(app, passport);
+
   userRoutes(app);
   questionRoutes(app);
 };
