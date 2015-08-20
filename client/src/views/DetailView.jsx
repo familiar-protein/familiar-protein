@@ -89,7 +89,7 @@ var DetailView = React.createClass({
         data: JSON.stringify(answerData),
         success: function(data){
           console.log("Post Answer: ", data);
-        }.bind(this),
+        },
         error: function(xhr, status, err){
           console.log("ERROR in Post", err);
         }
