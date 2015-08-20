@@ -109,24 +109,25 @@ var DetailView = React.createClass({
       return null;
     }
   },
-  componentDidMount: function(){
+  componentWillReceiveProps: function(){
     /*** Timer ***/
-    var startTime = new Date();
-    var interval = 1000;
-    this.setState({elapsed:0}); //init
-    // TEST: set interval when the page loads?
-    setInterval(function(){
-      var currentTime = new Date();
+    // var startTime = new Date();
+    // var interval = 1000;
+    // this.setState({elapsed:0}); //init
+    // // TEST: set interval when the page loads?
+    // setInterval(function(){
+    //   var currentTime = new Date();
       
-      this.setState({
-        elapsed: Math.round((currentTime - startTime)/1000)
-      });
+    //   this.setState({
+    //     elapsed: Math.round((currentTime - startTime)/1000)
+    //   });
 
-      // console.log("TEST ----> elapsed=" + this.state.elapsed);
-    }.bind(this), interval); //setInterval
+    //   // console.log("TEST ----> elapsed=" + this.state.elapsed);
+    // }.bind(this), interval); //setInterval
+  },
+  componentDidMount: function(){ //whenever 
 
   },
-
   render: function() {
     // this.startTimer();
     /*** Questions ***/
@@ -144,6 +145,14 @@ var DetailView = React.createClass({
       return <div></div>;
     }
 
+    // var SuccessView = React.createClass({
+    //   render: function() {
+    //     return (
+    //       <p> {'Hello World!'}</p>
+    //     );
+    //   }
+    // });
+
     return (
       <div className="question-solve">
         <div className="row">
@@ -157,12 +166,24 @@ var DetailView = React.createClass({
         </div>
 
         <h2 className='timer'>Time Elapsed: {this.state.elapsed}</h2> {/*timer*/}
-        
+
         <form className="form-inline text-center">
           <span className="solution">/<TextField hintText="You can solve it!" floatingLabelText="Regex solution..." type="text" ref="solutionText" onChange={this.setRegex} className="regex"/>/<TextField  floatingLabelText="Put your flags here..." type="text" ref="solutionTextFlags" onChange={this.setRegex} className="regex"/></span>
 
           {this.state.solved === null ? <p className="error-msg">Please provide valid regular expression</p> : null}
-          {this.state.solved ? <h3 className="success">Success!!! Solved All Test Cases!</h3> : null}
+          {(function(){
+            if(this.state.solved){
+              // console.log('Test here!');
+              return (
+                <h3 className='success'>
+                  {"Success!!! Solved All Test Cases!  "}
+                 <a href={"/#/question/"+(parseInt(this.props.params.qNumber)+1)}>Next Problem</a>
+                  // <Link to="question" params={{qNumber: "2"}} />
+                </h3>
+              ) //return 
+            }
+          }.bind(this))()} 
+
         </form>
 
         <div className="test-cases">
@@ -179,8 +200,8 @@ var DetailView = React.createClass({
 
         </div>
       </div>
-    )
-  }
-});
+    ) //return 
+  } //render()
+}); //detailView
 
 module.exports = DetailView;
