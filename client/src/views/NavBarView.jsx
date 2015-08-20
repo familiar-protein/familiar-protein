@@ -22,13 +22,12 @@ var NavBarView = React.createClass({
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <Link to="userProfile" className="navbar-brand" href="#">Brand</Link>
+            <Link to="default" className="navbar-brand" href="#">RegExCEPTIONAL</Link>
           </div>
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
-              <li className="active"><a href="#">Link <span className="sr-only">(current)</span></a></li>
-              <li><a href="#">Link</a></li>
+              <li><Link to="userProfile">Profile</Link></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li><a href="#">Link</a></li>
