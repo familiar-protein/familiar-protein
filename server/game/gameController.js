@@ -22,9 +22,6 @@ var makeGame = function(req, res, next){
 
 var getGame = function(req, res, next){
 
-  console.log("req.body", req.body);
-  console.log("req.body.code", req.body.code);
-
   Game.findById(req.body.code).exec(function(err, data){
     if (err){
       console.log("ERROR: ", err);
@@ -37,6 +34,8 @@ var getGame = function(req, res, next){
 };
 
 var updateGame = function(req,res,next){
+  console.log("req.body === ", req.body);
+  console.log("req.body.code === ", req.body.code);
   Game.findOneAndUpdate(
       {"_id":req.body.code},
       {$push: {"players": {username: "hardcode", currentRound: 1}}},
