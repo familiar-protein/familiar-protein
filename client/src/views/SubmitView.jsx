@@ -29,13 +29,23 @@ var SubmitView = React.createClass({
   },
 
   truthy: function(){
-    var truthyVals = this.refs.passingTests.getValue();
-    return truthyVals.split(' ');
+    var truthyVals = this.refs.passingTests.getValue().split(' ');
+    truthyVals.forEach(function(item, index, array){
+      if(item === ' ' || item === ''){
+        array.splice(index, 1);
+      }
+    });
+    return truthyVals;
   },
 
   falsy: function(){
-    var falsyVals = this.refs.failingTests.getValue();
-    return falsyVals.split(' ');
+    var falsyVals = this.refs.failingTests.getValue().split(' ');
+    falsyVals.forEach(function(item, index, array){
+      if(item === ' ' || item === ''){
+        array.splice(index, 1);
+      }
+    });
+    return falsyVals;
   },
 
   submit: function(question){
