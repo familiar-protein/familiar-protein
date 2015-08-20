@@ -5,6 +5,14 @@ var Link = Router.Link;
 
 var NavBarView = React.createClass({
   render: function() {
+
+    if (this.props.loggedIn) {
+      var loginHTML = <a href="/logout">Logout</a>;
+    } else {
+      var loginHTML = <Link to="login">Login</Link>;
+    }
+
+    // console.log("Logged In NavBar ", this.props.loggedIn);
     return (
       <nav className="navbar navbar-default">
         <div className="container-fluid">
@@ -31,7 +39,7 @@ var NavBarView = React.createClass({
                   <li><a href="#">Stats</a></li>
                   <li><a href="#">Settings</a></li>
                   <li role="separator" className="divider"></li>
-                  <li><a href="#">Logout</a></li>
+                  <li>{loginHTML}</li>
                 </ul>
               </li>
             </ul>
