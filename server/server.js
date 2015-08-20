@@ -8,7 +8,7 @@ var port = process.env.PORT || 3000;
 
 var app = express();
 
-auth(passport);
+// auth(passport);
 middleware(app);
 
 // only execute if server.js was the root process rather than being required by other module,
