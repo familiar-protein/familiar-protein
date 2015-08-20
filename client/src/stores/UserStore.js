@@ -5,7 +5,8 @@ var Dispatcher = require('../Dispatcher');
 var CHANGE_EVENT = 'change';
 
 var userAuth = {
-  loggedIn: false
+  loggedIn: false,
+  error: false
 };
 
 var UserStore = assign({}, EventEmitter.prototype, {
@@ -26,13 +27,14 @@ var UserStore = assign({}, EventEmitter.prototype, {
   },
 
   setState: function (authentication) {
-    userAuth.loggedIn = authentication;
+    userAuth = authentication;
+    console.log(this.getState());
   }
 });
 
 UserStore.dispatchToken = Dispatcher.register(function (action) {
   if (action.type === 'USER_AUTHENTICATION') {
-    UserStore.setState(action.authenticated);
+    UserStore.setState(action.authentication);
     UserStore.emitChange();
   }
 });

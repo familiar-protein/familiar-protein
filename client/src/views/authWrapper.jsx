@@ -5,6 +5,10 @@ var UserStore = require('../stores/UserStore');
 
 module.exports = function(Component) {
   return React.createClass({
+    getInitialState: function () {
+      return UserStore.getState();
+    },
+
     statics: {
       willTransitionTo: function(transition){
         console.log(UserStore.getState().loggedIn);
@@ -15,7 +19,7 @@ module.exports = function(Component) {
     },
 
     onChange: function () {
-      this.render();
+      this.setState(UserStore.getState());
     },
 
     componentDidMount: function () {

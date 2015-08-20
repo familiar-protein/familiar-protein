@@ -16,7 +16,10 @@ var ViewActions = {
     Auth.login(user, pass, function (isAuthenticated) {
       Dispatcher.dispatch({
         type: ActionTypes.USER_AUTHENTICATION,
-        authenticated: isAuthenticated
+        authentication: {
+          authenticated: isAuthenticated,
+          error: !isAuthenticated
+        }
       });
     });
   }
