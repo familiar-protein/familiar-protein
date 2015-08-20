@@ -36,7 +36,24 @@ var getGame = function(req, res, next){
 
 };
 
+var updateGame = function(req,res,next){
+  Game.findByIdAndUpdate(
+      req.body.code,
+      {$push: {"players": {name: "hardcode"}}},
+      {safe: true, upsert: true, new: true},
+      function(err, model){
+        if (err){
+          console.log("ERROR: ", err);
+          res.send(500, err);
+        }else{
+          res.status(200).send(model);
+        }
+      }
+    );
+};
+
 module.exports = {
   makeGame: makeGame,
-  getGame: getGame
+  getGame: getGame,
+  updateGame: updateGame
 };
