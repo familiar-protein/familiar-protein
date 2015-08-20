@@ -55,17 +55,12 @@ var App = React.createClass({
   },
 
   loadAllQuestions: function(){
+    var that = this;  
     $.ajax({
       url: window.location.origin + '/questions',
       method: 'GET',
       dataType: 'json',
       success: function(data){
-      //   // this probably should be sorted by difficulty
-      //   data.sort(function(a, b){
-      //     return a.qNumber - b.qNumber;
-      //   });
-      //   this.setState({questions: data});
-      // }.bind(this),
         console.log(data);
         if(data === 'not logged in'){
           React.render(React.createElement(loginView), document.body);
@@ -73,9 +68,9 @@ var App = React.createClass({
           data.sort(function(a, b){
             return a.qNumber - b.qNumber;
           });
-          this.setState({questions: data});
+          that.setState({questions: data});
           }
-        }.bind(this),
+        },
       error: function(xhr, status, err){
         console.error(xhr, status, err.message);
       }
@@ -93,12 +88,12 @@ var App = React.createClass({
       success: function(data){
         console.log('user', data);
         that.setState({user: data});
-      }.bind(this),
+        console.log(that.state(user));
+      },
       error: function(xhr, status, err){
         console.error(xhr, status, err.message);
-        this.setState({user: undefined});
-      }.bind(this)
-
+        that.setState({user: 'error'});
+      }
     });
   },
 
