@@ -8,7 +8,6 @@ var add = function(req, res, next) {
     str += chunk;
   });
   req.on('end', function(){
-    // console.log('=============================', str);
     str = JSON.parse(str);
     
     var question = {
@@ -22,7 +21,6 @@ var add = function(req, res, next) {
 
     var newQ = new Question(question);
     newQ.save(function(err, newEntry) {
-      // console.log('=================', newEntry, err);
       if (err) {
         res.status(500).send('error when adding to db', err);
       } else {
