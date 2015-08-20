@@ -2,7 +2,7 @@ var express = require('express');
 var middleware = require('./config/middleware');
 var auth = require('./config/passport');
 var passport = require('passport');
-require('./config/db');
+var db = require('./config/db');
 
 var port = process.env.PORT || 3000;
 

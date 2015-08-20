@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var UserSchema = new mongoose.Schema({
+  //For local auth only.
   username: {type: String, unique: true},
   email: {type: String, unique: true},
   password: String,
@@ -12,8 +13,15 @@ var UserSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Solution'
   }],
-  githubId: {
-    type: String
+  //Github auth
+  github : {
+    id: String,
+    displayName: String,
+    token: String,
+    username: String,
+    profileUrl: String,
+    //only using first email.
+    email: String
   }
   // format is intended to be: { <qNumber>: "solution string", ...}
   // entries will only exist for a question that the user has solved.
