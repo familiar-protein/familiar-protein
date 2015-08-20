@@ -16,11 +16,11 @@ var UserSchema = new mongoose.Schema({
   score: {type: Number, default:0},
 
   stats: [{
-      question: String, //array of q_id
-      score: Number, //total score
-      time: Number, //no use
-      timestamp: String //no use
-    }], 
+      question: String, 
+      score: Number, 
+      time: Number, 
+      timestamp: String
+    }]
 
   // format is intended to be: { <qNumber>: "solution string", ...}
   // entries will only exist for a question that the user has solved.
