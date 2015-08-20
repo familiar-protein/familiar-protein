@@ -3,22 +3,32 @@ var questionValidation = require('../question_validation/validation');
 
 // adds a question to the database
 var add = function(req, res, next) {
-  var question = {
-    qNumber: req.body.qNumber,
-    title: req.body.title,
-    description: req.body.description,
-    truthy: req.body.truthy,
-    falsy: req.body.falsy,
-    solution: req.body.solution
-  }
-
-  var newQ = new Question(question);
-  newQ.save(function(err, newEntry) {
-    if (err) {
-      res.send(500, err);
-    } else {
-      res.send(200, newEntry);
+  var str = '';
+  req.on('data', function(chunk){
+    str += chunk;
+  });
+  req.on('end', function(){
+    // console.log('=============================', str);
+    str = JSON.parse(str);
+    
+    var question = {
+      qNumber: str.qNumber,
+      title: str.title,
+      description: str.description,
+      truthy: str.truthy,
+      falsy: str.falsy,
+      solution: str.solution
     }
+
+    var newQ = new Question(question);
+    newQ.save(function(err, newEntry) {
+      // console.log('=================', newEntry, err);
+      if (err) {
+        res.status(500).send('error when adding to db', err);
+      } else {
+        res.status(201).json(newEntry);
+      }
+    });
   });
 };
 
