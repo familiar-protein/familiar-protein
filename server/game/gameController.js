@@ -25,7 +25,6 @@ var getGame = function(req, res, next){
   console.log("req.body", req.body);
   console.log("req.body.code", req.body.code);
 
-
   Game.findById(req.body.code).exec(function(err, data){
     if (err){
       console.log("ERROR: ", err);
