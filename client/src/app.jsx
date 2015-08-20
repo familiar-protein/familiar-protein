@@ -50,7 +50,7 @@ var App = React.createClass({
   getInitialState: function(){
     return {
       questions: [],
-      user: 'mr. nobody'
+      user: undefined
     };
   },
 
@@ -96,7 +96,7 @@ var App = React.createClass({
       }.bind(this),
       error: function(xhr, status, err){
         console.error(xhr, status, err.message);
-        this.setState({user: 'error'});
+        this.setState({user: undefined});
       }.bind(this)
 
     });
@@ -108,7 +108,7 @@ var App = React.createClass({
   componentDidMount: function(){
     this.loadAllQuestions();
     this.getUserInfo();
-    this.setState({user: 'Placeholder UserName'});
+    this.setState({user: undefined});
   },
   // _handleClick, _getSelectedIndex & _onLeftNavChange -> functions for Appbar & LeftNav
   _handleClick: function(e) {
@@ -150,6 +150,12 @@ var App = React.createClass({
       requestChange: this._handleIconMenuValueLinkChange
     };
 
+    if (this.state.user !== undefined) {
+      console.log('USER', this.state.user);
+    } else {
+      console.log('USER undefined');
+    }
+
     //Login: http://localhost:3000/auth/google
     return (
       <div>
@@ -174,7 +180,7 @@ var App = React.createClass({
                 valueLink={iconMenuValueLink}>
                 <MenuItem value="user" primaryText="User" leftIcon={<i className="material-icons md-light md-24">face</i>}/>
                 <MenuItem value="test" primaryText="Test" leftIcon={<i className="material-icons md-light md-24">star</i>}/>
-                <MenuItem value="login" primaryText="Login" />
+                <MenuItem value="login" primaryText="Login / Logout" />
               </IconMenu>
             </div>
           } /> {/* appBar */}

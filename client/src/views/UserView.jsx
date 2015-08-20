@@ -57,6 +57,7 @@ var UserView = React.createClass({
           <div className="col-xs-12 col-sm-9 col-md-10">
             <h1>{username}</h1>
             <p>{userlocation}</p>
+            {user.score}
             {user.stats}
           </div>
         </div>
