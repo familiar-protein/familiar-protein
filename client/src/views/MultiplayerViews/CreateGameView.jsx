@@ -21,6 +21,7 @@ var CreateGameView = React.createClass({
 
   createGame: function(gameID){
     var game = {id: gameID};
+    console.log("CreateGame");
     $.ajax({
       url: window.location.origin + "/makeGame",
       method: "POST",
