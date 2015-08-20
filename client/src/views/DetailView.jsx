@@ -74,6 +74,25 @@ var DetailView = React.createClass({
     }
   },
 
+  handleAnswerSubmit: function() {
+    var asnswer = React.findDOMNode(this.refs.solutionText).value.trim();
+    var qID = 
+
+    $.ajax({
+      url: window.location.origin + this.getPath(),
+      method: "POST",
+      dataType: "json",
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify(answer),
+      success: function(data){
+        console.log("Post Answer: ", data);
+      }.bind(this),
+      error: function(xhr, status, err){
+        console.log("ERROR in Post", err);
+      }
+    });
+  },
+
   render: function() {
     var question = this.props.questions[this.props.params.qNumber - 1];
 
@@ -102,9 +121,9 @@ var DetailView = React.createClass({
           </div>
         </div>
 
-        <form className="form-inline text-center">
+        <form className="form-inline text-center" onSubmit={this.handleAnswerSubmit}>
           <span className="solution">/<textarea ref="solutionText" onChange={this.setRegex} rows="1" cols="50" type="text" className="regex form-control" placeholder="Regex solution..."></textarea>/</span>
-
+          <input type="submit" className="btn btn-primary" value="Submit Answer" />
           {this.state.solved === null ? <p className="error-msg">Please provide valid regular expression</p> : null}
           {this.state.solved ? <h3 className="success">Success!!! Solved All Test Cases!</h3> : null}
         </form>
