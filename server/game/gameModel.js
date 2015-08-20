@@ -6,10 +6,7 @@ var GameSchema = new mongoose.Schema({
     username: String,
     currentRound: Number
   }],
-  questions: [{
-    currentRound: Number,
-    question: String
-  }]
+  questions: [Number]
 });
 
 var Game = mongoose.model('Game', GameSchema);
