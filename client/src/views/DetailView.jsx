@@ -14,13 +14,15 @@ var DetailView = React.createClass({
     return {
       result: '',
       solved: false,
+      solutions: []
     };
   },
 
   componentDidMount: function(){
+    var context = this;
     SolutionStore.addListener(function(){
-      console.log("Solution Data Received:", SolutionStore.getSolutions());
-    })
+      context.state.solutions = SolutionStore.getSolutions();
+    });
   },
 
   setRegex: function() {
@@ -120,6 +122,7 @@ var DetailView = React.createClass({
 
           {this.state.solved === null ? <p className="error-msg">Please provide valid regular expression</p> : null}
           {this.state.solved ? <h3 className="success">Success!!! Solved All Test Cases!</h3> : null}
+          {this.state.solutions}
         </form>
 
         <div className="test-cases">

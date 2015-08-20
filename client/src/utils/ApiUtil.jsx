@@ -31,8 +31,8 @@ var ApiUtils = {
         console.log(xhr, status, err.message);
       }
     })
-  })
   },
+  
   loadSolutions: function () {
 
     //TODO: Actual request to server
