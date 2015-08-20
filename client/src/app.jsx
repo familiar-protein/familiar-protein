@@ -18,7 +18,8 @@ var App = React.createClass({
   getInitialState: function(){
     return {
       questions: [],
-      user: {}
+      user: {},
+      loggedIn: false
     };
   },
 
@@ -39,9 +40,28 @@ var App = React.createClass({
     });
   },
 
-
   componentDidMount: function(){
     this.loadAllQuestions();
+  },
+
+  componentDidUpdate: function() {
+    this.isLoggedIn();
+    //console.log("CURRENT STATE: ", this.state.loggedIn);
+  },
+
+  isLoggedIn: function() {
+    $.ajax({
+      url: window.location.origin + '/loggedin',
+      method: 'GET',
+      dataType: 'json',
+      success: function(data){
+        //console.log("Logged In: ", data.loggedIn);
+        this.setState({loggedIn: data.loggedIn});
+      }.bind(this),
+      error: function(xhr, status, err){
+        console.error(xhr, status, err.message);
+      }
+    });
   },
 
   render: function() {
