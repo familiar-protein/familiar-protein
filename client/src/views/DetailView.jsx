@@ -41,15 +41,19 @@ var DetailView = React.createClass({
     };
   },
 
-  setRegex: function() {
+  setRegex: function() { //called when changes are made to the solution
     var value = this.refs.solutionText.getValue();
     var flag = this.refs.solutionTextFlags.getValue();
-    var solved = this.isSolved(value, flag);
+    var solved = this.isSolved(value);
     this.setState({
       result: value,
       flag: flag,
       solved: solved
     });
+
+    if(solved===true){ // send data to server when solution is found
+      this.submitSolution();
+    } //if
   },
 
   checkTestCase: function(testCase, condition) {
@@ -66,7 +70,7 @@ var DetailView = React.createClass({
   },
 
   displayTestCases: function(string, condition) { //string=truthy or falsy
-    var question = this.props.questions[this.props.params.qNumber];
+    var question = this.props.questions[this.props.params.qNumber]; //find info based on q_id
     return question[string].map(function(testCase) {
       return (
         <p key={testCase} className={this.checkTestCase(testCase, condition)}>{testCase}</p>
@@ -106,9 +110,7 @@ var DetailView = React.createClass({
       return null;
     }
   },
-  componentWillReceiveProps: function(){
-  },
-  componentDidMount: function(){ //whenever 
+  componentDidMount: function(){ //begins the timer, only once when component becomes mounted 
     /*** Timer ***/
     // var startTime = new Date();
     var interval = 1000;
@@ -134,19 +136,34 @@ var DetailView = React.createClass({
   },
   submitSolution: function(data){ //submit user solution to database
     console.log('TEST inside submitSolution');
-    $.ajax({
-      url: window.location.origin + '/user/solved',
-      method: 'POST',
-      data: JSON.stringify('hellow world'),
-      dataType: 'json',
-      success: function(){
-        console.log('success!');
-      },
-      error: function(xhr, status, err){
-        console.log(err);
-      }
-    }); //ajax
-  },
+      
+    try{
+      console.log("TEST ----> user=", this.props.user);
+      var user = this.props.user;
+      
+      $.ajax({
+        url: window.location.origin + '/user/solved',
+        method: 'POST',
+        data: {
+          u_id: user._id,
+          q_id: this.props.params.qNumber,
+          solution: this.state.result,
+          time: this.state.elapsed,
+        },
+        dataType: 'json',
+        success: function(){
+          console.log('success!');
+        },
+        error: function(xhr, status, err){
+          console.log(err);
+          alert("You must login before you can save your score.");
+        }
+      }); //ajax
+    }catch(err){
+      console.log('User not found! Error: '+err);
+    } //try
+
+  }, //submitSolution()
   render: function() {
     // this.startTimer();
     /*** Questions ***/
