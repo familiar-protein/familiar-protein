@@ -22,7 +22,7 @@ module.exports = function(passport){
   },
 
   function(token, refreshToken, profile, done){
-    console.log('USER PROFILE INFO', profile._json);
+    // console.log('USER PROFILE INFO', profile._json);
 
     
     process.nextTick(function(){

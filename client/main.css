@@ -74,12 +74,13 @@ form {
 }
 
 .btn-primary {
-  background-color: #00bcd4;
+  background-color: #00bcd4 !important;
   border-color:#14A7BB;
+  color: rgba(255, 255, 255, 0.87);
 }
 
-/*.btn-primary:hover {
+.btn-primary:hover, .btn-primary:focus, .btn-primary:visited {
   color: #fff;
-  background-color: #286090;
-  border-color: #204d74;
-}*/
+  background-color: #45BCCC !important;
+  border-color: #14A7BB !important;
+}

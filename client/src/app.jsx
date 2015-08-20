@@ -88,11 +88,10 @@ var App = React.createClass({
       success: function(data){
         console.log('user', data);
         that.setState({user: data});
-        console.log(that.state(user));
       },
       error: function(xhr, status, err){
         console.error(xhr, status, err.message);
-        that.setState({user: 'error'});
+        that.setState({user: undefined});
       }
     });
   },
@@ -146,6 +145,7 @@ var App = React.createClass({
     };
 
     if (this.state.user !== undefined) {
+      console.log(this.state);
       var username = this.state.user.google.name;
       var loginandout = <MenuItem value="login" primaryText="Logout" leftIcon={<i className="material-icons md-light md-24">swap_horiz</i>}/>
     } else {
