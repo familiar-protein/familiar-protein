@@ -27,5 +27,5 @@ build/Release
 node_modules
 .idea
 .DS_Store
-
 build
+auth.js
