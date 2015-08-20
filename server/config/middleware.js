@@ -15,7 +15,6 @@ module.exports = function(app) {
   gameRoutes(app);
   userRoutes(app);
   questionRoutes(app);
-  gameRoutes(app);
   answerRoutes(app);
 };
 
