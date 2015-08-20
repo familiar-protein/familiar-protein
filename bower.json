@@ -1,0 +1,21 @@
+{
+  "name": "familiar-protein",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Gattermeier/familiar-protein",
+  "authors": [
+    "Matthias Gattermeier <matthias.gattermeier@gmail.com>"
+  ],
+  "main": "client/src/app.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/src/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "material-design-icons": "~2.0.0"
+  }
+}

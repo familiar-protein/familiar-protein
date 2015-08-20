@@ -6,8 +6,10 @@ module.exports = function (app) {
   app.get('/questions', questionController.getAll);
   // app.get('/questions', utils.isAuth, questionController.getAll);
 
+
   app.param('id', questionController.getQuestionData);
 
   app.get('/questions/:id', questionController.getQuestion);
   app.post('/questions/:id', questionController.runTests);
 };
+

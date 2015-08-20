@@ -10,7 +10,7 @@ var SubmitView = require('./views/SubmitView.jsx');
 var Link = Router.Link;
 var OverView = require('./views/Overview.jsx');
 var DetailView = require('./views/DetailView.jsx');
-var loginView = require('./views/loginView.jsx');
+var LoginView = require('./views/loginView.jsx');
 
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -21,13 +21,22 @@ var RouteHandler = Router.RouteHandler;
 
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
-var AppBar = mui.AppBar;
-var LeftNav = mui.LeftNav;
-var MenuItem = mui.MenuItem;
+var AppBar = mui.AppBar,
+    LeftNav = mui.LeftNav,
+    List = mui.List,
+    ListItem = mui.ListItem, 
+    FlatButton = mui.FlatButton,
+    TextField = mui.TextField,
+    RaisedButton = mui.RaisedButton,
+    IconButton = mui.IconButton,
+    IconMenu = mui.IconMenu;
+    FontIcon = mui.FontIcon;
 
+var Menu = require('material-ui/lib/menus/menu'),
+    MenuItem = require('material-ui/lib/menus/menu-item'); 
 
-var TextField = mui.TextField;
-var RaisedButton = mui.RaisedButton;
+// var MoreVertIcon = require('./svg-icons/navigation/more-vert');
+
 
 var App = React.createClass({
   childContextTypes: {
@@ -75,17 +84,21 @@ var App = React.createClass({
 
   // expect to get user data from route /user
   getUserInfo: function() {
+    var that = this;
+    console.log('Get userinfo executed.');
      $.ajax({
       url: window.location.origin + '/user',
       method: 'GET',
       dataType: 'json',
       success: function(data){
-        this.setState({user: data});
-      },
+        console.log('user', data);
+        that.setState({user: data});
+        console.log(that.state(user));
+      }.bind(this),
       error: function(xhr, status, err){
         console.error(xhr, status, err.message);
-        this.setState({user: 'error'});
-      }
+        that.setState({user: 'error'});
+      }.bind(this)
     });
   },
 
@@ -102,19 +115,29 @@ var App = React.createClass({
     e.preventDefault();
     this.refs.leftNav.toggle();
   },
-  _getSelectedIndex: function() {
+  _getSelectedIndex: function(menuItems) {
     var currentItem;
     for (var i = menuItems.length - 1; i >= 0; i--) {
       currentItem = menuItems[i];
       if (currentItem.route && this.context.router.isActive(currentItem.route)) return i;
     }
   },
-  _onLeftNavChange: function(e, key, payload) {
+  _onNavChange: function(e, key, payload) {
+    console.log('Key & Payload from _onNavChange: ',key, payload)
     this.context.router.transitionTo(payload.route);
   },
 
+  _handleIconMenuValueLinkChange: function(e, value) {
+    this.setState({
+      iconMenuValueLink: value
+    });
+    console.log('_handleIconMenuValueLinkChange', e, value);
+    this.context.router.transitionTo(value);
+    // this.context.router.transitionTo();
+  },
+
   render: function() {
-    menuItems = [
+    var leftNavMenuItems = [
       { route: 'home', text: 'Home' },
       { route: 'questions', text: 'Challenges' },
       { route: 'user', text: 'User' },
@@ -122,19 +145,45 @@ var App = React.createClass({
       { route: 'submit', text: 'Submit Your Challenge' },
     ];
 
+    var iconMenuValueLink = {
+      value: this.state.iconMenuValueLink,
+      requestChange: this._handleIconMenuValueLinkChange
+    };
+
+    //Login: http://localhost:3000/auth/google
     return (
       <div>
         <LeftNav ref="leftNav" 
           docked={false} 
-          menuItems={menuItems} 
-          selectedIndex={this._getSelectedIndex()}
-          onChange={this._onLeftNavChange} />
+          menuItems={leftNavMenuItems} 
+          selectedIndex={this._getSelectedIndex(leftNavMenuItems)}
+          onChange={this._onNavChange} />
 
         <header>
-          <AppBar title='Regex Challenge' onLeftIconButtonTouchTap={this._handleClick} />
+          <AppBar title='Regex Challenge' 
+          onLeftIconButtonTouchTap={this._handleClick} 
+          iconElementRight={
+            <div>
+              <IconMenu
+                desktop={true} 
+                iconButtonElement={
+                  <div>
+                    <i className="material-icons md-light md-24 margin-10">person</i>
+                  </div>}
+                openDirection="bottom-left"
+                valueLink={iconMenuValueLink}>
+                <MenuItem value="user" primaryText="User" leftIcon={<i className="material-icons md-light md-24">face</i>}/>
+                <MenuItem value="test" primaryText="Test" leftIcon={<i className="material-icons md-light md-24">star</i>}/>
+                <MenuItem value="login" primaryText="Login" />
+              </IconMenu>
+            </div>
+          } />
         </header>
+        
+        <section className="content">
+          <RouteHandler questions={this.state.questions} user={this.state.user}/>
+        </section>
 
-        <RouteHandler questions={this.state.questions} user={this.state.user}/>
       </div>
     )
   }
@@ -153,6 +202,7 @@ var routes = (
     <Route name="user" handler={UserView}/>
     <Route name="test" handler={TestView}/>
     <Route name="submit" handler={SubmitView}/>
+    <Route name="login" handler={LoginView}/>
     <DefaultRoute handler={HomeView}/>
   </Route>
 );

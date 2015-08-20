@@ -26,6 +26,8 @@ var UserView = React.createClass({
   render: function() {
     console.log('Props in userview render', this.props);
     var user = this.props.user;
+    // google.username
+    // score
     return (<p>User Profile:  {user} </p>);
   }
 })
