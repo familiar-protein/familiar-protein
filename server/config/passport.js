@@ -1,4 +1,4 @@
-var GithubStrategy = require('passport-github').Strategy;
+var GithubStrategy = require('passport-github2').Strategy;
 var User = require('../users/userModel');
 var configAuth = require('./auth');
 

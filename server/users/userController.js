@@ -1,12 +1,5 @@
 var User = require('./userModel');
 
-
-var signup = function() {};
-
-var login = function() {};
-
-var logout = function() {};
-
 var getUserData = function(req, res, next, id) {
   User.findOne({_id: id}).exec(function(err, data) {
     if (err) {
