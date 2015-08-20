@@ -4,6 +4,8 @@ var OverView = require('./views/OverView.jsx');
 var DetailView = require('./views/DetailView.jsx');
 var LoginView = require('./views/LoginView.jsx');
 var ProfileView = require('./views/ProfileView.jsx');
+var SolutionView = require('./views/SolutionView.jsx');
+
 var Auth = require('./utils/auth.jsx');
 var UserStore = require('./stores/UserStore');
 var QuestionStore = require('./stores/QuestionStore');
@@ -58,6 +60,7 @@ var routes = (
     <Route name="login" path="/login" handler={LoginView}/>
     <Route name="user" path="/user/:id" handler={ProfileView}/>
     <Route name="question" path="/:qNumber" handler={DetailView}/>
+    <Route name="solutions" path="/solutions" handler={SolutionView}/>
     <DefaultRoute name="default" handler={OverView} />
   </Route>
 );
