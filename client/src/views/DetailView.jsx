@@ -74,6 +74,32 @@ var DetailView = React.createClass({
     }
   },
 
+  handleAnswerSubmit: function() {
+    var question = this.props.questions[this.props.params.qNumber - 1];
+    var qID = question._id;
+    var qNumber = question.qNumber;
+    var answerData = {questionID: qID, answer: this.state.result};
+    console.log("qNumber: ", qNumber);
+    if (this.state.solved) {
+      $.ajax({
+        url: window.location.origin + "/answers/" + qNumber,
+        method: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(answerData),
+        success: function(data){
+          console.log("Post Answer: ", data);
+        },
+        error: function(xhr, status, err){
+          console.log("ERROR in Post", err);
+        }
+      });
+    } else {
+      console.log("not solved no save!");
+    }
+
+  },
+
   render: function() {
     var question = this.props.questions[this.props.params.qNumber - 1];
 
@@ -102,9 +128,9 @@ var DetailView = React.createClass({
           </div>
         </div>
 
-        <form className="form-inline text-center">
+        <form className="form-inline text-center" onSubmit={this.handleAnswerSubmit}>
           <span className="solution">/<textarea ref="solutionText" onChange={this.setRegex} rows="1" cols="50" type="text" className="regex form-control" placeholder="Regex solution..."></textarea>/</span>
-
+          <input type="submit" className="btn btn-primary" value="Submit Answer" />
           {this.state.solved === null ? <p className="error-msg">Please provide valid regular expression</p> : null}
           {this.state.solved ? <h3 className="success">Success!!! Solved All Test Cases!</h3> : null}
         </form>
