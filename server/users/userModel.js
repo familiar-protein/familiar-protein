@@ -5,10 +5,15 @@ var UserSchema = new mongoose.Schema({
     id: String,
     token: String,
     name: String,
-    image: String,
+    url: {type: String, default: 'unknown'},
+    location: {type: String, default: 'unknown'},
+    aboutMe: {type: String, default: 'unknown'},
+    tagline: {type: String, default: 'unknown'},
+    profileCover: {type: String, default: 'unknown'},
+    profileImage: {type: String, default: 'unknown'},
   },
 
-  score: Number,
+  score: {type: Number, default:0},
 
   stats: [{
       question: String, 
