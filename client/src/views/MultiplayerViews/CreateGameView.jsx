@@ -45,7 +45,7 @@ var CreateGameView = React.createClass({
       <div>
         <h1>This is the create Game view</h1>
         <h1>Enter Code: {gameID}</h1>
-        <Link to=""
+        <Link to="question" params={{qNumber: 1}} className="btn btn-primary">Play</Link>
       </div>
     );
   }
