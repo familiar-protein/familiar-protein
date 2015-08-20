@@ -8,8 +8,8 @@ var makeGame = function(req, res, next){
 
   var game = {
     _id: req.body.id,
-    players: {},
-    questions: {}
+    players: [],
+    questions: [1,2,3,4,5,6,7] // hard coded question numbers
   };
 
   console.log("Making new Game in gameController");
