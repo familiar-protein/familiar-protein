@@ -144,12 +144,12 @@ var DetailView = React.createClass({
       $.ajax({
         url: window.location.origin + '/user/solved',
         method: 'POST',
-        data: {
+        data: JSON.stringify({
           u_id: user._id,
           q_id: this.props.params.qNumber,
           solution: this.state.result,
           time: this.state.elapsed,
-        },
+        }),
         dataType: 'json',
         success: function(){
           console.log('success!');
