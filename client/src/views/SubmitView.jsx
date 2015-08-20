@@ -57,7 +57,7 @@ var SubmitView = React.createClass({
 
   checkTestCases: function(){
     var regex = this.createRegExp();
-    console.log(regex);
+    var qNumber = this.props.questions.length;
     var passing = this.truthy();
     var failing = this.falsy();
     var passTruthy = true;
@@ -79,12 +79,16 @@ var SubmitView = React.createClass({
     if(passTruthy && passFalsy){
       //if all test 'pass' then submit a question object to the server
       console.log('passing');
+      console.log(qNumber);
+      qNumber++;
+      console.log(qNumber);
       this.submit({
         title: this.refs.challengeTitle.getValue(),
         description: this.refs.challengeDescription.getValue(),
         truthy: passing,
         falsy: failing,
-        solution: this.refs.challengeAnswer.getValue()
+        solution: this.refs.challengeAnswer.getValue(),
+        qNumber: qNumber
       });
     }
   },
