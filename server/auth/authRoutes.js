@@ -3,10 +3,10 @@ module.exports = function(app, passport) {
     function(req, res) {
       // will never be called
     });
-  app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: /*failpage*/ }),
-    function(req, res) {
-      res.redirect(/*mainpage*/);
-    });
+  //app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: /*failpage*/ }),
+  //  function(req, res) {
+  //    res.redirect(/*mainpage*/);
+  //  });
 
   // signup/login only used for local auth
   // app.post('/signup', authController.signup);  
