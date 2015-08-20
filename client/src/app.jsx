@@ -93,7 +93,6 @@ var App = React.createClass({
       success: function(data){
         console.log('user', data);
         that.setState({user: data});
-        console.log(that.state(user));
       }.bind(this),
       error: function(xhr, status, err){
         console.error(xhr, status, err.message);

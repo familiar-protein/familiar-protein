@@ -22,6 +22,8 @@ module.exports = function(passport){
   },
 
   function(token, refreshToken, profile, done){
+    console.log('USER PROFILE INFO', profile._json);
+
     
     process.nextTick(function(){
 
@@ -34,12 +36,26 @@ module.exports = function(passport){
         }else{
           var newUser = new User();
 
-          console.log(profile._json);
+          for (var i = 0; i < profile._json.placesLived.length; i++ ) {
+            if (profile._json.placesLived[i].primary === true) {
+              var location = profile._json.placesLived[i].value;
+            }
+          }
 
+          function getPathFromUrl(url) {
+            console.log(url);
+            return url.split("?")[0];
+          }
+          console.log(profile._json.url);
           newUser.google.id = profile.id;
           newUser.google.token = token;
           newUser.google.name = profile.displayName;
-          newUser.google.image = profile._json.image.url || null;
+          newUser.google.url = profile._json.url;
+          newUser.google.location = location;
+          newUser.google.aboutMe = profile._json.aboutMe;
+          newUser.google.tagline = profile._json.tagline;
+          newUser.google.profileCover = profile._json.cover.coverPhoto.url || null;
+          newUser.google.profileImage = getPathFromUrl(profile._json.image.url) || null;
 
           newUser.save(function(err){
             if(err)
