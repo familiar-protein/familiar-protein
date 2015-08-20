@@ -55,7 +55,10 @@ var App = React.createClass({
 
   // AJAX request to the server to check if the client is logged in.
   // This is probably a DIRTY way to do it. REALLY DIRTY.
+  
   isLoggedIn: function() {
+    // console.log("EXECUTING isLoggedIn");
+    // console.log("URL", window.location.origin);
     $.ajax({
       url: window.location.origin + '/loggedin',
       method: 'GET',
