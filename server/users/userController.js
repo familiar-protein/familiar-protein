@@ -45,22 +45,28 @@ var login = function(req,res,next){
           utils.createSession(req, res, data);
           res.statusCode = 200;
           console.log("SUCCESSFULLY LOGGED IN!");
-          res.send({response: "SUCCESSFULLY LOGGED IN!"});
+          res.send({response: "SUCCESSFULLY LOGGED IN!", loggedIn: utils.isLoggedIn(req)});
         }else{
-          res.statusCode = 400;
+          res.statusCode = 401;
           console.log("WRONG PASSWORD");
-          res.send({response: "WRONG PASSWORD"});
+          res.send({response: "WRONG PASSWORD", loggedIn: false});
         }
       });
     }else{
-      res.statusCode = 400;
+      res.statusCode = 401;
       console.log("WRONG USERNAME");
-      res.send({response: "WRONG USERNAME"});
+      res.send({response: "WRONG USERNAME", loggedIn: false});
     }
   });
 };
 
+// Simply check whether the user is logged in based on a cookie.
+var checkLoggedIn = function(req, res, next) {
+  res.send({loggedIn: utils.isLoggedIn(req)});
+}
+
 module.exports = {
   signup: signup,
-  login: login
+  login: login,
+  checkLoggedIn: checkLoggedIn
 };

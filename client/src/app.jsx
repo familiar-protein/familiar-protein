@@ -20,7 +20,8 @@ var App = React.createClass({
   getInitialState: function(){
     return {
       questions: [],
-      user: {}
+      user: {},
+      loggedIn: false
     };
   },
 
@@ -41,15 +42,38 @@ var App = React.createClass({
     });
   },
 
-
   componentDidMount: function(){
     this.loadAllQuestions();
+  },
+
+  // Whenever we update any component that's a child of our app,
+  // let's kick off a request to check if we aren't logged in.
+  componentDidUpdate: function() {
+    this.isLoggedIn();
+    //console.log("CURRENT STATE: ", this.state.loggedIn);
+  },
+
+  // AJAX request to the server to check if the client is logged in.
+  // This is probably a DIRTY way to do it. REALLY DIRTY.
+  isLoggedIn: function() {
+    $.ajax({
+      url: window.location.origin + '/loggedin',
+      method: 'GET',
+      dataType: 'json',
+      success: function(data){
+        //this.props.loggedIn = data.loggedIn;
+        this.setState({loggedIn: data.loggedIn});
+      }.bind(this),
+      error: function(xhr, status, err){
+        console.error(xhr, status, err.message);
+      }
+    });
   },
 
   render: function() {
     return (
       <div className="container">
-        <NavBarView />
+        <NavBarView loggedIn={this.state.loggedIn} />
         <RouteHandler questions={this.state.questions} user={this.state.user} />
       </div>
     )

@@ -12,4 +12,8 @@ module.exports = function (app) {
     res.redirect('/');
     res.end();
   });
+
+  // This is probably an inefficient way to do this, but
+  // check whether or not a cookie has been set for the user.
+  app.get('/loggedin', userController.checkLoggedIn);
 };
