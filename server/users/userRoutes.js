@@ -17,5 +17,9 @@ module.exports = function (app, passport) {
   app.get('/logout', function(req, res){
     req.logout();
     res.redirect('/');
-  })
+  }); //app.get
+
+  app.post('/user/solved', function(){
+    console.log("TEST inside user/solved ----->");
+  }); //app.post   
 };

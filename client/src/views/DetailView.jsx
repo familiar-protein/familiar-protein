@@ -124,6 +124,29 @@ var DetailView = React.createClass({
     }.bind(this), interval); //setInterval
 
   },
+  nextProblem: function(){ //reset timer and solved when user clicks next problem link
+    this.setState({
+      'solved':false,
+      'elapsed':0,
+      'startTime':new Date(),
+      'result': ''
+    });
+  },
+  submitSolution: function(data){ //submit user solution to database
+    console.log('TEST inside submitSolution');
+    $.ajax({
+      url: window.location.origin + '/user/solved',
+      method: 'POST',
+      data: JSON.stringify('hellow world'),
+      dataType: 'json',
+      success: function(){
+        console.log('success!');
+      },
+      error: function(xhr, status, err){
+        console.log(err);
+      }
+    }); //ajax
+  },
   render: function() {
     // this.startTimer();
     /*** Questions ***/
@@ -141,14 +164,6 @@ var DetailView = React.createClass({
       return <div></div>;
     }
 
-    // var SuccessView = React.createClass({
-    //   render: function() {
-    //     return (
-    //       <p> {'Hello World!'}</p>
-    //     );
-    //   }
-    // });
-
     return (
       <div className="question-solve">
         <div className="row">
@@ -164,22 +179,22 @@ var DetailView = React.createClass({
         <h2 className='timer'>Time Elapsed: {this.state.elapsed}</h2> {/*timer*/}
 
         <form className="form-inline text-center">
-          <span className="solution">/<TextField hintText="You can solve it!" floatingLabelText="Regex solution..." type="text" ref="solutionText" onChange={this.setRegex} className="regex"/>/<TextField  floatingLabelText="Put your flags here..." type="text" ref="solutionTextFlags" onChange={this.setRegex} className="regex"/></span>
+          <span className="solution">/<TextField value={this.state.result} hintText="You can solve it!" floatingLabelText="Regex solution..." type="text" ref="solutionText" onChange={this.setRegex} className="regex"/>/<TextField  floatingLabelText="Put your flags here..." type="text" ref="solutionTextFlags" onChange={this.setRegex} className="regex"/></span>
 
           {this.state.solved === null ? <p className="error-msg">Please provide valid regular expression</p> : null}
-          {(function(){
+          {(function(){ //custom function which injects code based on if statement
+            // console.log('TEST state.solved = '+this.state.solved);
             if(this.state.solved){
-              // console.log('Test here!');
               return (
                 <h3 className='success'>
                   {"Success!!! Solved All Test Cases!  "}
-                 <a href={"/#/question/"+(parseInt(this.props.params.qNumber)+1)}>Next Problem</a>
-                  // <Link to="question" params={{qNumber: "2"}} />
+                 <a href={"/#/question/"+(parseInt(this.props.params.qNumber)+1)} onClick={this.nextProblem} /*onClick={this.submitSolution}*/>Next Problem</a>
                 </h3>
-              ) //return 
+              )//return 
+            }else{
+              return null;
             }
           }.bind(this))()} 
-
         </form>
 
         <div className="test-cases">
