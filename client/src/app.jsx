@@ -99,6 +99,7 @@ var App = React.createClass({
         console.error(xhr, status, err.message);
         that.setState({user: 'error'});
       }.bind(this)
+
     });
   },
 

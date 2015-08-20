@@ -9,6 +9,17 @@ var injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
 var Link = Router.Link;
 
+// var time = 0; 
+// var startTime = new Date();
+// var interval = 1000;
+
+// // TEST: set interval when the page loads?
+// setInterval(function(){
+//   var currentTime = new Date();
+//   time = Math.round((currentTime - startTime)/1000); 
+
+//   console.log("TEST ----> time=" + time);
+// }, interval);
 
 var DetailView = React.createClass({
 
@@ -29,6 +40,7 @@ var DetailView = React.createClass({
       result: '',
       flag: '',
       solved: false,
+      elapsed: 0 //initial time
     };
   },
 
@@ -97,8 +109,27 @@ var DetailView = React.createClass({
       return null;
     }
   },
+  componentDidMount: function(){
+    /*** Timer ***/
+    var startTime = new Date();
+    var interval = 1000;
+    this.setState({elapsed:0}); //init
+    // TEST: set interval when the page loads?
+    setInterval(function(){
+      var currentTime = new Date();
+      
+      this.setState({
+        elapsed: Math.round((currentTime - startTime)/1000)
+      });
+
+      // console.log("TEST ----> elapsed=" + this.state.elapsed);
+    }.bind(this), interval); //setInterval
+
+  },
 
   render: function() {
+    // this.startTimer();
+    /*** Questions ***/
     var question = this.props.questions[this.props.params.qNumber - 1];
 
     if (this.props.questions.length > 0 && question === undefined) {
@@ -125,6 +156,8 @@ var DetailView = React.createClass({
             </div>
         </div>
 
+        <h2 className='timer'>Time Elapsed: {this.state.elapsed}</h2> {/*timer*/}
+        
         <form className="form-inline text-center">
           <span className="solution">/<TextField hintText="You can solve it!" floatingLabelText="Regex solution..." type="text" ref="solutionText" onChange={this.setRegex} className="regex"/>/<TextField  floatingLabelText="Put your flags here..." type="text" ref="solutionTextFlags" onChange={this.setRegex} className="regex"/></span>
 

@@ -26,7 +26,7 @@ body {
 }
 
 form {
-  margin: 60px 0;
+  margin: 30px 0px 60px 0;
 }
 
 .regex {
@@ -50,6 +50,7 @@ form {
 .bottom-space {
   margin-bottom: 50px;
 }
+
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
@@ -58,4 +59,7 @@ form {
 .material-icons.margin-10 {
   margin: 10px;
 }
-
+ 
+.timer{
+  text-align:center;
+}
