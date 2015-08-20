@@ -50,7 +50,6 @@ var App = React.createClass({
   // let's kick off a request to check if we aren't logged in.
   componentDidUpdate: function() {
     this.isLoggedIn();
-    console.log('Component updating!');
   },
 
   // AJAX request to the server to check if the client is logged in.
