@@ -1,10 +1,10 @@
 var React = require('react');
 
-var requireAuth = require('./../utils/authWrapper.jsx');
+//var requireAuth = require('./authWrapper.jsx');
 var Router = require('react-router');
 var Link = Router.Link;
-
-var OverView = requireAuth(React.createClass({
+//requireAuth(
+var OverView = React.createClass({
   render: function() {
     var questions = this.props.questions.map(function(question) {
       return (
@@ -26,6 +26,7 @@ var OverView = requireAuth(React.createClass({
       </div>
     );
   }
-}));
+});
+//)
 
 module.exports = OverView;

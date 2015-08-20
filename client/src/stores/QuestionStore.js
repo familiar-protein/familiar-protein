@@ -30,7 +30,10 @@ var QuestionStore = assign({}, EventEmitter.prototype, { // assign === _.extend
 
 QuestionStore.dispatchToken = Dispatcher.register(function (action) {
   if (action.type === 'QUESTIONS_LOADED') {
-    QuestionStore.loadedQuestions(action.questions);
+    console.log('Got questions');
+    QuestionStore.loadQuestions(action.questions);
     QuestionStore.emitChange();
   }
 });
+
+module.exports = QuestionStore;

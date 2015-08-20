@@ -18,7 +18,6 @@ module.exports = {
     cb = arguments[arguments.length - 1];
     if (localStorage.token) {
       if (cb) cb(true);
-      this.onChange(true);
       return;
     }
     var context = this;
@@ -26,10 +25,8 @@ module.exports = {
       if(res.authenticated) {
         localStorage.token = res.token;
         if (cb) cb(true);
-        context.onChange(true);
       } else {
         if (cb) cb(false);
-        context.onChange(false);
       }
     });
   },
@@ -41,7 +38,7 @@ module.exports = {
   logout: function (cb) {
     delete localStorage.token;
     if (cb) cb();
-    this.onChange(false);
+    //this.onChange(false);
   },
 
   loggedIn: function () {
