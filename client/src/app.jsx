@@ -146,12 +146,13 @@ var App = React.createClass({
     };
 
     if (this.state.user !== undefined) {
-      console.log('USER', this.state.user);
+      var username = this.state.user.google.name;
+      var loginandout = <MenuItem value="login" primaryText="Logout" leftIcon={<i className="material-icons md-light md-24">swap_horiz</i>}/>
     } else {
-      console.log('USER undefined');
+      var username = '';
+      var loginandout = <MenuItem value="login" primaryText="Login" leftIcon={<i className="material-icons md-light md-24">swap_horiz</i>}/>
     }
 
-    //Login: http://localhost:3000/auth/google
     return (
       <div>
         <LeftNav ref="leftNav" 
@@ -165,6 +166,9 @@ var App = React.createClass({
           onLeftIconButtonTouchTap={this._handleClick} 
           iconElementRight={
             <div>
+            <div className="username" style={{float: 'left'}}>
+              {username}
+            </div>
               <IconMenu
                 desktop={true} 
                 iconButtonElement={
@@ -175,7 +179,7 @@ var App = React.createClass({
                 valueLink={iconMenuValueLink}>
                 <MenuItem value="user" primaryText="User" leftIcon={<i className="material-icons md-light md-24">face</i>}/>
                 <MenuItem value="test" primaryText="Test" leftIcon={<i className="material-icons md-light md-24">star</i>}/>
-                <MenuItem value="login" primaryText="Login / Logout" />
+                {loginandout}
               </IconMenu>
             </div>
           } /> {/* appBar */}

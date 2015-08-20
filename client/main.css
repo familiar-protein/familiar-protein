@@ -50,14 +50,36 @@ form {
 .bottom-space {
   margin-bottom: 50px;
 }
-
+.username { 
+  margin: .8em;
+  color: rgba(255, 255, 255, 0.87);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-flex: 1;
+  flex: 1; 
+}
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
-.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light { color: rgba(255, 255, 255, 0.87); }
 .material-icons.margin-10 { margin: 10px; }
  
 .timer{
   text-align:center;
 }
+.btn, .btn-primary, .btn-lg {
+  border-radius: 0;
+}
+
+.btn-primary {
+  background-color: #00bcd4;
+  border-color:#14A7BB;
+}
+
+/*.btn-primary:hover {
+  color: #fff;
+  background-color: #286090;
+  border-color: #204d74;
+}*/
