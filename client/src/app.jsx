@@ -61,9 +61,17 @@ var App = React.createClass({
       method: 'GET',
       dataType: 'json',
       success: function(data){
-        //this.props.loggedIn = data.loggedIn;
+        console.log('DATA!!!! ', data);
         if (this.state.loggedIn != data.loggedIn) {
-          this.setState({loggedIn: data.loggedIn});
+          this.setState({
+            loggedIn: data.loggedIn,
+            user: data.userInfo
+          });
+
+          if (data.loggedIn === false) {
+            //this.setState({user: {}});  // Clear out clientside user info if / when we log out.
+          }
+          console.log ("USER INFO: ", this.state.user);
         }
       }.bind(this),
       error: function(xhr, status, err){

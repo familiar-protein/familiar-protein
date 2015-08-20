@@ -44,8 +44,13 @@ var login = function(req,res,next){
         if (match){
           utils.createSession(req, res, data);
           res.statusCode = 200;
+          console.log('SESSION DATA: ', req.session.user);
           console.log("SUCCESSFULLY LOGGED IN!");
-          res.send({response: "SUCCESSFULLY LOGGED IN!", loggedIn: utils.isLoggedIn(req)});
+          res.send({
+            response: "SUCCESSFULLY LOGGED IN!", 
+            loggedIn: utils.isLoggedIn(req),
+            userInfo: req.session.user
+          });
         }else{
           res.statusCode = 401;
           console.log("WRONG PASSWORD");
@@ -62,7 +67,8 @@ var login = function(req,res,next){
 
 // Simply check whether the user is logged in based on a cookie.
 var checkLoggedIn = function(req, res, next) {
-  res.send({loggedIn: utils.isLoggedIn(req)});
+  var userData = req.session.user || null;
+  res.send({loggedIn: utils.isLoggedIn(req), user: userData});
 }
 
 module.exports = {
