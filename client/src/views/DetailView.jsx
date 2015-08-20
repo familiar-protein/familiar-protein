@@ -9,24 +9,20 @@ var injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
 var Link = Router.Link;
 
-// var time = 0; 
-// var startTime = new Date();
-// var interval = 1000;
-
-// // TEST: set interval when the page loads?
-// setInterval(function(){
-//   var currentTime = new Date();
-//   time = Math.round((currentTime - startTime)/1000); 
-
-//   console.log("TEST ----> time=" + time);
-// }, interval);
-
 var DetailView = React.createClass({
 
+  statics: {
+    // willTransitionTo: function (transition, params, query, callback) {
+    //   console.log('TEST---> everytime this loads');
+    // } // willTransitionTo()
+    willTransitionTo: function(){
+      console.log("TEST --> willTransitionTo");
+      // this.startTimer();
+    } //willTransitionTo()
+  }, //statics
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
-
   getChildContext: function() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
@@ -40,7 +36,8 @@ var DetailView = React.createClass({
       result: '',
       flag: '',
       solved: false,
-      elapsed: 0 //initial time
+      elapsed: 0, //initial time
+      startTime: new Date()
     };
   },
 
@@ -110,22 +107,21 @@ var DetailView = React.createClass({
     }
   },
   componentWillReceiveProps: function(){
-    /*** Timer ***/
-    // var startTime = new Date();
-    // var interval = 1000;
-    // this.setState({elapsed:0}); //init
-    // // TEST: set interval when the page loads?
-    // setInterval(function(){
-    //   var currentTime = new Date();
-      
-    //   this.setState({
-    //     elapsed: Math.round((currentTime - startTime)/1000)
-    //   });
-
-    //   // console.log("TEST ----> elapsed=" + this.state.elapsed);
-    // }.bind(this), interval); //setInterval
   },
   componentDidMount: function(){ //whenever 
+    /*** Timer ***/
+    // var startTime = new Date();
+    var interval = 1000;
+    // this.setState({elapsed:0}); //init
+    // TEST: set interval when the page loads?
+    setInterval(function(){
+      var currentTime = new Date();
+      
+      this.setState({
+        elapsed: Math.round((currentTime - this.state.startTime)/1000)
+      });
+      // console.log("TEST ----> elapsed=" + this.state.elapsed);
+    }.bind(this), interval); //setInterval
 
   },
   render: function() {
@@ -161,7 +157,7 @@ var DetailView = React.createClass({
             <p>{question.description}</p>
           </div>
             <div className="col-sm-2 back">
-              <RaisedButton label="Back" linkButton="true" href="/#/"/>
+              <RaisedButton label="Back" linkButton="true" href="/#/questions"/>
             </div>
         </div>
 
