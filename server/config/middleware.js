@@ -13,5 +13,6 @@ module.exports = function(app) {
   // Handle routing for users and questions
   userRoutes(app);
   questionRoutes(app);
+  gameRoutes(app);
 };
 

@@ -26,7 +26,7 @@ var CreateGameView = React.createClass({
       method: "POST",
       dataType: "json",
       contentType: "application/json; charset=utf-8",
-      data: JSON.stringify(gameID),
+      data: JSON.stringify(game),
       success: function(data){
         console.log("Successfully created game", data);
       },
