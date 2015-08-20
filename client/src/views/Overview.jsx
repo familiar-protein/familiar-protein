@@ -1,6 +1,6 @@
 var React = require('react');
 
-//var requireAuth = require('./authWrapper.jsx');
+var requireAuth = require('./authWrapper.jsx');
 var Router = require('react-router');
 var Link = Router.Link;
 //requireAuth(
