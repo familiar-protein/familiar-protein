@@ -4,6 +4,8 @@ var Router = require('react-router');
 var Navigation = Router.Navigation;
 var Link = Router.Link;
 
+var ViewActions = require('./../actions/ViewActions');
+var SolutionStore = require('./../stores/SolutionStore');
 
 var DetailView = React.createClass({
   mixins: [Navigation],
@@ -12,12 +14,25 @@ var DetailView = React.createClass({
     return {
       result: '',
       solved: false,
+      solutions: []
     };
+  },
+
+  componentDidMount: function(){
+    var context = this;
+    SolutionStore.addListener(function(){
+      context.state.solutions = SolutionStore.getSolutions();
+    });
   },
 
   setRegex: function() {
     var value = React.findDOMNode(this.refs.solutionText).value;
     var solved = this.isSolved(value);
+
+    if(solved){
+      ViewActions.loadSolutions();
+    }
+
     this.setState({
       result: value,
       solved: solved
@@ -107,6 +122,7 @@ var DetailView = React.createClass({
 
           {this.state.solved === null ? <p className="error-msg">Please provide valid regular expression</p> : null}
           {this.state.solved ? <h3 className="success">Success!!! Solved All Test Cases!</h3> : null}
+          {this.state.solutions}
         </form>
 
         <div className="test-cases">
