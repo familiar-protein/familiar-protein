@@ -78,9 +78,6 @@ var SubmitView = React.createClass({
     });
     if(passTruthy && passFalsy){
       //if all test 'pass' then submit a question object to the server
-      console.log('passing');
-      console.log(qNumber);
-      qNumber++;
       console.log(qNumber);
       this.submit({
         title: this.refs.challengeTitle.getValue(),
@@ -90,6 +87,8 @@ var SubmitView = React.createClass({
         solution: this.refs.challengeAnswer.getValue(),
         qNumber: qNumber
       });
+    }else{
+      alert('Unable to submit, Your solution does not soleve the problem. Please try again');
     }
   },
 

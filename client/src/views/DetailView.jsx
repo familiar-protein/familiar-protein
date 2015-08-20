@@ -69,7 +69,7 @@ var DetailView = React.createClass({
   },
 
   displayTestCases: function(string, condition) { //string=truthy or falsy
-    var question = this.props.questions[this.props.params.qNumber - 1];
+    var question = this.props.questions[this.props.params.qNumber];
     return question[string].map(function(testCase) {
       return (
         <p key={testCase} className={this.checkTestCase(testCase, condition)}>{testCase}</p>
@@ -88,7 +88,7 @@ var DetailView = React.createClass({
   },
 
   isSolved: function(regexString, flag) {
-    var question = this.props.questions[this.props.params.qNumber - 1];
+    var question = this.props.questions[this.props.params.qNumber];
 
     var truthy = question['truthy']
     var falsy = question['falsy'];
@@ -130,7 +130,7 @@ var DetailView = React.createClass({
   render: function() {
     // this.startTimer();
     /*** Questions ***/
-    var question = this.props.questions[this.props.params.qNumber - 1];
+    var question = this.props.questions[this.props.params.qNumber];
 
     if (this.props.questions.length > 0 && question === undefined) {
       this.transitionTo('/');
