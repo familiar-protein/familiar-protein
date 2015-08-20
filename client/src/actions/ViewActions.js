@@ -11,6 +11,13 @@ var ViewActions = {
     ApiUtils.loadAllQuestions();
   },
 
+  loadSolutions: function () {
+    Dispatcher.dispatch({
+      type: ActionTypes.LOAD_SOLUTIONS
+    });
+    ApiUtils.loadSolutions();
+  },
+
   login: function (user, pass) {
     Auth.login(user, pass, function (isAuthenticated) {
       Dispatcher.dispatch({

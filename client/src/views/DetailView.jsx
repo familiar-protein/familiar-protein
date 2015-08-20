@@ -4,6 +4,8 @@ var Router = require('react-router');
 var Navigation = Router.Navigation;
 var Link = Router.Link;
 
+var ViewActions = require('./../actions/ViewActions');
+var SolutionStore = require('./../stores/SolutionStore');
 
 var DetailView = React.createClass({
   mixins: [Navigation],
@@ -15,9 +17,20 @@ var DetailView = React.createClass({
     };
   },
 
+  componentDidMount: function(){
+    SolutionStore.addListener(function(){
+      console.log("Solution Data Received:", SolutionStore.getSolutions());
+    })
+  },
+
   setRegex: function() {
     var value = React.findDOMNode(this.refs.solutionText).value;
     var solved = this.isSolved(value);
+
+    if(solved){
+      ViewActions.loadSolutions();
+    }
+
     this.setState({
       result: value,
       solved: solved
