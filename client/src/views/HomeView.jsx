@@ -20,7 +20,7 @@ var HomeView = React.createClass({
   },
   getInitialState: function(){
     return {
-      user: 'nobody'
+      user: undefined
     };
   },
   render: function() {
