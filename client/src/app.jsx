@@ -56,6 +56,7 @@ var App = React.createClass({
   // AJAX request to the server to check if the client is logged in.
   // This is probably a DIRTY way to do it. REALLY DIRTY.
   isLoggedIn: function() {
+    var context = this;
     $.ajax({
       url: window.location.origin + '/loggedin',
       method: 'GET',
@@ -66,12 +67,13 @@ var App = React.createClass({
           this.setState({
             loggedIn: data.loggedIn,
             user: data.userInfo
+          }, function() {
+            console.log ("USER INFO: ", context.state.user);
           });
 
           if (data.loggedIn === false) {
-            //this.setState({user: {}});  // Clear out clientside user info if / when we log out.
+            //this.setState({loggedIn: false, user: {}});  // Clear out clientside user info if / when we log out.
           }
-          console.log ("USER INFO: ", this.state.user);
         }
       }.bind(this),
       error: function(xhr, status, err){
