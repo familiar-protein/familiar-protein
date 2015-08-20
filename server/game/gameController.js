@@ -20,6 +20,22 @@ var makeGame = function(req, res, next){
   });
 };
 
+var getGame = function(req, res, next){
+
+  console.log("getting game");
+
+  Game.findById(req.body.code).exec(function(err, data){
+    if (err){
+      console.log("ERROR: ", err);
+      res.send(500,err);
+    }else{
+      res.status(200).send(data);
+    }
+  });
+
+};
+
 module.exports = {
-  makeGame: makeGame
+  makeGame: makeGame,
+  getGame: getGame
 };
