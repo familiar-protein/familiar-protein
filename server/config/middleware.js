@@ -2,6 +2,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var userRoutes = require('../users/userRoutes');
 var questionRoutes = require('../questions/questionRoutes');
+var gameRoutes = require('../game/gameRoutes');
 
 module.exports = function(app) {
   app.use(bodyParser.json());
