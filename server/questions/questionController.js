@@ -6,7 +6,10 @@ var add = function(req, res, next) {
   var question = {
     qNumber: req.body.qNumber,
     title: req.body.title,
-    description: req.body.description
+    description: req.body.description,
+    truthy: req.body.truthy,
+    falsy: req.body.falsy,
+    solution: req.body.solution
   }
 
   var newQ = new Question(question);

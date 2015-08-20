@@ -6,7 +6,8 @@ var QuestionSchema = new mongoose.Schema({
   title: String,
   description: String,
   truthy: [String],
-  falsy: [String]
+  falsy: [String],
+  solution: String
   // examples?
 });
 
