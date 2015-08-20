@@ -37,9 +37,9 @@ var getGame = function(req, res, next){
 };
 
 var updateGame = function(req,res,next){
-  Game.findByIdAndUpdate(
-      req.body.code,
-      {$push: {"players": {name: "hardcode"}}},
+  Game.findOneAndUpdate(
+      {"_id":req.body.code},
+      {$push: {"players": {username: "hardcode", currentRound: 1}}},
       {safe: true, upsert: true, new: true},
       function(err, model){
         if (err){
