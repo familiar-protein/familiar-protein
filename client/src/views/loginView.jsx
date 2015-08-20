@@ -8,6 +8,8 @@ var Login = React.createClass({
     return (
       <div>
         <a href='/auth/google'>login</a>
+        <a href='/logout'>logout</a>
+
       </div>
     );
   }

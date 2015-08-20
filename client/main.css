@@ -56,9 +56,7 @@ form {
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
-.material-icons.margin-10 {
-  margin: 10px;
-}
+.material-icons.margin-10 { margin: 10px; }
  
 .timer{
   text-align:center;
