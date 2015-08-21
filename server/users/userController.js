@@ -1,6 +1,7 @@
 var User = require('./userModel');
 var bcrypt = require('bcrypt');
 var utils = require('../lib/utilities');
+var url = require('url');
 
 var signup = function(req,res,next){
   console.log("req.body === ",req.body);
@@ -64,6 +65,33 @@ var login = function(req,res,next){
   });
 };
 
+var getUserInfo = function(req, res, next) {
+  var url_parts = url.parse(req.url,true);
+  var username = url_parts.query.username;
+  //res.send("Username: " + username);
+
+  User.findOne({username: username})
+  .exec(function(err, data){
+    if (err) { console.log("ERROR", err);}
+    
+    if (data !== null) {
+      // check that the passwords match if so, log in else don't
+      if (err){console.log(err);}
+      var userData = data;
+      userData.password = ""; // Remove password from the API request. Deeeerp. 
+
+      res.statusCode = 200;
+      res.send({
+        response: "Found user profile!", 
+        userInfo: userData
+      });
+    }else{
+      res.statusCode = 401;
+      res.send({response: "No user found"});
+    }
+  });
+}
+
 // Simply check whether the user is logged in based on a cookie.
 var checkLoggedIn = function(req, res, next) {
   var userData = req.session.user || null;
@@ -71,7 +99,8 @@ var checkLoggedIn = function(req, res, next) {
 }
 
 module.exports = {
-  signup: signup,
+  checkLoggedIn: checkLoggedIn,
+  getUserInfo: getUserInfo,
   login: login,
-  checkLoggedIn: checkLoggedIn
+  signup: signup
 };

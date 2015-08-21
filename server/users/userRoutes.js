@@ -6,6 +6,8 @@ module.exports = function (app) {
   app.post('/signup', userController.signup);
   app.post('/login', userController.login);
 
+  app.get('/user', userController.getUserInfo);
+
   app.get('/logout', function(req, res) {
     console.log('Logging out');
     req.session.reset(); // Destroy our current session when the user logs out.
