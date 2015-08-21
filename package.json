@@ -28,7 +28,8 @@
     "passport-google-oauth": "^0.2.0",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
-    "react-tap-event-plugin": "^0.1.7"
+    "react-tap-event-plugin": "^0.1.7",
+    "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
     "chai": "^3.2.0",

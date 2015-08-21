@@ -201,46 +201,57 @@ var DetailView = React.createClass({
     }
 
     return (
-      <div className="question-solve">
+
+      <div className="panel question-solved col-xs-12 ">
         <div className="row">
-          <div className="col-sm-10">
+          <div className="col-xs-10 col-sm-8">
             <h2>{question.title}</h2>
             <p>{question.description}</p>
           </div>
-
-          <div className="col-sm-2 back">
+          <div className="col-xs-2 col-sm-4 back ">
             <RaisedButton label="Back" linkButton="true" href="/#/questions"/>
           </div>
-
         </div>{/*question-solve*/}
+        
+        <div className='row'>
+          <div className="col-sm-12">
+            <h2 className='timer'>Time Elapsed: {this.state.elapsed}</h2> {/*timer*/}
+          </div>
+        </div>
+        
+        <div className='row'>
+          <div className="col-sm-12">
+            <form className="form-inline text-center">
+              <span className="solution">/<TextField value={this.state.result} hintText="You can solve it!" floatingLabelText="Regex solution..." type="text" ref="solutionText" onChange={this.setRegex} className="regex"/>/<TextField  floatingLabelText="Put your flags here..." type="text" ref="solutionTextFlags" onChange={this.setRegex} className="regex"/></span>
 
-        <h2 className='timer'>Time Elapsed: {this.state.elapsed}</h2> {/*timer*/}
+              {this.state.solved === null ? <p className="error-msg">Please provide valid regular expression</p> : null}
+              {(function(){ //custom function which injects code based on if statement
+                // console.log('TEST state.solved = '+this.state.solved);
+                if(this.state.solved){
+                  return (
+                    <h3 className='success'>
+                      {"Success!!! You earned "}<span>{this.calcScore()}</span>{" points. "}
+                     <a href={"/#/question/"+(parseInt(this.props.params.qNumber)+1)} onClick={this.nextProblem} /*onClick={this.submitSolution}*/>Next Problem</a>
+                    </h3>
+                  )//return 
+                }else{
+                  return null;
+                }
+              }.bind(this))()} 
+            </form>
+          </div>
+        </div>
 
-        <form className="form-inline text-center">
-          <span className="solution">/<TextField value={this.state.result} hintText="You can solve it!" floatingLabelText="Regex solution..." type="text" ref="solutionText" onChange={this.setRegex} className="regex"/>/<TextField  floatingLabelText="Put your flags here..." type="text" ref="solutionTextFlags" onChange={this.setRegex} className="regex"/></span>
+        <div className="test-cases row">
+          <div className='col-xs-12'>
+            <p className="instruction">{'Make all words turn green to complete the challenge'}</p>
+          </div>
+        </div>
 
-          {this.state.solved === null ? <p className="error-msg">Please provide valid regular expression</p> : null}
-          {(function(){ //custom function which injects code based on if statement
-            // console.log('TEST state.solved = '+this.state.solved);
-            if(this.state.solved){
-              return (
-                <h3 className='success'>
-                  {"Success!!! You earned "}<span>{this.calcScore()}</span>{" points. "}
-                 <a href={"/#/question/"+(parseInt(this.props.params.qNumber)+1)} onClick={this.nextProblem} /*onClick={this.submitSolution}*/>Next Problem</a>
-                </h3>
-              )//return 
-            }else{
-              return null;
-            }
-          }.bind(this))()} 
-        </form>
-
-        <div className="test-cases">
-
-          <p className="instruction">{'Make all words turn green to complete the challenge'}</p>
+        <div className='row'>
           <div className="col-sm-6 text-center">
-            <h3>{'Should match'}</h3>
-            {this.displayTestCases('truthy', true)}
+              <h3>{'Should match'}</h3>
+              {this.displayTestCases('truthy', true)}
           </div>
           <div className="col-sm-6 text-center">
             <h3>{'Should not match'}</h3>
