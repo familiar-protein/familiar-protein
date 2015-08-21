@@ -1,13 +1,14 @@
 var React = require('react');
 var Router = require('react-router');
 var Navigation = Router.Navigation;
+var RouterState = Router.State;
 var UserStore = require('../stores/UserStore');
 
 var Auth = require('./../utils/auth.jsx');
 var ViewActions = require('./../actions/ViewActions');
 
 var LoginView = React.createClass({
-  mixins: [Navigation],
+  mixins: [Navigation, RouterState],
 
   contextTypes: {
     router: React.PropTypes.func.isRequired
@@ -37,21 +38,7 @@ var LoginView = React.createClass({
     //var pass = this.refs.password.getDOMNode().value;
 
     ViewActions.login(user);
-    
-    // move to action
-    // Auth.login(user, pass, function(success){
-    //   console.log(success);
-    //   if(!success){
-    //     return context.setState({error: true});
-    //   }
-    //   if (nextPath) {
-    //     router.replaceWith(nextPath);
-    //   } else {
-    //     router.replaceWith('/default');
-    //   }
-    // });
-
-    //this.transitionTo('default');
+    this.transitionTo('default');
   },
   render: function(){
     return(
