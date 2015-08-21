@@ -31,7 +31,7 @@ var App = React.createClass({
       questions: QuestionStore.getQuestions(),
       loggedIn: UserStore.getState().loggedIn
     })
-    console.log(this.state);
+    // console.log(this.state);
   },
 
   componentWillMount: function(){

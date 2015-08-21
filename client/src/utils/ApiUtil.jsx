@@ -23,7 +23,7 @@ var ApiUtils = {
         data.sort(function(a, b){
           return a.qNumber - b.qNumber;
         });
-        console.log(data);
+        // console.log(data);
         ServerActions.questionsLoaded(data);
         //this.setState({questions: data});
       }.bind(this),
@@ -45,9 +45,24 @@ var ApiUtils = {
     })
   },
   
-  loadSolutions: function () {
+  loadSolutions: function (qId) {
     //TODO: Actual request to server
-    ServerActions.solutionsLoaded(solutions);
+    // console.log("Loading solutions for question ID: ", qId);
+
+    var loadSolutions = function(solutions){
+      // console.log('Got from server: ', solutions);
+      ServerActions.solutionsLoaded(solutions);
+    };
+
+    $.ajax({
+      url: window.location.origin + '/solutions/' + qId,
+      method: 'GET',
+      dataType: 'json',
+      success: loadSolutions,
+      error: function (xhr, status, err) {
+        console.log(xhr, status, err.message);
+      }
+    })
   },
 
   incrementSolutionVote: function (solutionId){

@@ -11,11 +11,11 @@ var ViewActions = {
     ApiUtils.loadAllQuestions();
   },
 
-  loadSolutions: function () {
+  loadSolutions: function (qId) {
     Dispatcher.dispatch({
       type: ActionTypes.LOAD_SOLUTIONS
     });
-    ApiUtils.loadSolutions();
+    ApiUtils.loadSolutions(qId);
   },
 
   voteForSolution: function (solutionId) {

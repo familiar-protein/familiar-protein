@@ -21,6 +21,11 @@ var SolutionView = React.createClass({
     SolutionStore.addListener(this.getSolutions);
   },
 
+  componentWillUnmount: function(){
+    // console.log("unmounted");
+    SolutionStore.removeChangeListener(this.getSolutions);
+  },
+
   vote: function(solutionId){
     
     //TODO: Implement voting
@@ -28,17 +33,19 @@ var SolutionView = React.createClass({
   },
 
   render: function(){
-    console.log("rendering");
     var context = this;
     var solutions = this.state.solutions.map(function(solution) {
       return (
-        <tr key={solution.id}>
+        <tr key={solution._id}>
+        <td className="solution-description">
+          {solution.userId.username}
+        </td>
           <td className="solution-description">
-            {solution.solution}
+            {solution.content}
           </td>
           <td>{solution.votes}</td>
           <td>
-            <button onClick={context.vote.bind(context, solution.id)} className="btn btn-primary">UpVote</button>
+            <button onClick={context.vote.bind(context, solution._id)} className="btn btn-primary">UpVote</button>
           </td>
         </tr>
       )
@@ -49,6 +56,7 @@ var SolutionView = React.createClass({
 
       <table>
         <tr>
+          <td><strong>User</strong></td>
           <td><strong>Solution</strong></td>
           <td><strong>Votes</strong></td>
         </tr>
