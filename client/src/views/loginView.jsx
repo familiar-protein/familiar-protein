@@ -21,20 +21,6 @@ var Login = React.createClass({
       // let's login
       console.log('loggedin false');
       location = '/auth/google';
-      // $.ajax({
-      //   url: window.location.origin + '/auth/google',
-      //   method: 'GET',
-      //   dataType: 'json',
-      //   success: function(data){
-      //     console.log('user', data);
-      //     // that.setState({user: data});
-      //   }.bind(this),
-      //   error: function(xhr, status, err){
-      //     console.error(xhr, status, err.message);
-      //     // this.setState({user: undefined});
-      //   }.bind(this)
-      // });
-
     }
   },
 
@@ -48,8 +34,8 @@ var Login = React.createClass({
   render: function(){
 
     return (
-      <div className="container">
-        <div className="row"><div className="col-xs-12">
+      <div className="panel">
+        <div className="panel-body row"><div className="col-xs-12">
         <p>Please wait ... </p>
         </div></div>
       </div>
