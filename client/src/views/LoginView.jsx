@@ -11,7 +11,7 @@ var LoginView = React.createClass({
 
     var user = {
       username: this.refs.username.getDOMNode().value,
-      password: this.refs.password.getDOMNode().value,
+      password: this.refs.password.getDOMNode().value
     };
     
     if (this.getPath() === "/signup") {
