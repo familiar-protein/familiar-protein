@@ -57,17 +57,39 @@ var UserView = React.createClass({
           </div>
           <div className="col-xs-12 col-sm-9 col-md-10">
             <h1>{username}</h1>
-            <p>{userlocation}</p>
-            {user.score}
-            {user.stats}
+            <p>Location: {userlocation}</p>
+            <p>Score: {user.score}</p>
           </div>
         </div>
+        </div>
+        <div className="row">
+          <div className="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+            <div className="panel panel-success">
+              <div className="panel-heading">
+                <h4 className="panel-title">Regex Results</h4>
+              </div>
+              <div className="panel-body">
+                <p>Score: {user.score}</p>
+                <p>Stats: {user.stats}</p>
+              </div> 
+            </div>
+          </div>
+          <div className="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+            <div className="panel panel-info">
+              <div className="panel-heading">
+                <h3 className="panel-title">More info</h3>
+              </div>
+              <div className="panel-body">
+                Some content
+              </div>
+            </div>
+          </div>
         </div>
         <Paper zDepth={1} circle={true}>
         </Paper>
       </div>);
     } else {
-      return (<div className="panel"> <div className="panel-body"><p>You are not logged in.</p></div></div>)
+      return (<div className="panel panel-danger"> <div className="panel-body"><p>You are not logged in.</p></div></div>)
     }
   }
 })
