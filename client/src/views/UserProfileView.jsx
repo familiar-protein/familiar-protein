@@ -11,17 +11,6 @@ var UserProfileContainer = React.createClass({
     };
   },
 
-	componentDidMount: function () {
-		// var username = this.props.params.username;
-		// this.getUserData(this.props.params.username);
-
-		// this.setState({username: username}, function() {
-		// 	console.log("USERNAME... hopefully... ", this.state.username);
-		
-		// 	// Initiate AJAX request to get some new data.
-		// });
-	},
-
 	// This stuff might not work exactly right.
 	// TODO: Potentially remove this stuff! HEYO.
   componentDidUpdate: function() {
@@ -66,7 +55,6 @@ var UserProfileContainer = React.createClass({
 
 var UserInfo = React.createClass({
 	render: function() {
-		console.log("Render Bullshit: ", this.props.user);
 		return (
 			<div className="row">
 				<div className="col-md-1">
