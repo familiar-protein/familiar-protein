@@ -3,7 +3,7 @@ var isAuth = function(req, res, next){
   if(req.isAuthenticated()){
     return next();
   }
-  res.json('not logged in');
+  res.redirect('/auth/google');
 }
 
 module.exports = {

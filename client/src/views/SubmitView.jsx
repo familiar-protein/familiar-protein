@@ -40,13 +40,15 @@ var SubmitView = React.createClass({
 
   submit: function(question){
     console.log('submitted');
+    var that = this;
     $.ajax({
       url: window.location.origin + '/questions',
       method: 'POST',
       data: JSON.stringify(question),
       dataType: 'json',
-      success: function(){
-        console.log('success!');
+      success: function(data){
+        that.setState({questions: that.props.questions.push(data)})
+        console.log('success!', that.props.questions);
       },
       error: function(xhr, status, err){
         alert("Something didn't work, please try again.");
