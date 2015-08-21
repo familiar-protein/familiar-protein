@@ -41,8 +41,7 @@ module.exports = function(app) {
     var addSolution = Solution.create({
       content: data.content,
       questionId: data.questionId,
-      userId: data.userId,
-      votes: data.votes
+      userId: data.userId
     },
     function(err, newSolution) {
       res.send(newSolution);
