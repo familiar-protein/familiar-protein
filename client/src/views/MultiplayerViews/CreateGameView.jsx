@@ -36,6 +36,11 @@ var CreateGameView = React.createClass({
     });
   },
 
+  startGame: function(){
+    console.log("starting game");
+    this.transitionTo('question', {qNumber: 1}); // transition to first question
+  },
+
   render: function(){
 
     var gameID = this.createGameID();
@@ -45,7 +50,7 @@ var CreateGameView = React.createClass({
       <div>
         <h1>This is the create Game view</h1>
         <h1>Enter Code: {gameID}</h1>
-        <Link to="question" params={{qNumber: 1}} className="btn btn-primary">Play</Link>
+        <button className="btn btn-primary" onClick={this.startGame}>Play</button>
       </div>
     );
   }

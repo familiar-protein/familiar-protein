@@ -38,13 +38,14 @@ var updateGame = function(req,res,next){
   console.log("req.body.code === ", req.body.code);
   Game.findOneAndUpdate(
       {"_id":req.body.code},
-      {$push: {"players": {username: "hardcode", currentRound: 1}}},
-      {safe: true, upsert: true, new: true},
+      {$addToSet: {"players": {username: "hardcode", currentRound: 1}}},
+      {safe: true, new: true},
       function(err, model){
         if (err){
           console.log("ERROR: ", err);
           res.send(500, err);
         }else{
+          console.log("SUCCESS: ", model);
           res.status(200).send(model);
         }
       }
