@@ -9,7 +9,8 @@ var SolutionView = React.createClass({
 
   getInitialState: function(){
     return {
-      solutions: SolutionStore.getSolutions()
+      solutions: SolutionStore.getSolutions(),
+      voted: false
     };
   },
 
@@ -30,6 +31,7 @@ var SolutionView = React.createClass({
     
     //TODO: Implement voting
     ViewActions.voteForSolution(solution);
+    this.setState({voted: true});
   },
 
   render: function(){
@@ -45,7 +47,7 @@ var SolutionView = React.createClass({
           </td>
           <td>{solution.votes || 0}</td>
           <td>
-            <button onClick={context.vote.bind(context, solution)} className="btn btn-primary">UpVote</button>
+            {context.state.voted === false ? <button onClick={context.vote.bind(context, solution)} className="btn btn-primary">UpVote</button> : null}
           </td>
         </tr>
       )
@@ -53,7 +55,7 @@ var SolutionView = React.createClass({
     return(
       <div>
       <Link to="default" className="btn btn-primary home">Back to Problems</Link>
-
+      <h2>Solutions</h2>
       <table>
         <tr>
           <td><strong>User</strong></td>

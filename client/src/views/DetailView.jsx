@@ -6,6 +6,8 @@ var Link = Router.Link;
 
 var ViewActions = require('./../actions/ViewActions');
 var SolutionStore = require('./../stores/SolutionStore');
+var UserStore = require('./../stores/UserStore');
+
 
 var DetailView = React.createClass({
   mixins: [Navigation],
@@ -15,7 +17,13 @@ var DetailView = React.createClass({
       result: '',
       solved: false,
       solutions: [],
-      question: this.props.questions[this.props.params.qNumber - 1]
+      question: this.props.questions[this.props.params.qNumber - 1],
+      
+      // TODO: Change to get from User Store
+      user: {
+        username: "Drew",
+        user_id: "55d688e65642c0b1713979e1"
+      }
     };
   },
 
@@ -33,7 +41,13 @@ var DetailView = React.createClass({
     var solved = this.isSolved(value);
 
     if(solved){
-      ViewActions.loadSolutions(this.state.question._id);
+
+      // TODO: Post new solution to server
+      ViewActions.postNewSolution(this.state.question._id,this.state.user.user_id, value);
+
+      // Retrieve solutions to current question
+      // ViewActions.loadSolutions(this.state.question._id);
+
     }
 
     this.setState({

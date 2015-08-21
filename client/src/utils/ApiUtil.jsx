@@ -1,18 +1,5 @@
 var ServerActions = require('../actions/ServerActions');
 
-// TODO: REMOVE when the backend API is working
-var solutions = [
-  {
-    id: 1,
-    solution: "Great Solution",
-    votes: 0
-  }, 
-  {
-    id: 2,
-    solution:"Best Solution",
-    votes: 0
-  }];
-
 var ApiUtils = {
   loadAllQuestions: function () {
     $.ajax({
@@ -82,18 +69,7 @@ var ApiUtils = {
   },
 
   incrementSolutionVote: function (solution){
-    //TODO: Actual request to server
-    // console.log("Incrementing votes for: ", solutionId);
-    
-    // Just temporary code to simulate a put request
-    // for(solution in solutions){
-    //   if(solutions[solution].id === solutionId) {
-    //     solutions[solution].votes++;
 
-    //     this.loadSolutions();
-    //   }
-    // }
-    
     solution['votes'] += 1;
     
     var putSolution = {
@@ -102,7 +78,7 @@ var ApiUtils = {
       userId: solution.userId._id,
       votes: solution.votes
     };
-    console.log(JSON.stringify(putSolution));
+    // console.log(JSON.stringify(putSolution));
 
     var context = this;
     $.ajax({
@@ -115,6 +91,29 @@ var ApiUtils = {
         console.log(xhr, status, err.message);
       }
     })
+  },
+
+  postNewSolution: function(qId, uId, solutionStr){
+    console.log(qId, uId, solutionStr);
+
+    var postObj = {
+      content: solutionStr,
+      userId: uId,
+      questionId: qId,
+      votes: 0
+    };
+
+    var context = this;
+    $.ajax({
+      url: '/solutions',
+      method: 'POST',
+      data: JSON.stringify(postObj),
+      contentType: 'application/json',
+      success: ApiUtils.loadSolutions.bind(context, qId),
+      error: function () {
+        console.log(arguments);
+      }
+    });
   }
 };
 
