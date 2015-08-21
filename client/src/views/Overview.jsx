@@ -40,6 +40,7 @@ var OverView = React.createClass({
     return (
       <div className="panel">
         <div className="panel-body">
+        <h2>Choose a challenge</h2>
         <table className="questionContainer table table-hover">
           <tbody>
             {questions}

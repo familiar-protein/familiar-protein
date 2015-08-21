@@ -84,6 +84,16 @@ var UserView = React.createClass({
               </div>
             </div>
           </div>
+           <div className="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+            <div className="panel panel-warning">
+              <div className="panel-heading">
+                <h3 className="panel-title">Submitted Challenges</h3>
+              </div>
+              <div className="panel-body">
+                Some content
+              </div>
+            </div>
+          </div>
         </div>
         <Paper zDepth={1} circle={true}>
         </Paper>
