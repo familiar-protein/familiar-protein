@@ -22,7 +22,7 @@ var App = React.createClass({
   getInitialState: function(){
     return {
       questions: [],
-      username: UserStore.getUser.username
+      username: UserStore.getUser().username
     };
   },
 
