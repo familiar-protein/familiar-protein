@@ -77,12 +77,13 @@ var getUserInfo = function(req, res, next) {
     if (data !== null) {
       // check that the passwords match if so, log in else don't
       if (err){console.log(err);}
+      var userData = data;
+      userData.password = ""; // Remove password from the API request. Deeeerp. 
 
-      utils.createSession(req, res, data);
       res.statusCode = 200;
       res.send({
         response: "Found user profile!", 
-        userInfo: req.session.user
+        userInfo: userData
       });
     }else{
       res.statusCode = 401;

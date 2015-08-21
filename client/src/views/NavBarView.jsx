@@ -7,8 +7,12 @@ var NavBarView = React.createClass({
   render: function() {
 
     if (this.props.loggedIn) {
+      // var username = this.props.user.username;
+      // var profileLink = "/user/" + username;
+      // var profileHTML = <Link to={profileLink}>Profile</Link>
       var loginHTML = <a href="/logout">Logout</a>;
     } else {
+      // var profileHTML = "";
       var loginHTML = <Link to="login">Login</Link>;
     }
 
@@ -27,7 +31,7 @@ var NavBarView = React.createClass({
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
-              <li><Link to="userProfile">Profile</Link></li>
+              <li><a href="#">Link</a></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li><a href="#">Link</a></li>
