@@ -54,7 +54,8 @@ var ViewActions = {
       Dispatcher.dispatch({
         type: ActionTypes.GET_USER_PROFILE,
         payload: {
-          username: userData.username
+          username: userData.username,
+          user_id: userData._id
         }
       });
     });
