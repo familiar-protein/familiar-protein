@@ -20,7 +20,7 @@ module.exports = function(app) {
   });
 
   app.get('/solutions', function(req, res, next) {
-    Solution.find().exec(function(err, data) {
+    Solution.find().populate('questionId').exec(function(err, data) {
       if (err) {
         res.send(500, err);
       } else {
