@@ -77,22 +77,24 @@ var ApiUtils = {
     //     this.loadSolutions();
     //   }
     // }
-    if(!solution[votes]){
-      solution[votes] = 0;
-    }
-    solution[votes]++;
-
-    var populateSolutions = function(solutions){
-      // console.log('Got from server: ', solutions);
-      ServerActions.solutionsLoaded(solutions);
+    
+    solution['votes'] += 1;
+    
+    var putSolution = {
+      _id: solution._id,
+      questionId: solution.questionId._id,
+      userId: solution.userId._id,
+      votes: solution.votes
     };
-     
+    console.log(JSON.stringify(putSolution));
+
+    var context = this;
     $.ajax({
-      url: window.location.origin + '/solutions/' + solution._id,
+      url: window.location.origin + '/solutions',
       method: 'PUT',
-      dataType: 'json',
-      data: solution,
-      success: loadSolutions,
+      contentType: "application/json",
+      data: JSON.stringify(putSolution),
+      success: ApiUtils.loadSolutions.bind(context, solution.questionId._id),
       error: function (xhr, status, err) {
         console.log(xhr, status, err.message);
       }

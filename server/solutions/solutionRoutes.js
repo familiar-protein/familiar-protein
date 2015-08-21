@@ -50,6 +50,7 @@ module.exports = function(app) {
 
   app.put('/solutions', function(req, res) {
     var id = req.body._id;
+    console.log("updating:", req.body);
     Solution.findByIdAndUpdate(id, req.body, function(err) {
       if (err) {
         return res.send(500, err);
