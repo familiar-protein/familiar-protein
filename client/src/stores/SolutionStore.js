@@ -15,7 +15,7 @@ var SolutionStore = assign({}, EventEmitter.prototype, { // assign === _.extend
     this.on(CHANGE_EVENT, callback);
   },
 
-  removeListener: function (callback) {
+  removeChangeListener: function (callback) {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
@@ -30,7 +30,7 @@ var SolutionStore = assign({}, EventEmitter.prototype, { // assign === _.extend
 
 SolutionStore.dispatchToken = Dispatcher.register(function (action) {
   if (action.type === 'SOLUTIONS_LOADED') {
-    //console.log('Got Solutions');
+    console.log('Got Solutions', action.solutions);
     SolutionStore.loadSolutions(action.solutions);
     SolutionStore.emitChange();
   }

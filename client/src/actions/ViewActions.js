@@ -11,15 +11,15 @@ var ViewActions = {
     ApiUtils.loadAllQuestions();
   },
 
-  loadSolutions: function () {
+  loadSolutions: function (qId) {
     Dispatcher.dispatch({
       type: ActionTypes.LOAD_SOLUTIONS
     });
-    ApiUtils.loadSolutions();
+    ApiUtils.loadSolutions(qId);
   },
 
   voteForSolution: function (solutionId) {
-    //console.log("Voting for ", solutionId);
+    // console.log("Voting for ", solutionId);
     //ADD_VOTE_TO_SOLUTION
     Dispatcher.dispatch({
       type: ActionTypes.ADD_VOTE_TO_SOLUTION

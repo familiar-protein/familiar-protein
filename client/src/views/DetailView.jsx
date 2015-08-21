@@ -14,7 +14,8 @@ var DetailView = React.createClass({
     return {
       result: '',
       solved: false,
-      solutions: []
+      solutions: [],
+      question: this.props.questions[this.props.params.qNumber - 1]
     };
   },
 
@@ -32,7 +33,7 @@ var DetailView = React.createClass({
     var solved = this.isSolved(value);
 
     if(solved){
-      ViewActions.loadSolutions();
+      ViewActions.loadSolutions(this.state.question._id);
     }
 
     this.setState({
