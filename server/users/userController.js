@@ -1,6 +1,7 @@
 var User = require('./userModel');
 var bcrypt = require('bcrypt');
 var utils = require('../lib/utilities');
+var url = require('url');
 
 var signup = function(req,res,next){
   console.log("req.body === ",req.body);
@@ -64,6 +65,12 @@ var login = function(req,res,next){
   });
 };
 
+var getUserInfo = function(req, res, next) {
+  var url_parts = url.parse(req.url,true);
+  var username = url_parts.query.username;
+  res.send("Username: " + username);
+}
+
 // Simply check whether the user is logged in based on a cookie.
 var checkLoggedIn = function(req, res, next) {
   var userData = req.session.user || null;
@@ -71,7 +78,8 @@ var checkLoggedIn = function(req, res, next) {
 }
 
 module.exports = {
-  signup: signup,
+  checkLoggedIn: checkLoggedIn,
+  getUserInfo: getUserInfo,
   login: login,
-  checkLoggedIn: checkLoggedIn
+  signup: signup
 };

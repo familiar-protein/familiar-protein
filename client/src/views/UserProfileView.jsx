@@ -32,7 +32,7 @@ var UserProfileContainer = React.createClass({
 
   getUserData: function(username) {
     $.ajax({
-      url: window.location.origin + '/user/' + this.state.username,
+      url: window.location.origin + '/user?username=' + this.state.username,
       method: 'GET',
       dataType: 'json',
       success: function(data){
