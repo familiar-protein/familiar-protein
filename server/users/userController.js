@@ -11,7 +11,7 @@ var signup = function(req,res,next){
 
     if (data === null) {
       bcrypt.hash(req.body.password, 8, function(err, hash){
-        User.create({username: req.body.username, password: hash}, function (err, newUser) {
+        User.create({username: req.body.username, password: hash, name: req.body.name, image: req.body.image}, function (err, newUser) {
           if (err) {
             console.log("ERROR - ", err);
           } else {

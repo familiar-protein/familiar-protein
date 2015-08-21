@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 var UserSchema = new mongoose.Schema({
   username: {type: String, unique: true},
   password: String,
+  name: String,
+  image: String,
 
   // format is intended to be: { <qNumber>: "solution string", ...}
   // entries will only exist for a question that the user has solved.
