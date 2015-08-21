@@ -8,6 +8,7 @@
 //       res.redirect(/*mainpage*/);
 //     });
 
+
 //   // signup/login only used for local auth
 //   // app.post('/signup', authController.signup);  
 //   // app.post('/login', function(req, res) {});
