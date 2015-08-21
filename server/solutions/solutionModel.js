@@ -10,7 +10,11 @@ var SolutionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-  votes: Number
+  votes: {
+    type: Number,
+    default: 0,
+    required: true
+  }
 });
 
 var Solution = mongoose.model('Solution', SolutionSchema);
