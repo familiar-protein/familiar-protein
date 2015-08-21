@@ -47,15 +47,15 @@ var ApiUtils = {
   },
 
   getUserProfile: function (username, callback) {
-    // $.ajax({
-    //   url: window.location.origin + '/users/' + username,
-    //   method: 'GET',
-    //   dataType: 'json',
-    //   success: callback,
-    //   error: function (xhr, status, err) {
-    //     console.log(xhr, status, err.message);
-    //   }
-    // })
+    $.ajax({
+      url: window.location.origin + '/users/' + username,
+      method: 'GET',
+      dataType: 'json',
+      success: callback,
+      error: function (xhr, status, err) {
+        console.log(xhr, status, err.message);
+      }
+    })
     console.log('get user profile');
   },
   

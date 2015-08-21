@@ -55,7 +55,7 @@ UserStore.dispatchToken = Dispatcher.register(function (action) {
   }
 
   if (action.type === 'GET_USER_PROFILE') {
-    UserStore.setUserProfile(action.payload.username);
+    UserStore.setUserProfile(action.payload);
     UserStore.emitChange();
   }
 
