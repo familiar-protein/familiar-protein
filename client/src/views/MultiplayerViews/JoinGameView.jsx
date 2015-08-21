@@ -27,7 +27,8 @@ var JoinGameView = React.createClass({
       success: function(game){
         // should get the game and then insert the user into the game
         console.log("SUCCESS!", game);
-      },
+        this.transitionTo("waiting");
+      }.bind(this),
       error: function(xhr, status, err){
         console.log("err", err);
         console.error(xhr, status, err.message);
