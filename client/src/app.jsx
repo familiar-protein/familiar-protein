@@ -19,17 +19,21 @@ var Link  = Router.Link;
 
 var App = React.createClass({
 
+  mixins: [Router.Navigation, Router.State],
+
   getInitialState: function(){
     return {
       questions: [],
-      username: UserStore.getUser().username
+      username: UserStore.getUser().username,
+      user_id: UserStore.getUser().user_id
     };
   },
 
   onChange: function () {
     this.setState({
       questions: QuestionStore.getQuestions(),
-      user_id: UserStore.getUser().username
+      username: UserStore.getUser().username,
+      user_id: UserStore.getUser().user_id
     })
     // console.log(this.state);
   },
@@ -45,12 +49,24 @@ var App = React.createClass({
     UserStore.addListener(this.onChange);
     QuestionStore.addListener(this.onChange);
     ViewActions.loadQuestions();
+    var self = this;
+    setTimeout(function () {console.log(self.state)},2000);
+  },
+
+  loginHandler: function (e) {
+    e.preventDefault();
+    this.transitionTo('login');
+  },
+
+  profileHandler: function () {
+    this.transitionTo('/user/' + UserStore.getUser().username);
   },
 
   render: function() {
     return (
       <div className="container">
         <h2 className="title">Regex Game</h2>
+        {(this.state.username === "anonymous") ? <button onClick={this.loginHandler} ref="login-btn">Login</button> : <button onClick={this.profileHandler} ref="profile-btn">My Profile</button>}
         <RouteHandler questions={this.state.questions}/>
       </div>
     )
@@ -69,6 +85,6 @@ var routes = (
 );
 
 Router.run(routes, function(Root){
-  React.render(<Root />, document.body);
+  React.render(<Root />, document.getElementById('whateber'));
 });
 
