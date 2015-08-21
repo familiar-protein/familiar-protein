@@ -109,7 +109,9 @@ var NavBar = React.createClass({
 var routes = (
   <Route name="app" path="/" handler={App}>
     <DefaultRoute name="default" handler={OverView} />
-    <Route name="userProfile" path="userProfile" handler={UserProfileView}/>
+    <Route name="userProfile" path="user" handler={UserProfileView}>
+      <Route path="user/:username" handler={UserProfileView}/>
+    </Route>
     <Route name="login" path="/login" handler={LoginView}/> 
     <Route name="signup" path="/signup" handler={LoginView}/>
     <Route name="home" path="/home" handler={HomeView}/>
