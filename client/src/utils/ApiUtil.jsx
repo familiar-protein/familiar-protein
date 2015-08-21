@@ -20,7 +20,18 @@ var ApiUtils = {
     })
   },
 
-  login: function (username, callback) { //handle sign up and login
+  login: function (username, callback) {
+    $.ajax({
+      url: '/users/' + username,
+      method: 'GET',
+      success: callback,  
+      error: function (e) {
+        console.log(arguments);
+      }
+    });
+  },
+
+  signup: function (username, callback) { //handle sign up and login
     $.ajax({
       url: '/users',
       method: 'POST',
@@ -36,15 +47,15 @@ var ApiUtils = {
   },
 
   getUserProfile: function (username, callback) {
-    $.ajax({
-      url: window.location.origin + '/users/' + username,
-      method: 'GET',
-      dataType: 'json',
-      success: callback,
-      error: function (xhr, status, err) {
-        console.log(xhr, status, err.message);
-      }
-    })
+    // $.ajax({
+    //   url: window.location.origin + '/users/' + username,
+    //   method: 'GET',
+    //   dataType: 'json',
+    //   success: callback,
+    //   error: function (xhr, status, err) {
+    //     console.log(xhr, status, err.message);
+    //   }
+    // })
     console.log('get user profile');
   },
   
