@@ -4,10 +4,12 @@ var express = require('express');
 // var passport = require('passport');
 var userRoutes = require('../users/userRoutes');
 var questionRoutes = require('../questions/questionRoutes');
+var solutionRoutes = require('../solutions/solutionRoutes');
 // var authRoutes = require('../auth/authRoutes');
 
 module.exports = function(app) {
   app.use(bodyParser.json());
+
   // app.use(express.cookieParser());
   app.use(express.static(__dirname + '/../../client/'));
   // app.use(express.session({secret: 'keyboard cat'}));
@@ -19,7 +21,9 @@ module.exports = function(app) {
 
   // routing
   // authRoutes(app, passport);
+
   userRoutes(app);
   questionRoutes(app);
+  solutionRoutes(app);
 };
 
