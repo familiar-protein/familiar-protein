@@ -62,7 +62,8 @@ var SubmitView = React.createClass({
         location = "/#/questions";
       },
       error: function(xhr, status, err){
-        alert("Something didn't work, please try again.");
+        // alert("Something didn't work, please try again.");
+        $('#server-error').show();
         console.log(err);
       }
     });
@@ -75,6 +76,13 @@ var SubmitView = React.createClass({
     var failing = this.falsy();
     var passTruthy = true;
     var passFalsy = true;
+
+    // if(passing.length < 5){
+    //   alert('Please enter at least five passing tests.');
+    // }
+    // if(failing.length < 5){
+    //   alert('Please enter at least five failing tests.');
+    // }
     passing.forEach(function(item){
       if(!regex.test(item)){
         passTruthy = false;
@@ -102,7 +110,8 @@ var SubmitView = React.createClass({
       });
     }else{
 
-      alert('Unable to submit, Your solution does not solve the problem. Please try again');
+      alert('Unable to submit, Your solution does not solve the problem or your test cases are incorrect. Please try again');
+      // $('#question-dialog').toggle();
     }
   },
 
@@ -112,6 +121,11 @@ var SubmitView = React.createClass({
       <div className="panel">
         <div className="panel-body">
         <h3>Submit your own challenge</h3>
+        <div className="alert alert-dismissable alert-danger" id="server-error" style={{display: "none"}}>
+          <button type="button" className="close">×</button>
+          <h4>Warning!</h4>
+          <p>Something did not work, please try again.</p>
+        </div>
           <form className="form-inline ">
           <div className="row"> 
             <div className="col-xs-12 col-sm-6 col-md-5 col-lg-4 bottom-space">
@@ -142,6 +156,17 @@ var SubmitView = React.createClass({
               <div className="ripple-wrapper"></div>
             </button>
           </form>
+
+          <div id="question-dialog" className="modal fade" tabindex="-1">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-body">
+                  <p>Either your solution does not solve the problem or your test cases are not passing, Please try again.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>  
 
