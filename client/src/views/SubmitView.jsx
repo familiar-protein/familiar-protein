@@ -29,13 +29,23 @@ var SubmitView = React.createClass({
   },
 
   truthy: function(){
-    var truthyVals = this.refs.passingTests.getValue();
-    return truthyVals.split(' ');
+    var truthyVals = this.refs.passingTests.getValue().split('\n');
+    truthyVals.forEach(function(item, index, array){
+      if(item === ' ' || item === '' || item === undefined){
+        array.splice(index, 1);
+      }
+    });
+    return truthyVals;
   },
 
   falsy: function(){
-    var falsyVals = this.refs.failingTests.getValue();
-    return falsyVals.split(' ');
+    var falsyVals = this.refs.failingTests.getValue().split('\n');
+    falsyVals.forEach(function(item, index, array){
+      if(item === ' ' || item === ''){
+        array.splice(index, 1);
+      }
+    });
+    return falsyVals;
   },
 
   submit: function(question){
@@ -49,6 +59,7 @@ var SubmitView = React.createClass({
       success: function(data){
         that.setState({questions: that.props.questions.push(data)})
         console.log('success!', that.props.questions);
+        location = "/#/questions";
       },
       error: function(xhr, status, err){
         alert("Something didn't work, please try again.");
@@ -91,7 +102,7 @@ var SubmitView = React.createClass({
       });
     }else{
 
-      alert('Unable to submit, Your solution does not soleve the problem. Please try again');
+      alert('Unable to submit, Your solution does not solve the problem. Please try again');
     }
   },
 
@@ -120,17 +131,16 @@ var SubmitView = React.createClass({
           </div>
           <div className="row">
             <div className="col-xs-12 col-sm-6 col-md-5 col-lg-4">
-              <TextField fullWidth="true" hintText="Enter at least five examples that will pass your challenge here." multiLine={true} type="text" ref="passingTests"/>
+              <TextField fullWidth="true" hintText="Enter at least five examples that will pass your challenge seperated by new lines here." multiLine={true} type="text" ref="passingTests"/>
             </div>
             <div className="col-xs-12 col-sm-6 col-md-5 col-lg-4">
-              <TextField fullWidth="true" hintText="Enter at least five examples that will fail your challenge here." multiLine={true} type="text" ref="failingTests"/>
+              <TextField fullWidth="true" hintText="Enter at least five examples that will fail your challenge seperated by new lines here." multiLine={true} type="text" ref="failingTests"/>
             </div>
           </div>
             <button label="submit" className="btn btn-primary" onClick={this.checkTestCases}>
               Submit
               <div className="ripple-wrapper"></div>
             </button>
-              
           </form>
         </div>
       </div>  
