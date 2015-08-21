@@ -127,7 +127,6 @@ var SubmitView = React.createClass({
             <div className="col-xs-12 col-sm-6 col-md-5 col-lg-4 bottom-space">
               <TextField fullWidth="true" hintText="Enter your flags in this format gi " multiLine={true} onChange={this.createRegExp} type="text" ref="challengeAnswerFlags"/>
             </div>
-
           </div>
           <div className="row">
             <div className="col-xs-12 col-sm-6 col-md-5 col-lg-4">
@@ -141,7 +140,6 @@ var SubmitView = React.createClass({
               Submit
               <div className="ripple-wrapper"></div>
             </button>
-              
           </form>
         </div>
       </div>  
