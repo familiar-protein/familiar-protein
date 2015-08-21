@@ -11,6 +11,14 @@ var UserProfileContainer = React.createClass({
     };
   },
 
+  componentDidMount: function() {
+  	if (this.props.params.username === undefined) {
+  		this.getUserData(this.props.user.username);
+  		//console.log('HEY UNDEFINED THING', this.props.user);
+	  	//console.log("USER! ", this.props.user.username);
+  	}
+  },
+
 	// This stuff might not work exactly right.
 	// TODO: Potentially remove this stuff! HEYO.
   componentDidUpdate: function() {
