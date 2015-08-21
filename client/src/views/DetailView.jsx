@@ -150,7 +150,7 @@ var DetailView = React.createClass({
     //variables: elapsed, length;
     var time = this.state.elapsed; //25 +/- 25 seconds, +/- up to 30 points
     var length = this.state.result.length; //10 +/- 15 letters, +/- up to 30 points
-    var score = 100-(time-25)*30/25-(length-10)*30/15;
+    var score = 50-(time-25)*30/25-(length-10)*30/15;
     return score;
   },  
   submitSolution: function(data){ //submit user solution to database
@@ -225,7 +225,7 @@ var DetailView = React.createClass({
             if(this.state.solved){
               return (
                 <h3 className='success'>
-                  {"Success!!! You earned <span>"+this.calcScore()+"</span> points. "}
+                  {"Success!!! You earned "}<span>{this.calcScore()}</span>{" points. "}
                  <a href={"/#/question/"+(parseInt(this.props.params.qNumber)+1)} onClick={this.nextProblem} /*onClick={this.submitSolution}*/>Next Problem</a>
                 </h3>
               )//return 

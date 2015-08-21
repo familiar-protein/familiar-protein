@@ -48,4 +48,11 @@ module.exports = [
     truthy: ['Password1234', '111xxxYY', '123456aA', 'fhewoh123EWD', '12345abcdeFGHIJK'],
     falsy: ['#Password1234', '12345aA', 'no$pesialCharacter5', 'paws&*fsB', 'ThisIsTooLongOfAPassword']
   },
+  {
+    qNumber: 7,
+    title: "Test",
+    description: "Test",
+    truthy: ['a', 'a', 'a'],
+    falsy: ['b']
+  }
 ];
