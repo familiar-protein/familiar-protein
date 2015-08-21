@@ -1,5 +1,17 @@
 var ServerActions = require('../actions/ServerActions');
 
+// TODO: REMOVE when the backend API is working
+var solutions = [
+  {
+    id: 1,
+    solution: "Great Solution",
+    votes: 0
+  }, 
+  {
+    id: 2,
+    solution:"Best Solution",
+    votes: 0
+  }];
 
 var ApiUtils = {
   loadAllQuestions: function () {
@@ -34,18 +46,22 @@ var ApiUtils = {
   },
   
   loadSolutions: function () {
-
     //TODO: Actual request to server
-    var solutions = [
-      {
-        id: 1,
-        solution: "Great Solution"
-      }, 
-      {
-        id: 2,
-        solution:"Best Solution"
-      }];
     ServerActions.solutionsLoaded(solutions);
+  },
+
+  incrementSolutionVote: function (solutionId){
+    //TODO: Actual request to server
+    // console.log("Incrementing votes for: ", solutionId);
+    
+    // Just temporary code to simulate a put request
+    for(solution in solutions){
+      if(solutions[solution].id === solutionId) {
+        solutions[solution].votes++;
+
+        this.loadSolutions();
+      }
+    }
   }
 };
 
