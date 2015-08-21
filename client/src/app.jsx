@@ -22,14 +22,14 @@ var App = React.createClass({
   getInitialState: function(){
     return {
       questions: [],
-      loggedIn: UserStore.getState().loggedIn
+      username: UserStore.getUsername()
     };
   },
 
   onChange: function () {
     this.setState({
       questions: QuestionStore.getQuestions(),
-      loggedIn: UserStore.getState().loggedIn
+      user_id: UserStore.getUsername()ß
     })
     console.log(this.state);
   },

@@ -33,9 +33,13 @@ var ApiUtils = {
     })
   },
 
-  getUserProfile: function (userId, callback) {
+  login: function (username, callback) { //handle sign up and login
+    $.post('/users', {username: username}, callback);
+  },
+
+  getUserProfile: function (username, callback) {
     $.ajax({
-      url: window.location.origin + '/user/' + userId,
+      url: window.location.origin + '/users/' + username,
       method: 'GET',
       dataType: 'json',
       success: callback,
