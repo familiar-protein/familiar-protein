@@ -90,3 +90,8 @@ form {
   background-color: #45BCCC !important;
   border-color: #14A7BB !important;
 }
+
+a.login {
+  text-decoration: none;
+  color: white;
+}

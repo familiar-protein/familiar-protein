@@ -133,7 +133,7 @@ var App = React.createClass({
   render: function() {
     var leftNavMenuItems = [
       { route: 'home', text: 'Home' },
-      { route: 'questions', text: 'Take a Challenges' },
+      { route: 'questions', text: 'Take a Challenge' },
       { route: 'submit', text: 'Submit a Challenge' },
       { route: 'info', text: 'About' },
     ];
@@ -143,15 +143,29 @@ var App = React.createClass({
       requestChange: this._handleIconMenuValueLinkChange
     };
 
-    if (this.state.user !== undefined) {
-      // console.log(this.state);
-      var loggedIn = true;
-      var username = this.state.user.google.name;
-      var loginandout = <MenuItem value="login" primaryText="Logout" leftIcon={<i className="material-icons md-light md-24">swap_horiz</i>}/>
+    if (this.state.user !== undefined) {      
+      var loggedIn = (<div>
+        
+          <IconMenu
+            desktop={true} 
+            iconButtonElement={
+              <div>
+                <div className="username" style={{float: 'left'}}>
+                  {this.state.user.google.name}
+                </div>
+                <i className="material-icons md-light md-24 margin-10">person</i>
+              </div>}
+            openDirection="bottom-left"
+            valueLink={iconMenuValueLink}>
+            <MenuItem value="user" primaryText="User" leftIcon={<i className="material-icons md-light md-24">face</i>}/>
+            <MenuItem value="info" primaryText="Info" leftIcon={<i className="material-icons md-light md-24">info_outline</i>}/>
+            <MenuItem value="login" primaryText="Logout" leftIcon={<i className="material-icons md-light md-24">swap_horiz</i>}/>
+          </IconMenu>
+        </div>);
     } else {
-      var loggedIn = false;
       var username = '';
       var loginandout = <MenuItem value="login" primaryText="Login" leftIcon={<i className="material-icons md-light md-24">swap_horiz</i>}/>
+      var loggedIn = (<div className="username"><a href="/#/login" className="login">Login with Google</a></div>);
     }
 
     return (
@@ -166,23 +180,7 @@ var App = React.createClass({
           <AppBar title='Regex Challenge' 
           onLeftIconButtonTouchTap={this._handleClick} 
           iconElementRight={
-            <div>
-            <div className="username" style={{float: 'left'}}>
-              {username}
-            </div>
-              <IconMenu
-                desktop={true} 
-                iconButtonElement={
-                  <div>
-                    <i className="material-icons md-light md-24 margin-10">person</i>
-                  </div>}
-                openDirection="bottom-left"
-                valueLink={iconMenuValueLink}>
-                <MenuItem value="user" primaryText="User" leftIcon={<i className="material-icons md-light md-24">face</i>}/>
-                <MenuItem value="info" primaryText="Info" leftIcon={<i className="material-icons md-light md-24">info_outline</i>}/>
-                {loginandout}
-              </IconMenu>
-            </div>
+            loggedIn
           } /> {/* appBar */}
         </header>
         
