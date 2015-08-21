@@ -18,6 +18,16 @@ var ViewActions = {
     ApiUtils.loadSolutions(qId);
   },
 
+  loadAllSolutions: function () {
+    ApiUtils.loadAllSolutions(function (allSolutions) {
+        Dispatcher.dispatch({
+          type: ActionTypes.ALL_SOLUTIONS_LOADED,
+          solutions: allSolutions
+        });
+        console.log('ViewActions load all solutions');
+    });
+  },
+
   postNewSolution: function(qId, uId, solutionStr){
     // console.log(qId, uId, solutionStr);
       Dispatcher.dispatch({
