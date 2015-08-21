@@ -18,6 +18,15 @@ var ViewActions = {
     ApiUtils.loadSolutions();
   },
 
+  voteForSolution: function (solutionId) {
+    //console.log("Voting for ", solutionId);
+    //ADD_VOTE_TO_SOLUTION
+    Dispatcher.dispatch({
+      type: ActionTypes.ADD_VOTE_TO_SOLUTION
+    });
+    ApiUtils.incrementSolutionVote(solutionId);
+  },
+
   login: function (user, pass) {
     Auth.login(user, pass, function (isAuthenticated) {
       Dispatcher.dispatch({
