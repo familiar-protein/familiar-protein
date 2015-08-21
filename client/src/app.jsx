@@ -85,6 +85,6 @@ var routes = (
 );
 
 Router.run(routes, function(Root){
-  React.render(<Root />, document.getElementById('whateber'));
+  React.render(<Root />, document.getElementById('reactView'));
 });
 
