@@ -27,7 +27,7 @@ var LoginView = React.createClass({
       contentType: "application/json; charset=utf-8",
       data: JSON.stringify(user),
       success: function(data){
-        console.log("Successful signup | login", data);
+        //console.log("Successful signup | login", data);
         this.transitionTo('default');
         // navigate to the other screen
       }.bind(this),
@@ -39,7 +39,6 @@ var LoginView = React.createClass({
 
   render: function() {
     
-    console.log("PATH === ", this.getPath());
     if (this.getPath() === "/login"){
       return (
         <div>
