@@ -5,17 +5,19 @@
   "authors": [
     "Matthias Gattermeier <matthias.gattermeier@gmail.com>"
   ],
-  "main": "client/src/app.js",
+  "main": "client/build/app.js",
   "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "client/src/lib",
+    "client/lib",
     "test",
     "tests"
   ],
   "dependencies": {
-    "material-design-icons": "~2.0.0"
+    "material-design-icons": "~2.0.0",
+    "bootstrap-material-design": "~0.3.0",
+    "bootstrap": "~3.3.5"
   }
 }

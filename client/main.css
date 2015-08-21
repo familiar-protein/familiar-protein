@@ -1,6 +1,7 @@
 body { 
   /*padding: 30px 0 50px 0; */
   font-family: 'Roboto', sans-serif;
+  margin:8px;
 }
 
 .back {
@@ -69,6 +70,11 @@ form {
 .timer{
   text-align:center;
 }
+
+.jumbotron, .well, .panel {
+  margin-top: 10px;
+}
+
 .btn, .btn-primary, .btn-lg {
   border-radius: 0;
 }

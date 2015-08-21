@@ -49,8 +49,9 @@ var UserView = React.createClass({
       profileImage = user.google.profileImage;
       username = user.google.name;
       userlocation = user.google.location;
-      return (<div className="container"> 
-        <div className="row">
+      return (<div className=""> 
+        <div className="panel">
+        <div className="panel-body row">
           <div className="col-xs-12 col-sm-3 col-md-2">
             <img src={profileImage} className="img-responsive img-circle img-thumbnail profileImage"></img>
           </div>
@@ -61,11 +62,12 @@ var UserView = React.createClass({
             {user.stats}
           </div>
         </div>
+        </div>
         <Paper zDepth={1} circle={true}>
         </Paper>
       </div>);
     } else {
-      return (<div className="container"> <div className="row"><p>You are not logged in.</p></div></div>)
+      return (<div className="panel"> <div className="panel-body"><p>You are not logged in.</p></div></div>)
     }
   }
 })

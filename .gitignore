@@ -28,6 +28,7 @@ node_modules
 
 .DS_Store
 client/.DS_Store
+client/lib
 client/src/lib
 client/build
 client/build/*.js

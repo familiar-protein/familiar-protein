@@ -26,11 +26,11 @@ var HomeView = React.createClass({
   render: function() {
     // console.log('Render called in HomeView', this.props);
     return (
-      <div className="jumbotron" style={{marginTop: '0px', zindex: '0'}}>
-      <div className="container">
+      <div className="panel" style={{zindex: '0'}}>
+      <div className="panel-body">
         <h1>Welcome to the Regex Challenge</h1>
         <p>Learn how to use regex, solve challenges, earn points and compare your solutions.</p>
-        <p><a className="btn btn-primary btn-lg" href="#/questions" role="button">Learn more »</a></p>
+        <p><a className="btn btn-primary btn-lg" href="#/questions" role="button">Get started »</a></p>
       </div>
       </div>);
   }

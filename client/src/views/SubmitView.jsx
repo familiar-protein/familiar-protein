@@ -90,6 +90,7 @@ var SubmitView = React.createClass({
         qNumber: qNumber
       });
     }else{
+
       alert('Unable to submit, Your solution does not soleve the problem. Please try again');
     }
   },
@@ -97,38 +98,44 @@ var SubmitView = React.createClass({
   render: function(){
 
     return(
-      <div className="container">
+      <div className="panel">
+        <div className="panel-body">
         <h3>Submit your own challenge</h3>
-        <div className="container">
-          <form className="form-inline text-center">
-            <div className="container bottom-space">
-              <TextField hintText="Give your challenge an interesting title." multiLine={true} type="text" ref="challengeTitle"/>
+          <form className="form-inline ">
+          <div className="row"> 
+            <div className="col-xs-12 col-sm-6 col-md-5 col-lg-4 bottom-space">
+              <TextField fullWidth="true" hintText="Give your challenge an interesting title." multiLine={true} type="text" ref="challengeTitle"/>
             </div>
-            <div className="container bottom-space">
-              <TextField hintText="Enter a detailed description of your challenge here." multiLine={true} type="text" ref="challengeDescription"/>
+            <div className="col-xs-12 col-sm-6 col-md-5 col-lg-4 bottom-space">
+              <TextField fullWidth="true" hintText="Enter a detailed description of your challenge here." multiLine={true} type="text" ref="challengeDescription"/>
             </div>
-            <div className="container row">
-              <div className="col-md-6 bottom-space">
-                <TextField hintText="Enter your answer in this format a{1}\(9\)." multiLine={true} onChange={this.createRegExp} type="text" ref="challengeAnswer"/>
-              </div>
-              <div className="col-md-6 bottom-space">
-                <TextField hintText="Enter your flags in this format gi " multiLine={true} onChange={this.createRegExp} type="text" ref="challengeAnswerFlags"/>
-              </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-12 col-sm-6 col-md-5 col-lg-4 bottom-space">
+              <TextField fullWidth="true" hintText="Enter your answer in this format a{1}\(9\)." multiLine={true} onChange={this.createRegExp} type="text" ref="challengeAnswer"/>
             </div>
-            <div className="container row">
-              <div className="col-md-6">
-                <TextField hintText="Enter at least five examples that will pass your challenge here." multiLine={true} type="text" ref="passingTests"/>
-              </div>
-              <div className="col-md-6">
-                <TextField hintText="Enter at least five examples that will fail your challenge here." multiLine={true} type="text" ref="failingTests"/>
-              </div>
+            <div className="col-xs-12 col-sm-6 col-md-5 col-lg-4 bottom-space">
+              <TextField fullWidth="true" hintText="Enter your flags in this format gi " multiLine={true} onChange={this.createRegExp} type="text" ref="challengeAnswerFlags"/>
             </div>
-
-              <RaisedButton label="Submit" onClick={this.checkTestCases}/>
+          </div>
+          <div className="row">
+            <div className="col-xs-12 col-sm-6 col-md-5 col-lg-4">
+              <TextField fullWidth="true" hintText="Enter at least five examples that will pass your challenge here." multiLine={true} type="text" ref="passingTests"/>
+            </div>
+            <div className="col-xs-12 col-sm-6 col-md-5 col-lg-4">
+              <TextField fullWidth="true" hintText="Enter at least five examples that will fail your challenge here." multiLine={true} type="text" ref="failingTests"/>
+            </div>
+          </div>
+            <button label="submit" className="btn btn-primary" onClick={this.checkTestCases}>
+              Submit
+              <div className="ripple-wrapper"></div>
+            </button>
               
           </form>
         </div>
       </div>  
+
+      
 
     );
   },

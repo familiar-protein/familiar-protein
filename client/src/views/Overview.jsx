@@ -38,12 +38,14 @@ var OverView = React.createClass({
     // Instead, React DOM components expect DOM property names like className and htmlFor, respectively.
     // https://facebook.github.io/react/docs/jsx-in-depth.html
     return (
-      <div>
+      <div className="panel">
+        <div className="panel-body">
         <table className="questionContainer table table-hover">
           <tbody>
             {questions}
           </tbody>
         </table>
+        </div>
       </div>
     );
   }

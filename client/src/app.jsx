@@ -134,8 +134,6 @@ var App = React.createClass({
     var leftNavMenuItems = [
       { route: 'home', text: 'Home' },
       { route: 'questions', text: 'Challenges' },
-      { route: 'user', text: 'User' },
-      { route: 'test', text: 'Test' },
       { route: 'submit', text: 'Submit Your Challenge' },
     ];
 
