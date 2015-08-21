@@ -56,7 +56,25 @@ var ApiUtils = {
         console.log(xhr, status, err.message);
       }
     })
-    console.log('get user profile');
+    // console.log('get user profile');
+  },
+
+  getAllUsers: function(){
+    
+    var loadUsers = function(users){
+      ServerActions.usersLoaded(users);
+    };
+
+    $.ajax({
+      url: window.location.origin + '/users',
+      method: 'GET',
+      dataType: 'json',
+      success: loadUsers,
+      error: function (xhr, status, err) {
+        console.log(xhr, status, err.message);
+      }
+    });
+
   },
   
   loadSolutions: function (qId) {

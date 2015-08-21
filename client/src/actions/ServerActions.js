@@ -17,6 +17,13 @@ var ServerActions = {
       type: ActionTypes.SOLUTIONS_LOADED,
       solutions: solutions
     });
+  },
+
+  usersLoaded: function(users) {
+    Dispatcher.dispatch({
+      type: ActionTypes.USERS_LOADED,
+      users: users
+    });
   }
 };
 
