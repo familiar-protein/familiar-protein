@@ -20,10 +20,7 @@ var DetailView = React.createClass({
       question: this.props.questions[this.props.params.qNumber - 1],
       
       // TODO: Change to get from User Store
-      user: {
-        username: "Drew",
-        user_id: "55d688e65642c0b1713979e1"
-      }
+      user: UserStore.getUser()
     };
   },
 

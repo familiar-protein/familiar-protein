@@ -36,6 +36,9 @@ var App = React.createClass({
 
   componentWillMount: function(){
     //ViewActions.login();
+
+    // Set initial user value to anonymous
+    ViewActions.loadAnonProfile();
   },
 
   componentDidMount: function(){

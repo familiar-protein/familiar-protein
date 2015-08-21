@@ -37,8 +37,8 @@ var ViewActions = {
   
   login: function (username) {
     ApiUtils.login(username, function (userData) {
-      console.log(userData);
-      console.log(userData._id);
+      // console.log(userData);
+      // console.log(userData._id);
       Dispatcher.dispatch({
         type: ActionTypes.USER_AUTHENTICATION,
         payload: {
@@ -58,6 +58,9 @@ var ViewActions = {
         }
       });
     });
+  },
+  loadAnonProfile: function () {
+    this.login('anonymous');
   }
 };
 
