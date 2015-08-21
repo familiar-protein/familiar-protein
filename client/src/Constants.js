@@ -7,6 +7,7 @@ module.exports = {
     LOAD_QUESTIONS: null,
     LOAD_SOLUTIONS: null,
     SOLUTIONS_LOADED: null,
+    POST_NEW_SOLUTION: null,
     ADD_VOTE_TO_SOLUTION: null,
     QUESTIONS_LOADED: null,
     USER_AUTHENTICATION: null,

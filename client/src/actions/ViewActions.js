@@ -18,6 +18,14 @@ var ViewActions = {
     ApiUtils.loadSolutions(qId);
   },
 
+  postNewSolution: function(qId, uId, solutionStr){
+    // console.log(qId, uId, solutionStr);
+      Dispatcher.dispatch({
+        type: ActionTypes.POST_NEW_SOLUTION
+      });
+      ApiUtils.postNewSolution(qId, uId, solutionStr);
+  },
+
   voteForSolution: function (solutionId) {
     // console.log("Voting for ", solutionId);
     //ADD_VOTE_TO_SOLUTION
@@ -26,18 +34,6 @@ var ViewActions = {
     });
     ApiUtils.incrementSolutionVote(solutionId);
   },
-
-  // login: function (user, pass) {
-  //   Auth.login(user, pass, function (isAuthenticated) {
-  //     Dispatcher.dispatch({
-  //       type: ActionTypes.USER_AUTHENTICATION,
-  //       authentication: {
-  //         authenticated: isAuthenticated,
-  //         error: !isAuthenticated
-  //       }
-  //     });
-  //   });
-  // },
   
   login: function (username) {
     ApiUtils.login(username, function (userData) {

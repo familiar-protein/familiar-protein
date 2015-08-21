@@ -91,6 +91,29 @@ var ApiUtils = {
         console.log(xhr, status, err.message);
       }
     })
+  },
+
+  postNewSolution: function(qId, uId, solutionStr){
+    console.log(qId, uId, solutionStr);
+
+    var postObj = {
+      content: solutionStr,
+      userId: uId,
+      questionId: qId,
+      votes: 0
+    };
+
+    var context = this;
+    $.ajax({
+      url: '/solutions',
+      method: 'POST',
+      data: JSON.stringify(postObj),
+      contentType: 'application/json',
+      success: ApiUtils.loadSolutions.bind(context, qId),
+      error: function () {
+        console.log(arguments);
+      }
+    });
   }
 };
 
