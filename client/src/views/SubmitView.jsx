@@ -29,9 +29,9 @@ var SubmitView = React.createClass({
   },
 
   truthy: function(){
-    var truthyVals = this.refs.passingTests.getValue().split(' ');
+    var truthyVals = this.refs.passingTests.getValue().split('\n');
     truthyVals.forEach(function(item, index, array){
-      if(item === ' ' || item === ''){
+      if(item === ' ' || item === '' || item === undefined){
         array.splice(index, 1);
       }
     });
@@ -39,7 +39,7 @@ var SubmitView = React.createClass({
   },
 
   falsy: function(){
-    var falsyVals = this.refs.failingTests.getValue().split(' ');
+    var falsyVals = this.refs.failingTests.getValue().split('\n');
     falsyVals.forEach(function(item, index, array){
       if(item === ' ' || item === ''){
         array.splice(index, 1);
