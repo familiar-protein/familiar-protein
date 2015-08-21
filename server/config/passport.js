@@ -35,11 +35,15 @@ module.exports = function(passport){
           return done(null, user);
         }else{
           var newUser = new User();
-
-          for (var i = 0; i < profile._json.placesLived.length; i++ ) {
-            if (profile._json.placesLived[i].primary === true) {
-              var location = profile._json.placesLived[i].value;
+          var location = '';
+          try{
+            for (var i = 0; i < profile._json.placesLived.length; i++ ) {
+              if (profile._json.placesLived[i].primary === true) {
+                location = profile._json.placesLived[i].value;
+              }
             }
+          }catch(err){
+            location = 'planet earth';
           }
 
           function getPathFromUrl(url) {
@@ -47,15 +51,21 @@ module.exports = function(passport){
             return url.split("?")[0];
           }
           console.log(profile._json.url);
-          newUser.google.id = profile.id;
-          newUser.google.token = token;
-          newUser.google.name = profile.displayName;
-          newUser.google.url = profile._json.url;
-          newUser.google.location = location;
-          newUser.google.aboutMe = profile._json.aboutMe;
-          newUser.google.tagline = profile._json.tagline;
-          newUser.google.profileCover = profile._json.cover.coverPhoto.url || null;
-          newUser.google.profileImage = getPathFromUrl(profile._json.image.url) || null;
+          try{
+            newUser.google.id = profile.id;
+            newUser.google.token = token;
+            newUser.google.name = profile.displayName;
+            newUser.google.url = profile._json.url;
+            newUser.google.location = location;
+            newUser.google.aboutMe = profile._json.aboutMe;
+            newUser.google.tagline = profile._json.tagline;
+            newUser.google.profileCover = profile._json.cover.coverPhoto.url || null;
+            newUser.google.profileImage = getPathFromUrl(profile._json.image.url) || null;
+          }catch(err){
+            newUser.google.id = profile.id;
+            newUser.google.token = token;
+            newUser.google.name = profile.displayName;
+          }
 
           newUser.save(function(err){
             if(err)
