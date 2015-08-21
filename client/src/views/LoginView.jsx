@@ -14,14 +14,11 @@ var LoginView = React.createClass({
   },
 
   getInitialState: function(){
-    return {
-      username: UserStore.getUsername()      
-    };
+    return UserStore.getUser();
   },
 
   onChange: function () {
     this.setState(UserStore.getState());
-    console.log(this.getState());
   },
 
   componentDidMount: function () {

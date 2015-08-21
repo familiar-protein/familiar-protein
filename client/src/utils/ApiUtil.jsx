@@ -20,7 +20,18 @@ var ApiUtils = {
     })
   },
 
-  login: function (username, callback) { //handle sign up and login
+  login: function (username, callback) {
+    $.ajax({
+      url: '/users/' + username,
+      method: 'GET',
+      success: callback,  
+      error: function (e) {
+        console.log(arguments);
+      }
+    });
+  },
+
+  signup: function (username, callback) { //handle sign up and login
     $.ajax({
       url: '/users',
       method: 'POST',

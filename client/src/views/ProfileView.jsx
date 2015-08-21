@@ -10,7 +10,7 @@ var UserProfile = React.createClass({
   },
 
   onChange: function () {
-    this.setState(UserStore.getUser());
+    this.setState(UserStore.getProfile());
   },
 
   render: function () {
