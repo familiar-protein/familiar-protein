@@ -8,10 +8,16 @@ var LoginView = React.createClass({
   mixins: [Router.State, Router.Navigation],
 
   signUpLogin: function(){
+
     var user = {
       username: this.refs.username.getDOMNode().value,
       password: this.refs.password.getDOMNode().value
     };
+    
+    if (this.getPath() === "/signup") {
+      user.name = this.refs.realname.getDOMNode().value || null;
+      user.image = this.refs.imageurl.getDOMNode().value || null;
+    }
 
 
     $.ajax({
@@ -38,8 +44,8 @@ var LoginView = React.createClass({
       return (
         <div>
           <h1>Login</h1>
-          <p>Username: <input type="text" ref="username"/></p>
-          <p>Password: <input type="password" ref="password"/></p>
+          <p>Username: <input type="text" ref="username" required/></p>
+          <p>Password: <input type="password" ref="password" required/></p>
           <button type="button" onClick={this.signUpLogin}>Log In</button>
           <Link to="signup" className="btn btn-primary">To Signup</Link>
         </div>
@@ -48,8 +54,10 @@ var LoginView = React.createClass({
       return (
         <div>
           <h1>Sign Up</h1>
-          <p>Username: <input type="text" ref="username"/></p>
-          <p>Password: <input type="password" ref="password"/></p>
+          <p>Username: <input type="text" ref="username" required/></p>
+          <p>Password: <input type="password" ref="password" required/></p>
+          <p>Name: <input type="text" ref="realname"/></p>
+          <p>Image URL: <input type="text" ref="imageurl"/></p>
           <button type="button" onClick={this.signUpLogin}>Sign Up</button>
           <Link to="login" className="btn btn-primary">To Login</Link>
         </div>
