@@ -15,12 +15,13 @@ var LoginView = React.createClass({
 
   getInitialState: function(){
     return {
-      error: false
+      username: UserStore.getUsername()      
     };
   },
 
   onChange: function () {
     this.setState(UserStore.getState());
+    console.log(this.getState());
   },
 
   componentDidMount: function () {
@@ -36,10 +37,10 @@ var LoginView = React.createClass({
     var router = this.context.router;
     var nextPath = router.getCurrentQuery().nextPath;
     var user = this.refs.username.getDOMNode().value;
-    var pass = this.refs.password.getDOMNode().value;
+    //var pass = this.refs.password.getDOMNode().value;
 
-    ViewActions.login(user, pass);
-
+    ViewActions.login(user);
+    
     // move to action
     // Auth.login(user, pass, function(success){
     //   console.log(success);

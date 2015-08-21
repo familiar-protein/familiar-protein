@@ -41,6 +41,7 @@ module.exports = function (app) {
       username: data.username
     }, function(err,  newUser) {
       if (err) {
+        console.log(err.message);
         res.sendStatus(500, err);
       }
       res.send(newUser);

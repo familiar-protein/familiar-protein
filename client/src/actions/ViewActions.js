@@ -27,23 +27,36 @@ var ViewActions = {
     ApiUtils.incrementSolutionVote(solutionId);
   },
 
-  login: function (user, pass) {
-    Auth.login(user, pass, function (isAuthenticated) {
+  // login: function (user, pass) {
+  //   Auth.login(user, pass, function (isAuthenticated) {
+  //     Dispatcher.dispatch({
+  //       type: ActionTypes.USER_AUTHENTICATION,
+  //       authentication: {
+  //         authenticated: isAuthenticated,
+  //         error: !isAuthenticated
+  //       }
+  //     });
+  //   });
+  // },
+  
+  login: function (username) {
+    ApiUtils.login(username, function (userData) {
       Dispatcher.dispatch({
         type: ActionTypes.USER_AUTHENTICATION,
-        authentication: {
-          authenticated: isAuthenticated,
-          error: !isAuthenticated
+        payload: {
+          username: userData.username
         }
       });
     });
   },
 
-  getUserProfile: function (userId) {
-    ApiUtils.getUserProfile(userId, function (userData) {
+  getUserProfile: function (username) {
+    ApiUtils.getUserProfile(username, function (userData) {
       Dispatcher.dispatch({
         type: ActionTypes.GET_USER_PROFILE,
-        userData: userData
+        payload: {
+          username: userData.username
+        }
       });
     });
   }

@@ -33,9 +33,24 @@ var ApiUtils = {
     })
   },
 
-  getUserProfile: function (userId, callback) {
+  login: function (username, callback) { //handle sign up and login
     $.ajax({
-      url: window.location.origin + '/user/' + userId,
+      url: '/users',
+      method: 'POST',
+      data: JSON.stringify({"username": username}),
+      contentType: 'application/json',
+      success: function (data) {
+        console.log(data);
+      },
+      error: function () {
+        console.log(arguments);
+      }
+    });
+  },
+
+  getUserProfile: function (username, callback) {
+    $.ajax({
+      url: window.location.origin + '/users/' + username,
       method: 'GET',
       dataType: 'json',
       success: callback,
@@ -43,6 +58,7 @@ var ApiUtils = {
         console.log(xhr, status, err.message);
       }
     })
+    console.log('get user profile');
   },
   
   loadSolutions: function (qId) {
