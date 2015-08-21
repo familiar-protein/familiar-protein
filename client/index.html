@@ -19,5 +19,10 @@
   </head>
   <body>
     <script type="text/javascript" src="./build/app.js"></script>
+    <script>
+      $('.alert .close').on('click', function(e) {
+        $(this).parent().hide();
+      });
+    </script>
   </body>
 </html>
