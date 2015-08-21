@@ -36,9 +36,7 @@ module.exports = function (app) {
   });
 
   app.post('/users', function(req, res) {
-    console.log('im working!')
     var data = req.body;
-    console.log(data);
     var addUser = User.create({
       username: data.username
     }, function(err,  newUser) {
