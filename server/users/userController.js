@@ -68,7 +68,27 @@ var login = function(req,res,next){
 var getUserInfo = function(req, res, next) {
   var url_parts = url.parse(req.url,true);
   var username = url_parts.query.username;
-  res.send("Username: " + username);
+  //res.send("Username: " + username);
+
+  User.findOne({username: username})
+  .exec(function(err, data){
+    if (err) { console.log("ERROR", err);}
+    
+    if (data !== null) {
+      // check that the passwords match if so, log in else don't
+      if (err){console.log(err);}
+
+      utils.createSession(req, res, data);
+      res.statusCode = 200;
+      res.send({
+        response: "Found user profile!", 
+        userInfo: req.session.user
+      });
+    }else{
+      res.statusCode = 401;
+      res.send({response: "No user found"});
+    }
+  });
 }
 
 // Simply check whether the user is logged in based on a cookie.
