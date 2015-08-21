@@ -41,15 +41,20 @@ var DetailView = React.createClass({
     };
   },
 
-  setRegex: function() {
+  setRegex: function() { //called when changes are made to the solution
     var value = this.refs.solutionText.getValue();
     var flag = this.refs.solutionTextFlags.getValue();
-    var solved = this.isSolved(value, flag);
+    var solved = this.isSolved(value);
     this.setState({
       result: value,
       flag: flag,
       solved: solved
     });
+
+    if(solved===true){ // send data to server when solution is found
+      this.stopTimer();
+      this.submitSolution();
+    } //if
   },
 
   checkTestCase: function(testCase, condition) {
@@ -66,7 +71,7 @@ var DetailView = React.createClass({
   },
 
   displayTestCases: function(string, condition) { //string=truthy or falsy
-    var question = this.props.questions[this.props.params.qNumber];
+    var question = this.props.questions[this.props.params.qNumber]; //find info based on q_id
     return question[string].map(function(testCase) {
       return (
         <p key={testCase} className={this.checkTestCase(testCase, condition)}>{testCase}</p>
@@ -106,24 +111,31 @@ var DetailView = React.createClass({
       return null;
     }
   },
-  componentWillReceiveProps: function(){
-  },
-  componentDidMount: function(){ //whenever 
+  componentDidMount: function(){ //begins the timer, only once when component becomes mounted 
     /*** Timer ***/
     // var startTime = new Date();
+    this.startTimer();
+  },
+  startTimer: function(){
     var interval = 1000;
     // this.setState({elapsed:0}); //init
     // TEST: set interval when the page loads?
-    setInterval(function(){
-      var currentTime = new Date();
-      
-      this.setState({
-        elapsed: Math.round((currentTime - this.state.startTime)/1000)
-      });
-      // console.log("TEST ----> elapsed=" + this.state.elapsed);
-    }.bind(this), interval); //setInterval
+    this.setState({
+      timer: setInterval(function(){
+          var currentTime = new Date();
+          
+          this.setState({
+            elapsed: Math.round((currentTime - this.state.startTime)/1000)
+          });
+          // console.log("TEST ----> elapsed=" + this.state.elapsed);
+        }.bind(this), interval), //setInterval
+      timerRunning: true
+    }); //setState
 
-  },
+  }, //startTimer()
+  stopTimer:function(){
+    clearInterval(this.state.timer);
+  }, //stopTimer()
   nextProblem: function(){ //reset timer and solved when user clicks next problem link
     this.setState({
       'solved':false,
@@ -131,22 +143,46 @@ var DetailView = React.createClass({
       'startTime':new Date(),
       'result': ''
     });
+
+    this.startTimer();
   },
+  calcScore: function(){
+    //variables: elapsed, length;
+    var time = this.state.elapsed; //25 +/- 25 seconds, +/- up to 30 points
+    var length = this.state.result.length; //10 +/- 15 letters, +/- up to 30 points
+    var score = 100-(time-25)*30/25-(length-10)*30/15;
+    return score;
+  },  
   submitSolution: function(data){ //submit user solution to database
     console.log('TEST inside submitSolution');
-    $.ajax({
-      url: window.location.origin + '/user/solved',
-      method: 'POST',
-      data: JSON.stringify('hellow world'),
-      dataType: 'json',
-      success: function(){
-        console.log('success!');
-      },
-      error: function(xhr, status, err){
-        console.log(err);
-      }
-    }); //ajax
-  },
+      
+    try{
+      console.log("TEST ----> user=", this.props.user);
+      var user = this.props.user;
+      
+      $.ajax({
+        url: window.location.origin + '/user/solved',
+        method: 'POST',
+        data: JSON.stringify({
+          u_id: user._id,
+          q_id: this.props.params.qNumber,
+          solution: this.state.result,
+          time: this.state.elapsed,
+        }),
+        dataType: 'json',
+        success: function(){
+          console.log('success!');
+        },
+        error: function(xhr, status, err){
+          console.log(err);
+          alert("You must login before you can save your score.");
+        }
+      }); //ajax
+    }catch(err){
+      console.log('User not found! Error: '+err);
+    } //try
+
+  }, //submitSolution()
   render: function() {
     // this.startTimer();
     /*** Questions ***/
@@ -171,10 +207,12 @@ var DetailView = React.createClass({
             <h2>{question.title}</h2>
             <p>{question.description}</p>
           </div>
-            <div className="col-sm-2 back">
-              <RaisedButton label="Back" linkButton="true" href="/#/questions"/>
-            </div>
-        </div>
+
+          <div className="col-sm-2 back">
+            <RaisedButton label="Back" linkButton="true" href="/#/questions"/>
+          </div>
+
+        </div>{/*question-solve*/}
 
         <h2 className='timer'>Time Elapsed: {this.state.elapsed}</h2> {/*timer*/}
 
@@ -187,7 +225,7 @@ var DetailView = React.createClass({
             if(this.state.solved){
               return (
                 <h3 className='success'>
-                  {"Success!!! Solved All Test Cases!  "}
+                  {"Success!!! You earned <span>"+this.calcScore()+"</span> points. "}
                  <a href={"/#/question/"+(parseInt(this.props.params.qNumber)+1)} onClick={this.nextProblem} /*onClick={this.submitSolution}*/>Next Problem</a>
                 </h3>
               )//return 

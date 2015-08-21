@@ -30,7 +30,7 @@ var HomeView = React.createClass({
       <div className="container">
         <h1>Welcome to the Regex Challenge</h1>
         <p>Learn how to use regex, solve challenges, earn points and compare your solutions.</p>
-        <p><a className="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
+        <p><a className="btn btn-primary btn-lg" href="#/questions" role="button">Learn more »</a></p>
       </div>
       </div>);
   }
