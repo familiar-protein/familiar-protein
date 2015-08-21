@@ -132,7 +132,6 @@ var ApiUtils = {
       userId: solution.userId._id,
       votes: solution.votes
     };
-    // console.log(JSON.stringify(putSolution));
 
     var context = this;
     $.ajax({

@@ -35,7 +35,6 @@ var UserProfile = React.createClass({
   onChange: function () {
     this.updateUserData();
     this.updateSolutions();
-    console.log('change', this.state);
   },
 
   solutions: function () {
@@ -45,15 +44,14 @@ var UserProfile = React.createClass({
         return solution.userId === id;
       })
       .sort(function (solution1, solution2) {
-        return solution1.votes > solution2.votes;
+        return solution1.votes < solution2.votes;
       })
       .map(function (solution) {
-        return (<div>{solution.votes} - {solution.content}</div>);
+        return (<div>{solution.votes} - {solution.questionId.title} - {solution.content}</div>);
       });
   },
 
   render: function () {
-    console.log()
     return (
       <div>
         <h2>{this.state.username}</h2>

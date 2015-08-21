@@ -39,7 +39,6 @@ var UserStore = assign({}, EventEmitter.prototype, {
   setUserData: function (userData) {
     userAuth.username = userData.username;
     userAuth.user_id = userData.user_id;
-    // console.log(userAuth);
   },
 
   setUserProfile: function (data) { 
