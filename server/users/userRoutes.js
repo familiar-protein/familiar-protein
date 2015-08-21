@@ -38,7 +38,7 @@ module.exports = function (app) {
   app.post('/users', function(req, res) {
     var data = req.body;
     var addUser = User.create({
-      username: data.username,
+      username: data.username
     }, function(err,  newUser) {
       if (err) {
         res.sendStatus(500, err);
