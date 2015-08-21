@@ -2,7 +2,7 @@ var Solution = require('./solutionModel');
 
 module.exports = function(app) {
   app.param('qid', function(req, res, next, qid) {
-    Solution.find({questionId: qid}).populate('questionId').populate('userId')
+    Solution.find({questionId: qid}).sort( { votes: -1 } ).populate('questionId').populate('userId')
     .exec(function(err, data) {
       if (err) {
         //res.send(500, err);
