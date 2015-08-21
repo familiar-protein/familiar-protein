@@ -20,7 +20,7 @@ module.exports = function (app, passport) {
   }); //app.get
 
   app.post('/user/solved', function(req, res){
-    console.log("TEST inside user/solved ----->");
-    userController.newSolution(req, res);
+    // console.log("TEST inside user/solved ----->");
+    // userController.newSolution(req, res);
   }); //app.post   
 };

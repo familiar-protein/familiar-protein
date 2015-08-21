@@ -52,6 +52,7 @@ var DetailView = React.createClass({
     });
 
     if(solved===true){ // send data to server when solution is found
+      this.stopTimer();
       this.submitSolution();
     } //if
   },
@@ -113,19 +114,28 @@ var DetailView = React.createClass({
   componentDidMount: function(){ //begins the timer, only once when component becomes mounted 
     /*** Timer ***/
     // var startTime = new Date();
+    this.startTimer();
+  },
+  startTimer: function(){
     var interval = 1000;
     // this.setState({elapsed:0}); //init
     // TEST: set interval when the page loads?
-    setInterval(function(){
-      var currentTime = new Date();
-      
-      this.setState({
-        elapsed: Math.round((currentTime - this.state.startTime)/1000)
-      });
-      // console.log("TEST ----> elapsed=" + this.state.elapsed);
-    }.bind(this), interval); //setInterval
+    this.setState({
+      timer: setInterval(function(){
+          var currentTime = new Date();
+          
+          this.setState({
+            elapsed: Math.round((currentTime - this.state.startTime)/1000)
+          });
+          // console.log("TEST ----> elapsed=" + this.state.elapsed);
+        }.bind(this), interval), //setInterval
+      timerRunning: true
+    }); //setState
 
-  },
+  }, //startTimer()
+  stopTimer:function(){
+    clearInterval(this.state.timer);
+  }, //stopTimer()
   nextProblem: function(){ //reset timer and solved when user clicks next problem link
     this.setState({
       'solved':false,
@@ -133,7 +143,16 @@ var DetailView = React.createClass({
       'startTime':new Date(),
       'result': ''
     });
+
+    this.startTimer();
   },
+  calcScore: function(){
+    //variables: elapsed, length;
+    var time = this.state.elapsed; //25 +/- 25 seconds, +/- up to 30 points
+    var length = this.state.result.length; //10 +/- 15 letters, +/- up to 30 points
+    var score = 100-(time-25)*30/25-(length-10)*30/15;
+    return score;
+  },  
   submitSolution: function(data){ //submit user solution to database
     console.log('TEST inside submitSolution');
       
@@ -188,10 +207,12 @@ var DetailView = React.createClass({
             <h2>{question.title}</h2>
             <p>{question.description}</p>
           </div>
-            <div className="col-sm-2 back">
-              <RaisedButton label="Back" linkButton="true" href="/#/questions"/>
-            </div>
-        </div>
+
+          <div className="col-sm-2 back">
+            <RaisedButton label="Back" linkButton="true" href="/#/questions"/>
+          </div>
+
+        </div>{/*question-solve*/}
 
         <h2 className='timer'>Time Elapsed: {this.state.elapsed}</h2> {/*timer*/}
 
@@ -204,7 +225,7 @@ var DetailView = React.createClass({
             if(this.state.solved){
               return (
                 <h3 className='success'>
-                  {"Success!!! Solved All Test Cases!  "}
+                  {"Success!!! You earned <span>"+this.calcScore()+"</span> points. "}
                  <a href={"/#/question/"+(parseInt(this.props.params.qNumber)+1)} onClick={this.nextProblem} /*onClick={this.submitSolution}*/>Next Problem</a>
                 </h3>
               )//return 

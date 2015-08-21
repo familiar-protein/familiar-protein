@@ -16,8 +16,8 @@ var newSolution = function(req, res){
 	// var user = User.find(function(err, users){
 	// 	console.log('TEST inside userController->newSolution. user=', users);
 	// }); //find()
-	res.end();
-} //newSolution()
+	// res.end();
+}; //newSolution()
 
 module.exports = {
   userInfo : userInfo,
