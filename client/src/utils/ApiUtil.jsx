@@ -49,7 +49,7 @@ var ApiUtils = {
     //TODO: Actual request to server
     // console.log("Loading solutions for question ID: ", qId);
 
-    var loadSolutions = function(solutions){
+    var populateSolutions = function(solutions){
       // console.log('Got from server: ', solutions);
       ServerActions.solutionsLoaded(solutions);
     };
@@ -58,25 +58,45 @@ var ApiUtils = {
       url: window.location.origin + '/solutions/' + qId,
       method: 'GET',
       dataType: 'json',
-      success: loadSolutions,
+      success: populateSolutions,
       error: function (xhr, status, err) {
         console.log(xhr, status, err.message);
       }
     })
   },
 
-  incrementSolutionVote: function (solutionId){
+  incrementSolutionVote: function (solution){
     //TODO: Actual request to server
     // console.log("Incrementing votes for: ", solutionId);
     
     // Just temporary code to simulate a put request
-    for(solution in solutions){
-      if(solutions[solution].id === solutionId) {
-        solutions[solution].votes++;
+    // for(solution in solutions){
+    //   if(solutions[solution].id === solutionId) {
+    //     solutions[solution].votes++;
 
-        this.loadSolutions();
-      }
+    //     this.loadSolutions();
+    //   }
+    // }
+    if(!solution[votes]){
+      solution[votes] = 0;
     }
+    solution[votes]++;
+
+    var populateSolutions = function(solutions){
+      // console.log('Got from server: ', solutions);
+      ServerActions.solutionsLoaded(solutions);
+    };
+     
+    $.ajax({
+      url: window.location.origin + '/solutions/' + solution._id,
+      method: 'PUT',
+      dataType: 'json',
+      data: solution,
+      success: loadSolutions,
+      error: function (xhr, status, err) {
+        console.log(xhr, status, err.message);
+      }
+    })
   }
 };
 

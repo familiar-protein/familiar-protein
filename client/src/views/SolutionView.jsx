@@ -26,10 +26,10 @@ var SolutionView = React.createClass({
     SolutionStore.removeChangeListener(this.getSolutions);
   },
 
-  vote: function(solutionId){
+  vote: function(solution){
     
     //TODO: Implement voting
-    ViewActions.voteForSolution(solutionId);
+    ViewActions.voteForSolution(solution);
   },
 
   render: function(){
@@ -43,9 +43,9 @@ var SolutionView = React.createClass({
           <td className="solution-description">
             {solution.content}
           </td>
-          <td>{solution.votes}</td>
+          <td>{solution.votes || 0}</td>
           <td>
-            <button onClick={context.vote.bind(context, solution._id)} className="btn btn-primary">UpVote</button>
+            <button onClick={context.vote.bind(context, solution)} className="btn btn-primary">UpVote</button>
           </td>
         </tr>
       )

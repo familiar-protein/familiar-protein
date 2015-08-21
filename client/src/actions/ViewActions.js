@@ -19,7 +19,7 @@ var ViewActions = {
   },
 
   voteForSolution: function (solutionId) {
-    //console.log("Voting for ", solutionId);
+    // console.log("Voting for ", solutionId);
     //ADD_VOTE_TO_SOLUTION
     Dispatcher.dispatch({
       type: ActionTypes.ADD_VOTE_TO_SOLUTION
