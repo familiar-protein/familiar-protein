@@ -9,20 +9,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/familiar-protein/familiar-protein.git"
+    "url": "git+https://github.com/Raspy-Dimple/familiar-protein.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/familiar-protein/familiar-protein/issues"
+    "url": "https://github.com/Raspy-Dimple/familiar-protein/issues"
   },
-  "homepage": "https://github.com/familiar-protein/familiar-protein#readme",
+  "homepage": "https://github.com/Raspy-Dimple/familiar-protein#readme",
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "body-parser": "^1.13.3",
+    "client-sessions": "^0.7.0",
     "express": "^4.13.3",
     "mongoose": "^4.1.1",
     "react": "^0.13.3",
-    "react-router": "^0.13.3"
+    "react-router": "^0.13.3",
+    "url": "^0.10.3"
   },
   "devDependencies": {
     "chai": "^3.2.0",
