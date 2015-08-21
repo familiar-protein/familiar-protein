@@ -12,7 +12,8 @@ module.exports = {
     QUESTIONS_LOADED: null,
     USER_AUTHENTICATION: null,
     GET_USER_PROFILE: null,
-    USER_LOGIN: null
+    USER_LOGIN: null,
+    ALL_SOLUTIONS_LOADED: null
   }),
 
   PayloadSources: keyMirror({

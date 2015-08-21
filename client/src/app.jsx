@@ -62,10 +62,14 @@ var App = React.createClass({
     this.transitionTo('/user/' + UserStore.getUser().username);
   },
 
+  goToHome: function () {
+    this.transitionTo('default');
+  },
+
   render: function() {
     return (
       <div className="container">
-        <h2 className="title">Regex Game</h2>
+        <h2 className="title" onClick={this.goToHome}>Regex Game</h2>
         {(this.state.username === "anonymous") ? <button onClick={this.loginHandler} ref="login-btn">Login</button> : <button onClick={this.profileHandler} ref="profile-btn">My Profile</button>}
         <RouteHandler questions={this.state.questions}/>
       </div>
