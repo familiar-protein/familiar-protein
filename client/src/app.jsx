@@ -133,8 +133,9 @@ var App = React.createClass({
   render: function() {
     var leftNavMenuItems = [
       { route: 'home', text: 'Home' },
-      { route: 'questions', text: 'Challenges' },
-      { route: 'submit', text: 'Submit Your Challenge' },
+      { route: 'questions', text: 'Take a Challenges' },
+      { route: 'submit', text: 'Submit a Challenge' },
+      { route: 'info', text: 'About' },
     ];
 
     var iconMenuValueLink = {
@@ -143,10 +144,12 @@ var App = React.createClass({
     };
 
     if (this.state.user !== undefined) {
-      console.log(this.state);
+      // console.log(this.state);
+      var loggedIn = true;
       var username = this.state.user.google.name;
       var loginandout = <MenuItem value="login" primaryText="Logout" leftIcon={<i className="material-icons md-light md-24">swap_horiz</i>}/>
     } else {
+      var loggedIn = false;
       var username = '';
       var loginandout = <MenuItem value="login" primaryText="Login" leftIcon={<i className="material-icons md-light md-24">swap_horiz</i>}/>
     }
@@ -176,7 +179,7 @@ var App = React.createClass({
                 openDirection="bottom-left"
                 valueLink={iconMenuValueLink}>
                 <MenuItem value="user" primaryText="User" leftIcon={<i className="material-icons md-light md-24">face</i>}/>
-                <MenuItem value="test" primaryText="Test" leftIcon={<i className="material-icons md-light md-24">star</i>}/>
+                <MenuItem value="info" primaryText="Info" leftIcon={<i className="material-icons md-light md-24">info_outline</i>}/>
                 {loginandout}
               </IconMenu>
             </div>
@@ -203,6 +206,7 @@ var routes = (
     <Route name="question" path="question/:qNumber" handler={DetailView}/>
     <Route name="user" handler={UserView}/>
     <Route name="test" path="/test/" handler={TestView}/>
+    <Route name="info" handler={TestView}/>
     <Route name="submit" handler={SubmitView}/>
     <Route name="login" handler={LoginView}/>
     <DefaultRoute handler={HomeView}/>
@@ -213,27 +217,8 @@ Router.run(routes, function(Handler, state){
   var params = state.params;
   React.render(<Handler params={params}/>, document.body);
   console.log('test inside master routing');
-
-  /*** Timer ***/ //for testing
-  // var startTime = new Date();
-  // var interval = 1000;
-  // this.setState({elapsed:0}); //init
-  // // TEST: set interval when the page loads?
-  // setInterval(function(){
-  //   var currentTime = new Date();
-    
-  //   this.setState({
-  //     elapsed: Math.round((currentTime - startTime)/1000)
-  //   });
-
-  //   // console.log("TEST ----> elapsed=" + this.state.elapsed);
-  // }.bind(this), interval); //setInterval
 });
 
-// Router.run(routes, "/test/", function(){
-//   console.log('test inside ------> test routing');
-
-// });
 
 
 

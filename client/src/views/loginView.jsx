@@ -1,4 +1,7 @@
 var React = require('react');
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
+var LinearProgress = mui.LinearProgress;
 
 var Router = require('react-router');
 var Link = Router.Link;
@@ -34,10 +37,13 @@ var Login = React.createClass({
   render: function(){
 
     return (
+      <div>
       <div className="panel">
+        <LinearProgress mode="indeterminate"  />
         <div className="panel-body row"><div className="col-xs-12">
         <p>Please wait ... </p>
         </div></div>
+      </div>
       </div>
     );
   }
