@@ -29,13 +29,13 @@ var App = React.createClass({
   onChange: function () {
     this.setState({
       questions: QuestionStore.getQuestions(),
-      user_id: UserStore.getUsername()ß
+      user_id: UserStore.getUsername()
     })
     console.log(this.state);
   },
 
   componentWillMount: function(){
-    ViewActions.login();
+    //ViewActions.login();
   },
 
   componentDidMount: function(){

@@ -36,7 +36,7 @@ var UserStore = assign({}, EventEmitter.prototype, {
     return userAuth;
   },
 
-  getUser_Id: function () {
+  getUsername: function () {
     return userAuth.username;
   },
 
