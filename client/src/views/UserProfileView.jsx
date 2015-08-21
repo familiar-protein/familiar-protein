@@ -4,6 +4,46 @@ var Router = require('react-router');
 var Link = Router.Link;
 
 var UserProfileContainer = React.createClass({
+  getInitialState: function(){
+    return {
+    	username: null
+    };
+  },
+
+	componentDidMount: function () {
+		var username = this.props.params.username;
+		this.setState({username: username}, function() {
+			console.log("USERNAME... hopefully... ", this.state.username);
+		
+			// Initiate AJAX request to get some new data.
+			this.getUserData();
+		});
+	},
+
+	// This stuff might not work exactly right.
+	// TODO: Potentially remove this stuff! HEYO.
+  componentDidUpdate: function() {
+  	if (this.props.params.username !== this.state.username) {
+			this.setState({username: username}, function() {
+				console.log("USERNAME... hopefully... ", this.state.username);
+			});
+  	}
+  },
+
+  getUserData: function(username) {
+    $.ajax({
+      url: window.location.origin + '/user/' + this.state.username,
+      method: 'GET',
+      dataType: 'json',
+      success: function(data){
+
+      }.bind(this),
+      error: function(xhr, status, err){
+        console.error(xhr, status, err.message);
+      }
+    });
+  },
+
 	render: function() {
 		return (
 			<div>
