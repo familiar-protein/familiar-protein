@@ -6,6 +6,7 @@ var CHANGE_EVENT = 'change';
 
 var userAuth = {
   username: null,
+  user_id: null,
   profileView: { //  handles the /user route
     username: null
   }
@@ -24,8 +25,10 @@ var UserStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  setUsername: function (username) {
-    userAuth.username = username;
+  setUserData: function (userData) {
+    userAuth.username = userData.username;
+    userAuth.user_id = userData.user_id;
+    console.log(userAuth);
   },
 
   setUserProfile: function (data) { 
@@ -36,18 +39,18 @@ var UserStore = assign({}, EventEmitter.prototype, {
     return userAuth;
   },
 
-  getUsername: function () {
-    return userAuth.username;
+  getUser: function () {
+    return {username:userAuth.username, user_id: userAuth.user_id};
   },
 
-  getUser: function () {
+  getProfile: function () {
     return userAuth.profileView;
   }
 });
 
 UserStore.dispatchToken = Dispatcher.register(function (action) {
   if (action.type === 'USER_AUTHENTICATION') {
-    UserStore.setUsername(action.payload.username);
+    UserStore.setUserData(action.payload);
     UserStore.emitChange();
   }
 
