@@ -33,7 +33,13 @@ var DetailView = React.createClass({
     var solved = this.isSolved(value);
 
     if(solved){
+
+      // TODO: Post new solution to server
+
+
+      // Retrieve solutions to current question
       ViewActions.loadSolutions(this.state.question._id);
+
     }
 
     this.setState({
