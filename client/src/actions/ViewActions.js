@@ -57,6 +57,14 @@ var ViewActions = {
     });
   },
 
+  getAllUsers: function(){
+    // console.log('in view actions: getting all users');
+    Dispatcher.dispatch({
+      type: ActionTypes.LOAD_USERS
+    });
+    ApiUtils.getAllUsers();
+  },
+
   getUserProfile: function (username) {
     ApiUtils.getUserProfile(username, function (userData) {
       Dispatcher.dispatch({
