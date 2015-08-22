@@ -40,7 +40,7 @@ var SolutionView = React.createClass({
       return (
         <tr key={solution._id}>
         <td className="solution-description">
-          {solution.userId.username}
+          {solution.userId}
         </td>
           <td className="solution-description">
             {solution.content}
