@@ -35,6 +35,7 @@ var UserProfile = React.createClass({
   onChange: function () {
     this.updateUserData();
     this.updateSolutions();
+    this.forceUpdate();
   },
 
   solutions: function () {
