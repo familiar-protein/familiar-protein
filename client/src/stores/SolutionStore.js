@@ -39,13 +39,11 @@ var SolutionStore = assign({}, EventEmitter.prototype, { // assign === _.extend
 
 SolutionStore.dispatchToken = Dispatcher.register(function (action) {
   if (action.type === 'SOLUTIONS_LOADED') {
-    // console.log('Got Solutions', action.solutions);
     SolutionStore.loadSolutions(action.solutions);
     SolutionStore.emitChange();
   }
 
   if (action.type === 'ALL_SOLUTIONS_LOADED') {
-    console.log('reaches solution store');
     SolutionStore.loadAllSolutions(action.solutions);
     SolutionStore.emitChange();
   }

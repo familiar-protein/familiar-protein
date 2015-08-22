@@ -51,8 +51,6 @@ var App = React.createClass({
     QuestionStore.addListener(this.onChange);
     ViewActions.loadQuestions();
     ViewActions.loadAllSolutions();
-    var self = this;
-    setTimeout(function () {console.log(self.state)},2000);
   },
 
   loginHandler: function (e) {

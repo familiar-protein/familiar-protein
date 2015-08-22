@@ -24,7 +24,6 @@ var ViewActions = {
           type: ActionTypes.ALL_SOLUTIONS_LOADED,
           solutions: allSolutions
         });
-        console.log('ViewActions load all solutions');
     });
   },
 
