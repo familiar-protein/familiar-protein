@@ -13,7 +13,7 @@ module.exports = {
     USER_AUTHENTICATION: null,
     GET_USER_PROFILE: null,
     USER_LOGIN: null,
-    ALL_SOLUTIONS_LOADED: null
+    ALL_SOLUTIONS_LOADED: null,
     LOAD_USERS: null,
     USERS_LOADED: null,
     USER_LOGIN: null

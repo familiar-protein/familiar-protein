@@ -98,28 +98,28 @@ var ApiUtils = {
   },
 
   loadAllSolutions: function (callback) {
-    // $.ajax({
-    //   url: window.location.origin + '/solutions',
-    //   method: 'GET',
-    //   dataType: 'json',
-    //   success: callback,
-    //   error: function (xhr, status, err) {
-    //     console.log(xhr, status, err.message);
-    //   }
-    // })
-    console.log('loadAllSOlutions Api called');
-    callback(
-      [
-      {question_id:"question#1", votes:3, user_id: '55d7921a0129cac5f22b469e', content:'answer1'},
-      {question_id:"question#2", votes:1, user_id: '55d7921a0129cac5f22b469e', content:'answer2'},
-      {question_id:"question#3", votes:2, user_id: '55d7921a0129cac5f22b469e', content:'answer3'},
-      {question_id:"question#4", votes:7, user_id: '55d7921a0129cac5f22b469e', content:'answer4'},
-      {question_id:"question#5", votes:5, user_id: '55d7921a0129cac5f22b469e', content:'answer5'},
-      {question_id:"question#5", votes:5, user_id: '55d7921a0129cac5f22b469e', content:'answer5'},
-      {question_id:"question#6", votes:5, user_id: 'fsdjkfs', content:'answer6'},
-      {question_id:"question#7", votes:5, user_id: 'fsdjkfs', content:'answer7'},
-      {question_id:"question#8", votes:5, user_id: 'fsdjkfs', content:'answer8'},
-      ]);
+    $.ajax({
+      url: window.location.origin + '/solutions',
+      method: 'GET',
+      dataType: 'json',
+      success: callback,
+      error: function (xhr, status, err) {
+        console.log(xhr, status, err.message);
+      }
+    });
+    // console.log('loadAllSOlutions Api called');
+    // callback(
+    //   [
+    //   {question_id:"question#1", votes:3, user_id: '55d7921a0129cac5f22b469e', content:'answer1'},
+    //   {question_id:"question#2", votes:1, user_id: '55d7921a0129cac5f22b469e', content:'answer2'},
+    //   {question_id:"question#3", votes:2, user_id: '55d7921a0129cac5f22b469e', content:'answer3'},
+    //   {question_id:"question#4", votes:7, user_id: '55d7921a0129cac5f22b469e', content:'answer4'},
+    //   {question_id:"question#5", votes:5, user_id: '55d7921a0129cac5f22b469e', content:'answer5'},
+    //   {question_id:"question#5", votes:5, user_id: '55d7921a0129cac5f22b469e', content:'answer5'},
+    //   {question_id:"question#6", votes:5, user_id: 'fsdjkfs', content:'answer6'},
+    //   {question_id:"question#7", votes:5, user_id: 'fsdjkfs', content:'answer7'},
+    //   {question_id:"question#8", votes:5, user_id: 'fsdjkfs', content:'answer8'},
+    //   ]);
   },
 
   incrementSolutionVote: function (solution){

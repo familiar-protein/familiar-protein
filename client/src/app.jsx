@@ -50,6 +50,7 @@ var App = React.createClass({
     UserStore.addListener(this.onChange);
     QuestionStore.addListener(this.onChange);
     ViewActions.loadQuestions();
+    ViewActions.loadAllSolutions();
     var self = this;
     setTimeout(function () {console.log(self.state)},2000);
   },
@@ -71,7 +72,8 @@ var App = React.createClass({
     return (
       <div className="container">
         <h2 className="title" onClick={this.goToHome}>Regex Game</h2>
-        {(this.state.username === "anonymous") ? <button onClick={this.loginHandler} ref="login-btn">Login</button> : <button onClick={this.profileHandler} ref="profile-btn">My Profile</button>}
+        {(this.state.username === "anonymous") ? <button className="btn btn-primary home" onClick={this.loginHandler} ref="login-btn">Login</button> : <button onClick={this.profileHandler} ref="profile-btn">My Profile</button>}
+        <Link to="leaderboard" className="btn btn-primary home">View Leaderboard</Link>
         <RouteHandler questions={this.state.questions}/>
       </div>
     )
