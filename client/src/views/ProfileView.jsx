@@ -18,6 +18,7 @@ var UserProfile = React.createClass({
   componentWillMount: function () {
     UserStore.addListener(this.onChange);
     SolutionStore.addListener(this.onChange);
+    ViewActions.login(this.getPath().split('/')[2]);
     ViewActions.getUserProfile(this.getPath().split('/')[2]);
     ViewActions.loadAllSolutions();
   },

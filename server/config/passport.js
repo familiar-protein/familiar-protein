@@ -14,9 +14,9 @@
    });
 
    passport.use(new GithubStrategy({
-     clientID: configAuth.github.clientID,
-     clientSecret: configAuth.github.clientSecret,
-     callbackURL: configAuth.github.callbackURL
+    clientID: configAuth.githubAuth.clientID,
+    clientSecret: configAuth.githubAuth.clientSecret,
+    callbackURL: configAuth.githubAuth.callbackURL
      },
      function(accessToken, refreshToken, profile, done) {
        User.findOne({'github.id': profile.id}, function(err, user) {
@@ -29,7 +29,7 @@
            var newUser = new User();
            newUser.github.id = profile.id;
            newUser.github.token = accessToken;
-           newUser.github.username = profile.username;
+           newUser.username = profile.username;
            newUser.github.displayName = profile.displayName;
            newUser.github.profileUrl = profile.profileUrl;
            newUser.github.email = profile.emails[0].value;
@@ -46,4 +46,3 @@
      }
    ));
  };
-

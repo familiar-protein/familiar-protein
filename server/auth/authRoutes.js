@@ -5,7 +5,8 @@
      });
    app.get('/auth/github/callback', passport.authenticate('github'),
        function(req, res) {
-       res.redirect('/');
+         console.log(req.user);
+       res.redirect('/#/user/' + req.user.username);
      });
 
    // signup/login only used for local auth

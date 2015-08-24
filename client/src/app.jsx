@@ -18,6 +18,10 @@ var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route;
 var Link  = Router.Link;
 
+//var Dispatcher = require('./Dispatcher');
+//var ApiUtils = require('./utils/ApiUtil.jsx');
+//var ActionTypes = require('./Constants').ActionTypes;
+
 var App = React.createClass({
 
   mixins: [Router.Navigation, Router.State],
@@ -51,6 +55,7 @@ var App = React.createClass({
     QuestionStore.addListener(this.onChange);
     ViewActions.loadQuestions();
     ViewActions.loadAllSolutions();
+    //ViewActions.login();
   },
 
   loginHandler: function (e) {
@@ -66,12 +71,25 @@ var App = React.createClass({
     this.transitionTo('default');
   },
 
+  //githubHandler: function() {
+  //  ApiUtils.login(username, function (userData) {
+  //    Dispatcher.dispatch({
+  //      type: ActionTypes.USER_AUTHENTICATION,
+  //      payload: {
+  //        username: userData.username,
+  //        user_id: userData._id
+  //      }
+  //    });
+  //  });
+  //},
+
   render: function() {
     return (
       <div className="container">
         <h2 className="title" onClick={this.goToHome}>Regex Game</h2>
-        {(this.state.username === "anonymous") ? <button className="btn btn-primary home" onClick={this.loginHandler} ref="login-btn">Login</button> : <button onClick={this.profileHandler} ref="profile-btn">My Profile</button>}
+        {(this.state.username == "anonymous") ? <button className="btn btn-primary home" onClick={this.loginHandler} ref="login-btn">Login</button> : <button onClick={this.profileHandler} ref="profile-btn">My Profile</button>}
         <Link to="leaderboard" className="btn btn-primary home">View Leaderboard</Link>
+        <a href="/auth/github" onClick={this.githubHandler}>Github Login</a>
         <RouteHandler questions={this.state.questions}/>
       </div>
     )
@@ -91,6 +109,6 @@ var routes = (
 );
 
 Router.run(routes, function(Root){
-  React.render(<Root />, document.getElementById('reactView'));
+  React.render(<Root />, document.getElementById('reactView'))
 });
 
