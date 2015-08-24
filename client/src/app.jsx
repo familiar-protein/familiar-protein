@@ -17,6 +17,11 @@ var RouteHandler = Router.RouteHandler;
 var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route;
 var Link  = Router.Link;
+var cookie = require('react-cookie');
+
+//var Dispatcher = require('./Dispatcher');
+//var ApiUtils = require('./utils/ApiUtil.jsx');
+//var ActionTypes = require('./Constants').ActionTypes;
 
 var App = React.createClass({
 
@@ -25,7 +30,8 @@ var App = React.createClass({
   getInitialState: function(){
     return {
       questions: [],
-      username: UserStore.getUser().username,
+      //username: UserStore.getUser().username,
+      username: UserStore.getUser().username || cookie.load('cookieName'),
       user_id: UserStore.getUser().user_id
     };
   },
@@ -33,17 +39,19 @@ var App = React.createClass({
   onChange: function () {
     this.setState({
       questions: QuestionStore.getQuestions(),
-      username: UserStore.getUser().username,
+      username: UserStore.getUser().username || cookie.load('cookieName'),
       user_id: UserStore.getUser().user_id
-    })
+    });
     // console.log(this.state);
   },
 
   componentWillMount: function(){
-    //ViewActions.login();
+    if (cookie.load('cookieName') != null) {
+      ViewActions.login(cookie.load('cookieName'));
+    }
 
     // Set initial user value to anonymous
-    ViewActions.loadAnonProfile();
+    //ViewActions.loadAnonProfile();
   },
 
   componentDidMount: function(){
@@ -51,6 +59,7 @@ var App = React.createClass({
     QuestionStore.addListener(this.onChange);
     ViewActions.loadQuestions();
     ViewActions.loadAllSolutions();
+    //ViewActions.login();
   },
 
   loginHandler: function (e) {
@@ -66,12 +75,31 @@ var App = React.createClass({
     this.transitionTo('default');
   },
 
+  //githubHandler: function() {
+  //  ApiUtils.login(username, function (userData) {
+  //    Dispatcher.dispatch({
+  //      type: ActionTypes.USER_AUTHENTICATION,
+  //      payload: {
+  //        username: userData.username,
+  //        user_id: userData._id
+  //      }
+  //    });
+  //  });
+  //},
+
+  logOut: function() {
+    cookie.remove('cookieName');
+    this.transitionTo('/');
+  },
+
   render: function() {
     return (
       <div className="container">
         <h2 className="title" onClick={this.goToHome}>Regex Game</h2>
-        {(this.state.username === "anonymous") ? <button className="btn btn-primary home" onClick={this.loginHandler} ref="login-btn">Login</button> : <button onClick={this.profileHandler} ref="profile-btn">My Profile</button>}
+        {(!cookie.load('cookieName')) ? <a href="/auth/github" onClick={this.githubHandler}><button className="btn btn-primary home">Log in with Github</button></a> :
+          <button className="btn btn-primary home" onClick={this.profileHandler} ref="profile-btn">My Profile</button>}
         <Link to="leaderboard" className="btn btn-primary home">View Leaderboard</Link>
+        {(cookie.load('cookieName')) ? <a href="/"><button onClick={this.logOut} className="btn btn-primary home">Log out</button></a> : null }
         <RouteHandler questions={this.state.questions}/>
       </div>
     )
@@ -84,13 +112,13 @@ var routes = (
     <Route name="login" path="/login" handler={LoginView}/>
     <Route name="solutions" path="/solutions" handler={SolutionView}/>
     <Route name="leaderboard" path="/leaderboard" handler={LeaderboardView}/>
-    <Route name="user" path="/user/:id" handler={ProfileView}/>
+    <Route name="user" path="/user/:id" handler={ProfileView} username="this.state.username"/>
     <Route name="question" path="/:qNumber" handler={DetailView}/>
     <DefaultRoute name="default" handler={OverView} />
   </Route>
 );
 
 Router.run(routes, function(Root){
-  React.render(<Root />, document.getElementById('reactView'));
+  React.render(<Root />, document.getElementById('reactView'))
 });
 

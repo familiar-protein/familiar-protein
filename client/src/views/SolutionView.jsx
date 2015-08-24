@@ -3,6 +3,7 @@ var Router = require('react-router');
 var Link = Router.Link;
 
 var SolutionStore = require('./../stores/SolutionStore');
+var UserStore = require('../stores/UserStore');
 var ViewActions = require('./../actions/ViewActions');
 
 var SolutionView = React.createClass({
@@ -10,7 +11,7 @@ var SolutionView = React.createClass({
   getInitialState: function(){
     return {
       solutions: SolutionStore.getSolutions(),
-      voted: false
+      voted: {}
     };
   },
 
@@ -20,6 +21,8 @@ var SolutionView = React.createClass({
 
   componentDidMount: function(){
     SolutionStore.addListener(this.getSolutions);
+    this.getSolutions();
+    console.log(SolutionStore.getSolutions());
   },
 
   componentWillUnmount: function(){
@@ -27,27 +30,30 @@ var SolutionView = React.createClass({
     SolutionStore.removeChangeListener(this.getSolutions);
   },
 
-  vote: function(solution){
+  vote: function(solution, i){
     
     //TODO: Implement voting
-    ViewActions.voteForSolution(solution);
-    this.setState({voted: true});
+    ViewActions.voteForSolution(solution, UserStore.getUser().username);
+    var votedObj = this.state.voted;
+    votedObj[i] = true;
+    this.setState({voted: votedObj});
   },
 
   render: function(){
     var context = this;
-    var solutions = this.state.solutions.map(function(solution) {
+    var solutions = this.state.solutions.map(function(solution, i) {
       return (
-        <tr key={solution._id}>
-        <td className="solution-description">
-          {solution.userId.username}
-        </td>
+        <tr key={i}>
+          <td className="solution-description">
+            {solution.userId ? solution.userId.username : 'anonymous'}
+          </td>
           <td className="solution-description">
             {solution.content}
           </td>
           <td>{solution.votes || 0}</td>
           <td>
-            {context.state.voted === false ? <button onClick={context.vote.bind(context, solution)} className="btn btn-primary">UpVote</button> : null}
+            {solution.voters.indexOf(UserStore.getUser().username) === -1 ?
+              <button onClick={context.vote.bind(context, solution, i)} className="btn btn-primary">UpVote</button> : null}
           </td>
         </tr>
       )

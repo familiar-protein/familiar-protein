@@ -40,7 +40,7 @@ var DetailView = React.createClass({
     if(solved){
 
       // TODO: Post new solution to server
-      ViewActions.postNewSolution(this.state.question._id,this.state.user.user_id, value);
+      ViewActions.postNewSolution(this.state.question._id,this.state.user.user_id, value, this.state.user.username);
 
       // Retrieve solutions to current question
       // ViewActions.loadSolutions(this.state.question._id);

@@ -109,15 +109,18 @@ var ApiUtils = {
     });
   },
 
-  incrementSolutionVote: function (solution){
+  incrementSolutionVote: function (solution, username){
 
     solution['votes'] += 1;
+    solution['voters'].push(username);
+    console.log(putSolution);
     
     var putSolution = {
       _id: solution._id,
       questionId: solution.questionId._id,
       userId: solution.userId._id,
-      votes: solution.votes
+      votes: solution.votes,
+      voters: solution.voters
     };
 
     var context = this;
@@ -133,14 +136,15 @@ var ApiUtils = {
     })
   },
 
-  postNewSolution: function(qId, uId, solutionStr){
-    console.log(qId, uId, solutionStr);
+  postNewSolution: function(qId, uId, solutionStr, username){
+    console.log(qId, uId, solutionStr, username);
 
     var postObj = {
       content: solutionStr,
       userId: uId,
       questionId: qId,
-      votes: 0
+      votes: 0,
+      username: username
     };
 
     var context = this;
