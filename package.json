@@ -28,6 +28,7 @@
     "passport": "^0.2.2",
     "passport-github2": "^0.1.9",
     "react": "^0.13.3",
+    "react-cookie": "^0.3.4",
     "react-router": "^0.13.3"
   },
   "devDependencies": {

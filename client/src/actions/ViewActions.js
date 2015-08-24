@@ -27,21 +27,21 @@ var ViewActions = {
     });
   },
 
-  postNewSolution: function(qId, uId, solutionStr){
+  postNewSolution: function(qId, uId, solutionStr, username){
     // console.log(qId, uId, solutionStr);
       Dispatcher.dispatch({
         type: ActionTypes.POST_NEW_SOLUTION
       });
-      ApiUtils.postNewSolution(qId, uId, solutionStr);
+      ApiUtils.postNewSolution(qId, uId, solutionStr, username);
   },
 
-  voteForSolution: function (solutionId) {
+  voteForSolution: function (solutionId, username) {
     // console.log("Voting for ", solutionId);
     //ADD_VOTE_TO_SOLUTION
     Dispatcher.dispatch({
       type: ActionTypes.ADD_VOTE_TO_SOLUTION
     });
-    ApiUtils.incrementSolutionVote(solutionId);
+    ApiUtils.incrementSolutionVote(solutionId, username);
   },
   
   login: function (username) {

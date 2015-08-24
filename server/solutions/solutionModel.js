@@ -13,7 +13,8 @@ var SolutionSchema = new mongoose.Schema({
   votes: {
     type: Number,
     default: 0
-  }
+  },
+  voters: [String]
 });
 
 var Solution = mongoose.model('Solution', SolutionSchema);

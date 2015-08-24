@@ -3,6 +3,7 @@ var React = require('react');
 var requireAuth = require('./authWrapper.jsx');
 var Router = require('react-router');
 var Link = Router.Link;
+var UserStore = require('../stores/UserStore');
 //requireAuth(
 var OverView = React.createClass({
   render: function() {
@@ -11,7 +12,12 @@ var OverView = React.createClass({
         <tr key={question.qNumber} className="question">
           <td><b>{question.title}</b></td>
           <td><p>{question.description}</p></td>
-          <td><Link to="question" params={{qNumber:question.qNumber}} className="btn btn-primary">Solve</Link></td>
+          <td>
+            {(UserStore.getUser().username != null) ?
+              <Link to="question" params={{qNumber:question.qNumber}} className="btn btn-primary">Solve</Link> :
+              <p>Log in to solve!</p>
+            }
+          </td>
         </tr>
       )
     });
