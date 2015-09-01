@@ -45,3 +45,11 @@ form {
   font-style: italic;
   color: red;
 }
+td {
+  padding-right: 2em;
+  padding-bottom: 1em;
+}
+table {
+  margin-top: 2em;
+}
+

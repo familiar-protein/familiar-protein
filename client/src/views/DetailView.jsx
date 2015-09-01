@@ -4,6 +4,10 @@ var Router = require('react-router');
 var Navigation = Router.Navigation;
 var Link = Router.Link;
 
+var ViewActions = require('./../actions/ViewActions');
+var SolutionStore = require('./../stores/SolutionStore');
+var UserStore = require('./../stores/UserStore');
+
 
 var DetailView = React.createClass({
   mixins: [Navigation],
@@ -12,12 +16,37 @@ var DetailView = React.createClass({
     return {
       result: '',
       solved: false,
+      solutions: [],
+      question: this.props.questions[this.props.params.qNumber - 1],
+      
+      // TODO: Change to get from User Store
+      user: UserStore.getUser()
     };
+  },
+
+  getSolutions: function(){
+    this.state.solutions = SolutionStore.getSolutions();
+  },
+
+  componentDidMount: function(){
+    var context = this;
+    SolutionStore.addListener(this.getSolutions);
   },
 
   setRegex: function() {
     var value = React.findDOMNode(this.refs.solutionText).value;
     var solved = this.isSolved(value);
+
+    if(solved){
+
+      // TODO: Post new solution to server
+      ViewActions.postNewSolution(this.state.question._id,this.state.user.user_id, value, this.state.user.username);
+
+      // Retrieve solutions to current question
+      // ViewActions.loadSolutions(this.state.question._id);
+
+    }
+
     this.setState({
       result: value,
       solved: solved
@@ -107,6 +136,7 @@ var DetailView = React.createClass({
 
           {this.state.solved === null ? <p className="error-msg">Please provide valid regular expression</p> : null}
           {this.state.solved ? <h3 className="success">Success!!! Solved All Test Cases!</h3> : null}
+          {this.state.solved ? <Link to="solutions" className="btn btn-primary back">View Past Solutions</Link> : null}
         </form>
 
         <div className="test-cases">

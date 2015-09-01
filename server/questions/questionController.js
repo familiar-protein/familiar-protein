@@ -7,7 +7,7 @@ var add = function(req, res, next) {
     qNumber: req.body.qNumber,
     title: req.body.title,
     description: req.body.description
-  }
+  };
 
   var newQ = new Question(question);
   newQ.save(function(err, newEntry) {
@@ -68,3 +68,6 @@ module.exports = {
   getQuestionData: getQuestionData,
   runTests: runTests
 };
+
+
+
