@@ -1,5 +1,8 @@
 var express = require('express');
 var middleware = require('./config/middleware');
+var passport = require('passport');
+
+var session = require('express-session');
 require('./config/db');
 
 var port = process.env.PORT || 3000;
